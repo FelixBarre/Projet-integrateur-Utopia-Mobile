@@ -28,6 +28,7 @@ public class SQLiteManager extends SQLiteOpenHelper {
     private static final String ID_USER_FIELD = "id_user";
     private static final String ID_COMPTE_FIELD = "id_compte";
     private static final String ID_DEMANDEUR_FIELD = "id_demandeur";
+    private static final String ID_FOURNISSEUR_FIELD = "id_fournisseur";
     private static final String ID_ETAT_DEMANDE_FIELD = "id_etat_demande";
     private static final String ID_TYPE_DEMANDE_FIELD = "id_type_demande";
     private static final String NOM_FIELD = "nom";
@@ -40,6 +41,10 @@ public class SQLiteManager extends SQLiteOpenHelper {
     private static final String DATE_TRAITEMENT_FIELD = "date_traitement";
     private static final String RAISON_FIELD = "raison";
     private static final String MONTANT_FIELD = "montant";
+    private static final String LABEL_FIELD = "label";
+    private static final String DESCRIPTION_FIELD = "description";
+    private static final String MONTANT_DEFINI_FIELD = "montant_defini";
+    private static final String JOUR_DU_MOIS_FIELD = "jour_du_mois";
 
     public SQLiteManager(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -123,6 +128,47 @@ public class SQLiteManager extends SQLiteOpenHelper {
                 .append(" TEXT, ")
                 .append(MONTANT_FIELD)
                 .append(" DECIMAL)");
+
+        db.execSQL(sql.toString());
+
+        sql = new StringBuilder()
+                .append("CREATE TABLE ")
+                .append(ETAT_DEMANDES_TABLE_NAME)
+                .append("(")
+                .append(ID_FIELD)
+                .append(" INTEGER PRIMARY KEY AUTOINCREMENT, ")
+                .append(LABEL_FIELD)
+                .append(" TEXT)");
+
+        db.execSQL(sql.toString());
+
+        sql = new StringBuilder()
+                .append("CREATE TABLE ")
+                .append(ETAT_TRANSACTIONS_TABLE_NAME)
+                .append("(")
+                .append(ID_FIELD)
+                .append(" INTEGER PRIMARY KEY AUTOINCREMENT, ")
+                .append(LABEL_FIELD)
+                .append(" TEXT)");
+
+        db.execSQL(sql.toString());
+
+        sql = new StringBuilder()
+                .append("CREATE TABLE ")
+                .append(FACTURES_TABLE_NAME)
+                .append("(")
+                .append(ID_FIELD)
+                .append(" INTEGER PRIMARY KEY AUTOINCREMENT, ")
+                .append(ID_FOURNISSEUR_FIELD)
+                .append(" INTEGER, ")
+                .append(NOM_FIELD)
+                .append(" TEXT, ")
+                .append(DESCRIPTION_FIELD)
+                .append(" TEXT, ")
+                .append(MONTANT_DEFINI_FIELD)
+                .append(" DECIMAL, ")
+                .append(JOUR_DU_MOIS_FIELD)
+                .append(" INTEGER)");
 
         db.execSQL(sql.toString());
     }
