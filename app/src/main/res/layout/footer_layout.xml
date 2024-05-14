@@ -30,7 +30,7 @@
             android:layout_weight="1"
             android:layout_margin="8dp"
             android:background="@color/utopia_turquoise"
-            tools:srcCompat="@drawable/paperPlane" />
+            tools:srcCompat="@drawable/paper_plane" />
 
         <ImageButton
             android:id="@+id/messageButton"
@@ -48,7 +48,7 @@
             android:layout_weight="1"
             android:layout_margin="8dp"
             android:background="@color/utopia_turquoise"
-            tools:srcCompat="@drawable/creditCard" />
+            tools:srcCompat="@drawable/credit_card" />
 
         <ImageButton
             android:id="@+id/plusButton"

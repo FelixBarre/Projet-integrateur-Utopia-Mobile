@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Projet intégrateur - Utopia Mobile</string>
+
+    <string name="comptesTitle">Mes comptes</string>
 </resources>
