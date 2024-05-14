@@ -1,5 +1,13 @@
 <resources>
     <string name="app_name">Projet intégrateur - Utopia Mobile</string>
-
     <string name="comptesTitle">Mes comptes</string>
+    <string name="transactionTitle">Transaction</string>
+    <string name="createNewTransaction">Nouvelle transaction</string>
+    <string name="titleTypeTransaction">Type : </string>
+    <string name="titleMontantTransaction">Montant : </string>
+    <string name="destinationTransaction">Vers : </string>
+    <string name="checkVerificationTransaction">Les informations sont exactes </string>
+    <string name="valideTransaction">Terminer </string>
+    <string name="stopTransaction">Annuler </string>
+    <string name="VirementTitle">Virement</string>
 </resources>
