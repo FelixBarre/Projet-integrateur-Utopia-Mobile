@@ -325,6 +325,8 @@ public class SQLiteManager extends SQLiteOpenHelper {
                 .append(" TEXT, ")
                 .append(EMAIL_FIELD)
                 .append(" TEXT, ")
+                .append(EMAIL_VERIFIED_AT_FIELD)
+                .append(" DATETIME, ")
                 .append(PASSWORD_FIELD)
                 .append(" TEXT, ")
                 .append(REMEMBER_TOKEN_FIELD)
