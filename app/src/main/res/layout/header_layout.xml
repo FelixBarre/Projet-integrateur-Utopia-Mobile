@@ -14,31 +14,31 @@ android:layout_height="wrap_content">
     app:layout_constraintStart_toStartOf="parent">
 
     <ImageButton
-        android:id="@+id/imageButton3"
+        android:id="@+id/sortirButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:background="@color/bleu"
+        android:background="@color/utopia_turquoise"
         android:layout_gravity="center_vertical"
         tools:srcCompat="@drawable/seDeconnecter"/>
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/utopiaButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:background="@color/bleu"
+        android:background="@color/utopia_turquoise"
         android:layout_margin="8dp"
         android:scaleX="0.9"
         android:scaleY="0.9"
         tools:srcCompat="@drawable/letterU" />
 
     <ImageButton
-        android:id="@+id/imageButton2"
+        android:id="@+id/profilButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:background="@color/bleu"
+        android:background="@color/utopia_turquoise"
         android:layout_gravity="center_vertical"
         tools:srcCompat="@drawable/user" />
 </LinearLayout>

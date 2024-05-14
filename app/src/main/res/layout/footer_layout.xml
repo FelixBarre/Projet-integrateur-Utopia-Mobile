@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="@color/bleu"
+        android:background="@color/utopia_turquoise"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_margin="8dp"
-            android:background="@color/bleu"
+            android:background="@color/utopia_turquoise"
             tools:srcCompat="@drawable/blocks" />
 
         <ImageButton
@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_margin="8dp"
-            android:background="@color/bleu"
+            android:background="@color/utopia_turquoise"
             tools:srcCompat="@drawable/paperPlane" />
 
         <ImageButton
@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_margin="8dp"
-            android:background="@color/bleu"
+            android:background="@color/utopia_turquoise"
             tools:srcCompat="@drawable/chat" />
 
         <ImageButton
@@ -47,7 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_margin="8dp"
-            android:background="@color/bleu"
+            android:background="@color/utopia_turquoise"
             tools:srcCompat="@drawable/creditCard" />
 
         <ImageButton
@@ -56,7 +56,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_margin="8dp"
-            android:background="@color/bleu"
+            android:background="@color/utopia_turquoise"
             tools:srcCompat="@drawable/plus" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
