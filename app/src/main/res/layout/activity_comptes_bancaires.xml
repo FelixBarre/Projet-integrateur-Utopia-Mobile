@@ -27,6 +27,11 @@
             android:layout_marginTop="30dp"
             android:gravity="center"/>
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewCompte"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
         <include
             layout="@layout/footer_layout"
             app:layout_constraintBottom_toBottomOf="parent"
