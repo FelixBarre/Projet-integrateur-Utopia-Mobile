@@ -7,16 +7,29 @@
     android:layout_height="match_parent"
     tools:context=".ComptesBancairesActivity">
 
-    <include
-        layout="@layout/header_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
 
-    <include
-        layout="@layout/footer_layout"
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/header"
+            layout="@layout/header_layout" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView" />
+
+        <include
+            layout="@layout/footer_layout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+    </LinearLayout>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
