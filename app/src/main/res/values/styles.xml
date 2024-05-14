@@ -1,0 +1,11 @@
+<resources>
+    <style name="titre">
+        <item name="android:textSize">25sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="paragraphe">
+        <item name="android:layout_marginBottom">15dp</item>
+        <item name="android:justificationMode">inter_word</item>
+    </style>
+</resources>
