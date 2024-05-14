@@ -18,7 +18,7 @@ android:layout_height="wrap_content">
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:background="@color/bleu"
+        android:background="@color/utopia_turquoise"
         android:layout_gravity="center_vertical"
         tools:srcCompat="@drawable/seDeconnecter"/>
 
@@ -27,7 +27,7 @@ android:layout_height="wrap_content">
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:background="@color/bleu"
+        android:background="@color/utopia_turquoise"
         android:layout_margin="8dp"
         android:scaleX="0.9"
         android:scaleY="0.9"
@@ -38,7 +38,7 @@ android:layout_height="wrap_content">
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:background="@color/bleu"
+        android:background="@color/utopia_turquoise"
         android:layout_gravity="center_vertical"
         tools:srcCompat="@drawable/user" />
 </LinearLayout>
