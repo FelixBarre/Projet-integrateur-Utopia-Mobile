@@ -20,7 +20,7 @@ android:layout_height="wrap_content">
         android:layout_weight="1"
         android:background="@color/utopia_turquoise"
         android:layout_gravity="center_vertical"
-        tools:srcCompat="@drawable/seDeconnecter"/>
+        tools:srcCompat="@drawable/se_deconnecter"/>
 
     <ImageButton
         android:id="@+id/utopiaButton"
@@ -31,7 +31,7 @@ android:layout_height="wrap_content">
         android:layout_margin="8dp"
         android:scaleX="0.9"
         android:scaleY="0.9"
-        tools:srcCompat="@drawable/letterU" />
+        tools:srcCompat="@drawable/letter_u" />
 
     <ImageButton
         android:id="@+id/profilButton"
