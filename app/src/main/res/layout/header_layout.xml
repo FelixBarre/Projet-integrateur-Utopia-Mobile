@@ -9,7 +9,7 @@ android:layout_height="wrap_content">
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:background="@color/bleu"
+    android:background="@color/utopia_turquoise"
     app:layout_constraintTop_toTopOf="parent"
     app:layout_constraintStart_toStartOf="parent">
 
