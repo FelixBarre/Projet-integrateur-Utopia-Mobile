@@ -8,4 +8,15 @@
         <item name="android:layout_marginBottom">15dp</item>
         <item name="android:justificationMode">inter_word</item>
     </style>
+
+    <style name="input">
+        <item name="android:padding">10dp</item>
+        <item name="android:background">@drawable/backInput</item>
+    </style>
+
+    <style name="customButton">
+        <item name="android:backgroundTint">@color/utopia_turquoise_moyen</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">15sp</item>
+    </style>
 </resources>
