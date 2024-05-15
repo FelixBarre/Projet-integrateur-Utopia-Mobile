@@ -35,8 +35,8 @@ public class Conversations extends AppCompatActivity {
                     public void run() {
                         try {
                             HttpClient httpClient = HttpClient.instanceOfClient();
-                            String responsePOST = httpClient.post(HttpClient.Routes.TOKEN, "{ \"email\": \"test3@user.com\", \"password\": \"test3@user.com\", \"token_name\": \"tokenAPI\" }");
-                            //String responseGET = httpClient.get(HttpClient.Routes.USER);
+                            String responsePOST = httpClient.post("token", "{ \"email\": \"test3@user.com\", \"password\": \"test3@user.com\", \"token_name\": \"tokenAPI\" }");
+                            String responseGET = httpClient.get("conversations");
                         }
                         catch (IOException e) {
                             e.printStackTrace();

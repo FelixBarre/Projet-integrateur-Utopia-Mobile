@@ -1,10 +1,10 @@
 package com.example.projetintgrateur_utopiamobile;
 
-
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
@@ -12,10 +12,11 @@ import java.net.URL;
 
 public class HttpClient {
     private static HttpClient httpClient;
-    private final String apiUrl = "https://odd-friends-stick.loca.lt/api/";
+    private final String apiUrl = "http://localhost:8000/api/";
     private static String tokenApi = "";
     private HttpURLConnection connection;
-    public enum Methods {
+    private final String ROUTETOKEN = "token";
+    private enum Methods {
         GET ("GET"),
         POST("POST"),
         PUT("PUT"),
@@ -32,22 +33,6 @@ public class HttpClient {
             return this.method;
         }
     }
-    public enum Routes {
-        TOKEN ("token"),
-        CONVERSATIONS("conversations"),
-        USER("user");
-
-        private final String route;
-
-        private Routes(String r) {
-            route = r;
-        }
-
-        @Override
-        public String toString() {
-            return this.route;
-        }
-    }
 
     public static HttpClient instanceOfClient() {
         if (httpClient == null) {
@@ -57,26 +42,33 @@ public class HttpClient {
         return httpClient;
     }
 
-    private void openConnection(Routes route, Methods method) {
+    private void openConnection(String route, Methods method) {
         try {
-            URL url = new URL(apiUrl + route.toString());
+            URL url = new URL(apiUrl + route);
             connection = (HttpURLConnection) url.openConnection();
+            connection.setUseCaches(false);
             connection.setRequestMethod(method.toString());
-            connection.setRequestProperty("Content-Type", "application/json");
-            connection.setRequestProperty("Accept", "application/json");
-            connection.setDoOutput(true);
+            connection.setRequestProperty("Content-Type", "application/json; charset=utf-8");
+            connection.setRequestProperty("Accept", "application/json; charset=utf-8");
+
+            if (method != Methods.GET) {
+                connection.setDoOutput(true);
+            }
+
             connection.setDoInput(true);
 
-            if (route != Routes.TOKEN) {
+            if (route != ROUTETOKEN) {
                 connection.setRequestProperty("Authorization", "Bearer " + tokenApi);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
     private void closeConnection() {
         connection.disconnect();
     }
+
     private void ajouterBodyJSON(String bodyJSON) {
         try {
             OutputStream os = connection.getOutputStream();
@@ -87,11 +79,16 @@ public class HttpClient {
             e.printStackTrace();
         }
     }
-    private int getResponseCode() throws IOException {
-        return connection.getResponseCode();
-    }
+
     private String getResponse() throws IOException {
-        BufferedReader input = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+        InputStream inputStream;
+        if (connection.getResponseCode() >= 400) {
+            inputStream = connection.getErrorStream();
+        }
+        else {
+            inputStream = connection.getInputStream();
+        }
+        BufferedReader input = new BufferedReader(new InputStreamReader(inputStream));
         String inputLine;
         StringBuffer response = new StringBuffer();
 
@@ -105,7 +102,7 @@ public class HttpClient {
 
     private boolean validateToken() {
         if (tokenApi.isEmpty()) {
-            this.openConnection(Routes.TOKEN, Methods.POST);
+            this.openConnection(ROUTETOKEN, Methods.POST);
 
             // TODO À changer pour les infos du User
             this.ajouterBodyJSON("{ \"email\": \"test3@user.com\", \"password\": \"test3@user.com\", \"token_name\": \"tokenAPI\" }");
@@ -127,7 +124,8 @@ public class HttpClient {
 
         return true;
     }
-    public String get(Routes route) throws IOException {
+
+    public String get(String route) throws IOException {
         if (!this.validateToken()) {
             return "";
         }
@@ -140,8 +138,9 @@ public class HttpClient {
 
         return response;
     }
-    public String post(Routes route, String body) throws IOException {
-        if (route != Routes.TOKEN) {
+
+    public String post(String route, String body) throws IOException {
+        if (route != ROUTETOKEN) {
             if (!this.validateToken()) {
                 return "";
             }
