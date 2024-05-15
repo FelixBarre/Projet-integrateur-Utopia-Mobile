@@ -1,6 +1,21 @@
 <resources>
+    <!-- Strings générals -->
     <string name="app_name">Projet intégrateur - Utopia Mobile</string>
+    <string name="utopia_title">Banque Utopia</string>
+
+    <!-- Profile général -->
+    <string name="courrielLabel">Courriel</string>
+    <string name="mdpLabel">Mot de passe</string>
+
+    <!-- Connexion -->
+    <string name="connexionTitle">Connexion</string>
+    <string name="connexionButtonLabel">Se connecter</string>
+    <string name="forgotPasswordLink">Mot de passe oublié?</string>
+
+    <!-- Comptes bancaires -->
     <string name="comptesTitle">Mes comptes</string>
+
+    <!-- Transactions -->
     <string name="transactionTitle">Transaction</string>
     <string name="createNewTransaction">Nouvelle transaction</string>
     <string name="titleTypeTransaction">Type : </string>
@@ -9,5 +24,7 @@
     <string name="checkVerificationTransaction">Les informations sont exactes </string>
     <string name="valideTransaction">Terminer </string>
     <string name="stopTransaction">Annuler </string>
+
+    <!-- Virements -->
     <string name="VirementTitle">Virement</string>
 </resources>
