@@ -21,4 +21,6 @@ public class ComptesBancairesActivity extends AppCompatActivity {
             return insets;
         });
     }
+
+
 }

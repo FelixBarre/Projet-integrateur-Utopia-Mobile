@@ -57,4 +57,10 @@
 
     <!-- Virements -->
     <string name="VirementTitle">Virement</string>
+  
+    <!-- Comptes Bancaires -->
+    <string name="nom_de_compte_par_defaut">Nom de compte</string>
+    <string name="solde_compte">Solde : </string>
+    <string name="derniere_activite_compte">Dernière activité : %s</string>
+    <string name="solde_valeur">%s $</string>
 </resources>
