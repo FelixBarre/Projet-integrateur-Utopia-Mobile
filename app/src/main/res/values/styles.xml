@@ -18,13 +18,13 @@
 
     <style name="input">
         <item name="android:padding">10dp</item>
-        <item name="android:background">@drawable/backInput</item>
+        <item name="android:background">@drawable/back_input</item>
         <item name="android:layout_width">250dp</item>
     </style>
 
     <style name="inputNumber">
         <item name="android:padding">10dp</item>
-        <item name="android:background">@drawable/backInput</item>
+        <item name="android:background">@drawable/back_input</item>
         <item name="android:layout_width">100dp</item>
     </style>
 
@@ -35,7 +35,7 @@
     </style>
 
     <style name="contentBlock">
-        <item name="android:background">@drawable/backContentBlock</item>
+        <item name="android:background">@drawable/back_content_block</item>
         <item name="android:layout_width">300dp</item>
         <item name="android:padding">10dp</item>
     </style>
