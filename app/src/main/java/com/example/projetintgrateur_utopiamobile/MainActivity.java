@@ -74,6 +74,12 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, detailsProfil.class);
                 startActivity(intent);
                  */
+
+                /*
+                Intent intent = new Intent(MainActivity.this, transaction.class);
+                startActivity(intent);
+                 */
+
             }
         });
     }
