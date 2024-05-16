@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".accueil">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+
+        tools:layout_editor_absoluteX="79dp"
+        tools:layout_editor_absoluteY="0dp">
+
+        <include
+            android:id="@+id/header"
+            layout="@layout/header_layout" />
+
+        <TextView
+            android:id="@+id/accueilTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="10sp"
+            android:layout_marginBottom="10dp"
+            android:gravity="left"
+            android:text="@string/acceuilTitle"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/compteTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="10sp"
+            android:layout_marginBottom="10dp"
+            android:gravity="left"
+            android:text="@string/compteTitle"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#F5F5DC"
+            android:orientation="horizontal"
+            android:padding="10sp">
+
+
+            <TextView
+                android:id="@+id/compteName1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/compteName1"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/soldeCompte1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:text="@string/soldeCompte1"
+                android:textSize="15sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#F5F5DC"
+            android:orientation="horizontal"
+            android:padding="10sp">
+
+
+            <TextView
+                android:id="@+id/compteName2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/compteName2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:text="@string/soldeCompte2"
+                android:textSize="15sp" />
+
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="150sp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:backgroundTint="@color/white"
+            android:gravity="center"
+            android:textSize="17sp"
+            android:textColor="#178CA4"
+            android:text="@string/voirPlus" />
+
+        <TextView
+            android:id="@+id/annonceTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="10sp"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:text="@string/annonceTitle"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#F5F5DC"
+            android:gravity="center"
+            android:padding="10sp"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/dateAnnonce"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginBottom="10sp"
+                android:text="@string/annonceDate" />
+
+            <TextView
+                android:id="@+id/descriptionAnnonce"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginBottom="10sp"
+                android:text="@string/annonceDescription" />
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/carteTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="10sp"
+            android:layout_marginBottom="10dp"
+            android:gravity="left"
+            android:text="@string/carteTitle"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#F5F5DC"
+            android:orientation="horizontal"
+            android:padding="10sp">
+
+
+            <TextView
+                android:id="@+id/carteName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/nameCarte"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/montantCarte"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:text="@string/montantCarte"
+                android:textSize="15sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#F5F5DC"
+            android:padding="10sp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/limiteCarte"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginBottom="10sp"
+                android:layout_gravity="right"
+                android:text="@string/limiteCarte"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/dateCarte"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:text="@string/dateCarte"
+                android:textSize="15sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnPaiement"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:backgroundTint="@color/white"
+                android:gravity="center"
+                android:textSize="17sp"
+                android:textColor="#178CA4"
+                android:text="@string/btnPaiement" />
+
+            <Button
+                android:id="@+id/btnDemande"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:backgroundTint="@color/white"
+                android:gravity="center"
+                android:textSize="17sp"
+                android:textColor="#18B7BE"
+                android:text="@string/btndDemande" />
+
+        </LinearLayout>
+
+
+        <include
+            layout="@layout/footer_layout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+
+
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

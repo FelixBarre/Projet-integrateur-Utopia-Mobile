@@ -15,6 +15,15 @@
         android:theme="@style/Theme.ProjetIntégrateurUtopiaMobile"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+
+        <activity
+            android:name=".accueil"
+            android:exported="false" />
+
+        <activity
+            android:name=".cancel_transaction"
+            android:exported="false" />
+
         <activity
             android:name=".changementMotDePasse"
             android:exported="false" />
@@ -27,6 +36,7 @@
         <activity
             android:name=".Conversations"
             android:exported="false" />
+            
         <activity
             android:name=".transaction"
             android:exported="false" />
