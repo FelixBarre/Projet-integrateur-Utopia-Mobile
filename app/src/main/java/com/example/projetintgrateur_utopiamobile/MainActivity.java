@@ -67,42 +67,17 @@ public class MainActivity extends AppCompatActivity {
                                 } else {
                                     outputError.setText(response.get("ERREUR").toString());
                                 }
-                            } else {
-                                outputError.setText(response.toString());
+                            } else if (response.has("SUCCÈS")) {
+                                httpClient.setTokenApi(response.get("SUCCÈS").toString());
+                                Intent intent = new Intent(MainActivity.this, accueil.class);
+                                startActivity(intent);
                             }
-
                         }
                         catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
                 }).start();
-
-
-                //store token in a local file
-                /*
-                String filename = "token";
-                String fileContents = ""; //TODO: add token
-                try (FileOutputStream fos)
-                */
-
-
-
-
-                /*
-                Intent intent = new Intent(MainActivity.this, detailsProfil.class);
-                startActivity(intent);
-                 */
-
-                /*
-                Intent intent = new Intent(MainActivity.this, transaction.class);
-                startActivity(intent);
-                 */
-
-
-                //Intent intent = new Intent(MainActivity.this, detailsProfil.class);
-                //startActivity(intent);
-
             }
         });
     }

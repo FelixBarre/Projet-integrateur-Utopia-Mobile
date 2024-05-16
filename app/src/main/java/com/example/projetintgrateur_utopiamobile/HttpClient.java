@@ -45,6 +45,9 @@ public class HttpClient {
     public void setTokenApi(String token) {
         tokenApi = token;
     }
+    public String getTokenApi() {
+        return tokenApi;
+    }
 
     private void openConnection(String route, Methods method) {
         try {
