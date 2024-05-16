@@ -78,8 +78,31 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }).start();
 
+
+                //store token in a local file
+                /*
+                String filename = "token";
+                String fileContents = ""; //TODO: add token
+                try (FileOutputStream fos)
+                */
+
+
+
+
+                /*
+                Intent intent = new Intent(MainActivity.this, detailsProfil.class);
+                startActivity(intent);
+                 */
+
+                /*
+                Intent intent = new Intent(MainActivity.this, transaction.class);
+                startActivity(intent);
+                 */
+
+
                 //Intent intent = new Intent(MainActivity.this, detailsProfil.class);
                 //startActivity(intent);
+
             }
         });
     }
