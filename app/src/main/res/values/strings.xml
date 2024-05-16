@@ -1,7 +1,64 @@
 <resources>
+    <!-- Strings générals -->
     <string name="app_name">Projet intégrateur - Utopia Mobile</string>
+    <string name="utopia_title">Banque Utopia</string>
+    <string name="undefinedLabel">Undefined</string>
+    <string name="soumettre">Soumettre</string>
+    <string name="confirmer">Confirmer</string>
+    <string name="annuler">Annuler</string>
 
+    <!-- Profil général -->
+    <string name="courrielLabel">Courriel</string>
+    <string name="mdpLabel">Mot de passe</string>
+
+    <string name="contactLabel">Informations de contact</string>
+    <string name="nomLabel">Nom</string>
+    <string name="prenomLabel">Prénom</string>
+    <string name="telephoneLabel">Téléphone</string>
+
+    <string name="adresseLabel">Adresse</string>
+    <string name="noCiviqueLabel">No. Civique</string>
+    <string name="noPorteLabel">No. Porte</string>
+    <string name="rueLabel">Rue</string>
+    <string name="villeLabel">Ville</string>
+    <string name="codePostalLabel">Code postal</string>
+
+    <!-- Connexion -->
+    <string name="connexionTitle">Connexion</string>
+    <string name="connexionButtonLabel">Se connecter</string>
+    <string name="forgotPasswordLink">Mot de passe oublié?</string>
+
+    <!-- Détails de profil -->
+    <string name="detailsProfileTitle">Mon profil</string>
+
+    <!-- Modification de profil -->
+    <string name="modificationProfileTitle">Modifier mon profil</string>
+    <string name="modificationMotDePasseLabel">Changer mon mot de passe</string>
+    <string name="confirmationEtMotDePasse">Confirmation et mot de passe</string>
+
+    <!-- Mot de passe -->
+    <string name="modificationMDPTitle">Changement de mot de passe</string>
+    <string name="ancienMDP">Ancien mot de passe</string>
+    <string name="nouveauMDP">Nouveau mot de passe</string>
+    <string name="confirmationMDP">Confirmation du mot de passe</string>
+
+    <!-- Comptes bancaires -->
     <string name="comptesTitle">Mes comptes</string>
+
+    <!-- Transactions -->
+    <string name="transactionTitle">Transaction</string>
+    <string name="createNewTransaction">Nouvelle transaction</string>
+    <string name="titleTypeTransaction">Type : </string>
+    <string name="titleMontantTransaction">Montant : </string>
+    <string name="destinationTransaction">Vers : </string>
+    <string name="checkVerificationTransaction">Les informations sont exactes </string>
+    <string name="valideTransaction">Terminer </string>
+    <string name="stopTransaction">Annuler </string>
+
+    <!-- Virements -->
+    <string name="VirementTitle">Virement</string>
+  
+    <!-- Comptes Bancaires -->
     <string name="nom_de_compte_par_defaut">Nom de compte</string>
     <string name="solde_compte">Solde : </string>
     <string name="derniere_activite_compte">Dernière activité : %s</string>

@@ -1,6 +1,5 @@
 package com.example.projetintgrateur_utopiamobile;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,43 +11,38 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
-public class MainActivity extends AppCompatActivity {
+public class Conversations extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_conversations);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-        Button btnConnexion = (Button) findViewById(R.id.btnConnexion);
-        btnConnexion.setOnClickListener(new View.OnClickListener() {
+        Button bouton = (Button) findViewById(R.id.button);
+        bouton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //http request
-
-                //store token in a local file
-                String filename = "token";
-                String fileContents = ""; //TODO: add token
-                try
-
-
-
-
-
-                Intent intent = new Intent(MainActivity.this, detailsProfil.class);
-                startActivity(intent);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            HttpClient httpClient = HttpClient.instanceOfClient();
+                            String responsePOST = httpClient.post("token", "{ \"email\": \"test3@user.com\", \"password\": \"test3@user.com\", \"token_name\": \"tokenAPI\" }");
+                            String responseGET = httpClient.get("conversations");
+                        }
+                        catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }).start();
             }
         });
     }
