@@ -15,7 +15,9 @@
 
         <include
             android:id="@+id/header"
-            layout="@layout/header_layout" />
+            layout="@layout/header_layout"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -34,8 +36,8 @@
 
             <ImageButton
                 android:id="@+id/editIcon"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:background="@color/utopia_beige"
                 android:scaleType="fitCenter"
                 tools:srcCompat="@drawable/edit"
@@ -68,14 +70,14 @@
                     android:id="@+id/prenomOutput"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/undefined_label"
+                    android:text="@string/undefinedLabel"
                     android:layout_marginEnd="10dp"/>
 
                 <TextView
                     android:id="@+id/nomOutput"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/undefined_label" />
+                    android:text="@string/undefinedLabel" />
             </LinearLayout>
         </LinearLayout>
 
@@ -114,7 +116,7 @@
                         android:id="@+id/telephoneOutput"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/undefined_label" />
+                        android:text="@string/undefinedLabel" />
                 </TableRow>
 
                 <TableRow
@@ -133,7 +135,7 @@
                         android:id="@+id/courrielOutput"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/undefined_label" />
+                        android:text="@string/undefinedLabel" />
                 </TableRow>
 
             </TableLayout>
@@ -164,21 +166,21 @@
                     android:id="@+id/noPorteOutput"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/undefined_label"
+                    android:text="@string/undefinedLabel"
                     android:layout_marginEnd="10dp"/>
 
                 <TextView
                     android:id="@+id/noCiviqueOutput"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/undefined_label"
+                    android:text="@string/undefinedLabel"
                     android:layout_marginEnd="10dp" />
 
                 <TextView
                     android:id="@+id/rueOutput"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/undefined_label" />
+                    android:text="@string/undefinedLabel" />
             </LinearLayout>
 
             <LinearLayout
@@ -190,14 +192,14 @@
                     android:id="@+id/villeOutput"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/undefined_label"
+                    android:text="@string/undefinedLabel"
                     android:layout_marginEnd="10dp"/>
 
                 <TextView
                     android:id="@+id/codePostalOutput"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/undefined_label" />
+                    android:text="@string/undefinedLabel" />
             </LinearLayout>
 
         </LinearLayout>
