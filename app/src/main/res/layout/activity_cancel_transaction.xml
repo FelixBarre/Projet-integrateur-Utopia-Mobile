@@ -75,11 +75,9 @@
         <EditText
             android:id="@+id/raisonAnnulation"
             android:layout_width="300dp"
-            android:layout_height="200dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
             android:gravity="start|top"
-            android:inputType="text"
-            android:lines="10"
             android:scrollbars="vertical"
             android:text="" />
 
@@ -87,7 +85,7 @@
             android:id="@+id/verifInfosTransaction"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
+            android:layout_marginLeft="30sp"
             android:layout_marginTop="10dp"
             android:text="@string/checkVerificationTransaction" />
 

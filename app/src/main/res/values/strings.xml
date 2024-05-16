@@ -2,6 +2,28 @@
     <string name="app_name">Projet intégrateur - Utopia Mobile</string>
     <string name="comptesTitle">Mes comptes</string>
 
+    <string name="acceuilTitle">Bonjour</string>
+    <string name="compteTitle">Résumé des comptes</string>
+    <string name="voirPlus">Voir plus</string>
+    <string name="compteName1">Compte chèque</string>
+    <string name="soldeCompte1">500 $</string>
+    <string name="compteName2">Compte épargne</string>
+    <string name="soldeCompte2">1000 $</string>
+
+    <string name="annonceTitle">Annonce</string>
+    <string name="annonceName">Annonce</string>
+    <string name="annonceDescription">Créer un compte REER à 1% de taux d'intérêt.</string>
+    <string name="annonceDate">09/10/2024</string>
+
+    <string name="carteTitle">Carte de crédit</string>
+    <string name="nameCarte">Visa XXXX</string>
+    <string name="montantCarte">500 $</string>
+    <string name="limiteCarte">Limite de crédit : 2500 $</string>
+    <string name="dateCarte">Paiement minimum 12 $ exigible le 30/10/2024</string>
+    <string name="btnPaiement">Payer maintenant</string>
+    <string name="btndDemande">Nouvelle demande</string>
+
+
     <string name="transactionTitle">Transaction</string>
     <string name="createNewTransaction">Nouvelle transaction</string>
     <string name="cancelTransaction">Annuler une transaction</string>
@@ -16,4 +38,5 @@
     <string name="stopTransaction">Annuler </string>
 
     <string name="VirementTitle">Virement</string>
+
 </resources>
