@@ -21,7 +21,7 @@
             android:layout_weight="1"
             android:layout_margin="8dp"
             android:background="@color/utopia_turquoise"
-            tools:srcCompat="@drawable/blocks" />
+            android:src="@drawable/blocks" />
 
         <ImageButton
             android:id="@+id/actionButton"
@@ -30,7 +30,7 @@
             android:layout_weight="1"
             android:layout_margin="8dp"
             android:background="@color/utopia_turquoise"
-            tools:srcCompat="@drawable/paper_plane" />
+            android:src="@drawable/paper_plane" />
 
         <ImageButton
             android:id="@+id/messageButton"
@@ -39,7 +39,7 @@
             android:layout_weight="1"
             android:layout_margin="8dp"
             android:background="@color/utopia_turquoise"
-            tools:srcCompat="@drawable/chat" />
+            android:src="@drawable/chat" />
 
         <ImageButton
             android:id="@+id/comptesButton"
@@ -48,7 +48,7 @@
             android:layout_weight="1"
             android:layout_margin="8dp"
             android:background="@color/utopia_turquoise"
-            tools:srcCompat="@drawable/credit_card" />
+            android:src="@drawable/credit_card" />
 
         <ImageButton
             android:id="@+id/plusButton"
@@ -57,6 +57,6 @@
             android:layout_weight="1"
             android:layout_margin="8dp"
             android:background="@color/utopia_turquoise"
-            tools:srcCompat="@drawable/plus" />
+            android:src="@drawable/plus" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
