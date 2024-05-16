@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".modifierProfil">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/header"
+            layout="@layout/header_layout"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            android:id="@+id/modifierProfileTitle"
+            style="@style/titre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:text="@string/modificationProfileTitle" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="520dp"
+            android:layout_marginTop="30dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/prenomOutput"
+                        style="@style/sousTitre"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:text="@string/undefinedLabel" />
+
+                    <TextView
+                        android:id="@+id/nomOutput"
+                        style="@style/sousTitre"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/undefinedLabel" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/contactLabel"
+                    style="@style/sousTitre"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_gravity="center"
+                    android:text="@string/contactLabel" />
+
+                <EditText
+                    android:id="@+id/courrielInput"
+                    style="@style/input"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:ems="10"
+                    android:hint="@string/courrielLabel"
+                    android:inputType="textEmailAddress" />
+
+                <EditText
+                    android:id="@+id/telephoneInput"
+                    style="@style/input"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="15dp"
+                    android:ems="10"
+                    android:hint="@string/telephoneLabel"
+                    android:inputType="phone" />
+
+                <TextView
+                    android:id="@+id/adresseLabel"
+                    style="@style/sousTitre"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/adresseLabel" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/noPorteInput"
+                        style="@style/inputNumber"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:ems="10"
+                        android:hint="@string/noPorteLabel"
+                        android:inputType="number" />
+
+                    <EditText
+                        android:id="@+id/noCiviqueInput"
+                        style="@style/inputNumber"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:hint="@string/noCiviqueLabel"
+                        android:inputType="number" />
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/rueInput"
+                    style="@style/input"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="15dp"
+                    android:ems="10"
+                    android:hint="@string/rueLabel"
+                    android:inputType="textEmailAddress" />
+
+                <Spinner
+                    android:id="@+id/villeInput"
+                    style="@style/input"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="15dp" />
+
+                <EditText
+                    android:id="@+id/codePostalInput"
+                    style="@style/input"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="15dp"
+                    android:ems="10"
+                    android:hint="@string/codePostalLabel"
+                    android:inputType="textEmailAddress" />
+
+                <TextView
+                    android:id="@+id/confirmationLabel"
+                    style="@style/sousTitre"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/confirmationEtMotDePasse" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center">
+
+                    <Button
+                        android:id="@+id/confirmerButton"
+                        style="@style/customButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:text="@string/confirmer" />
+
+
+                    <Button
+                        android:id="@+id/annulerButton"
+                        style="@style/customButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="@string/annuler" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/changeMotDePasseButton"
+                    style="@style/customButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/modificationMotDePasseLabel" />
+            </LinearLayout>
+        </ScrollView>
+
+        <include
+            layout="@layout/footer_layout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

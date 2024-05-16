@@ -2,7 +2,9 @@
     <!-- Strings générals -->
     <string name="app_name">Projet intégrateur - Utopia Mobile</string>
     <string name="utopia_title">Banque Utopia</string>
-    <string name="undefined_label">Undefined</string>
+    <string name="undefinedLabel">Undefined</string>
+    <string name="confirmer">Confirmer</string>
+    <string name="annuler">Annuler</string>
 
     <!-- Profil général -->
     <string name="courrielLabel">Courriel</string>
@@ -25,9 +27,14 @@
     <string name="connexionTitle">Connexion</string>
     <string name="connexionButtonLabel">Se connecter</string>
     <string name="forgotPasswordLink">Mot de passe oublié?</string>
-    
-    <!-- detaisProfil -->
+
+    <!-- Détails de profil -->
     <string name="detailsProfileTitle">Mon profil</string>
+
+    <!-- Modification de profil -->
+    <string name="modificationProfileTitle">Modifier mon profil</string>
+    <string name="modificationMotDePasseLabel">Changer mon mot de passe</string>
+    <string name="confirmationEtMotDePasse">Confirmation et mot de passe</string>
 
     <!-- Comptes bancaires -->
     <string name="comptesTitle">Mes comptes</string>
