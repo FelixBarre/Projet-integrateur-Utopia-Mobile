@@ -12,7 +12,7 @@ import java.net.URL;
 
 public class HttpClient {
     private static HttpClient httpClient;
-    private final String apiUrl = "http://localhost:8000/api/";
+    private final String apiUrl = "http://10.0.2.2:8000/api/";
     private static String tokenApi = "";
     private HttpURLConnection connection;
     private final String ROUTETOKEN = "token";
@@ -40,6 +40,10 @@ public class HttpClient {
         }
 
         return httpClient;
+    }
+
+    public void setTokenApi(String token) {
+        tokenApi = token;
     }
 
     private void openConnection(String route, Methods method) {
