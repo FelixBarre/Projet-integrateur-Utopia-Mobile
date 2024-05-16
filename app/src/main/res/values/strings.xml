@@ -3,6 +3,7 @@
     <string name="app_name">Projet intégrateur - Utopia Mobile</string>
     <string name="utopia_title">Banque Utopia</string>
     <string name="undefinedLabel">Undefined</string>
+    <string name="soumettre">Soumettre</string>
     <string name="confirmer">Confirmer</string>
     <string name="annuler">Annuler</string>
 
@@ -22,7 +23,6 @@
     <string name="villeLabel">Ville</string>
     <string name="codePostalLabel">Code postal</string>
 
-
     <!-- Connexion -->
     <string name="connexionTitle">Connexion</string>
     <string name="connexionButtonLabel">Se connecter</string>
@@ -35,6 +35,12 @@
     <string name="modificationProfileTitle">Modifier mon profil</string>
     <string name="modificationMotDePasseLabel">Changer mon mot de passe</string>
     <string name="confirmationEtMotDePasse">Confirmation et mot de passe</string>
+
+    <!-- Mot de passe -->
+    <string name="modificationMDPTitle">Changement de mot de passe</string>
+    <string name="ancienMDP">Ancien mot de passe</string>
+    <string name="nouveauMDP">Nouveau mot de passe</string>
+    <string name="confirmationMDP">Confirmation du mot de passe</string>
 
     <!-- Comptes bancaires -->
     <string name="comptesTitle">Mes comptes</string>
