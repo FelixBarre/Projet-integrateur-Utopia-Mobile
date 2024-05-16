@@ -27,7 +27,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class MainActivity extends AppCompatActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,14 +54,21 @@ public class MainActivity extends AppCompatActivity {
                             HttpClient httpClient = HttpClient.instanceOfClient();
                             String responsePOST = httpClient.post("token", "{ \"email\": \"" + inputCourriel.getText() + "\", \"password\": \"" + inputPassword.getText() + "\", \"token_name\": \"tokenAPI\" }");
                             JSONObject response = new JSONObject(responsePOST);
+                            JSONObject erreur = null;
 
                             if (response.has("ERREUR")) {
-                                JSONObject erreur = new JSONObject(response.get("ERREUR").toString());
-                                for (int i = 0; i < erreur.length(); i++) {
-                                    String erreurString = erreur.getString(erreur.names().get(i).toString());
-                                    String correctedErreurString = erreurString.replaceAll("[]\"\\[]", "") + "\n";
-                                    outputError.append(correctedErreurString);
+                                if (response.get("ERREUR").getClass() == JSONObject.class) {
+                                    erreur = new JSONObject(response.get("ERREUR").toString());
+                                    for (int i = 0; i < erreur.length(); i++) {
+                                        String erreurString = erreur.getString(erreur.names().get(i).toString());
+                                        String correctedErreurString = erreurString.replaceAll("[]\"\\[]", "") + "\n";
+                                        outputError.append(correctedErreurString);
+                                    }
+                                } else {
+                                    outputError.setText(response.get("ERREUR").toString());
                                 }
+                            } else {
+                                outputError.setText(response.toString());
                             }
 
                         }
@@ -72,8 +78,8 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }).start();
 
-                Intent intent = new Intent(MainActivity.this, detailsProfil.class);
-                startActivity(intent);
+                //Intent intent = new Intent(MainActivity.this, detailsProfil.class);
+                //startActivity(intent);
             }
         });
     }
