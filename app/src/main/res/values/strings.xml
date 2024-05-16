@@ -45,6 +45,7 @@
     <!-- Comptes bancaires -->
     <string name="comptesTitle">Mes comptes</string>
 
+    <!-- Acceuil -->
     <string name="acceuilTitle">Bonjour</string>
     <string name="compteTitle">Résumé des comptes</string>
     <string name="voirPlus">Voir plus</string>
@@ -55,7 +56,7 @@
 
     <string name="annonceTitle">Annonce</string>
     <string name="annonceName">Annonce</string>
-    <string name="annonceDescription">Créer un compte REER à 1% de taux d'intérêt.</string>
+    <string name="annonceDescription">Créer un compte REER à 1% de taux d\u2019intérêt.</string>
     <string name="annonceDate">09/10/2024</string>
 
     <string name="carteTitle">Carte de crédit</string>
@@ -69,23 +70,26 @@
 
     <!-- Transactions -->
     <string name="transactionTitle">Transaction</string>
+    <string name="transactionsTitle">Mes transactions</string>
     <string name="createNewTransaction">Nouvelle transaction</string>
     <string name="cancelTransaction">Annuler une transaction</string>
-    <string name="dateTransaction">Date</string>
+    <string name="dateTransaction">10/10/2024</string>
     <string name="descriptionTransaction">Dépôt de 2000$ depuis compte desjardins</string>
-    <string name="raisonTransaction">Raison de l'annulation</string>
+    <string name="raisonTransaction">Raison de l\u2019annulation</string>
     <string name="titleTypeTransaction">Type : </string>
+    <string name="typeTransaction">Virement </string>
+    <string name="etatTransaction">Status : En cours </string>
     <string name="titleMontantTransaction">Montant : </string>
-    <string name="destinationTransaction">Vers : </string>
+    <string name="montantTransaction">Montant : 800 $</string>
+    <string name="destinationTransaction">Vers : Bob</string>
     <string name="checkVerificationTransaction">Les informations sont exactes </string>
     <string name="valideTransaction">Terminer </string>
     <string name="stopTransaction">Annuler </string>
 
-    <string name="VirementTitle">Virement</string>
 
     <!-- Virements -->
     <string name="VirementTitle">Virement</string>
-  
+
     <!-- Comptes Bancaires -->
     <string name="nom_de_compte_par_defaut">Nom de compte</string>
     <string name="solde_compte">Solde : </string>
