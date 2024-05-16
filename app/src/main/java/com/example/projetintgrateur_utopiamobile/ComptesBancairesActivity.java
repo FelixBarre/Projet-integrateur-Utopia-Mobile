@@ -22,5 +22,5 @@ public class ComptesBancairesActivity extends AppCompatActivity {
         });
     }
 
-    
+
 }
