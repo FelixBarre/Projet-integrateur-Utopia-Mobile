@@ -26,7 +26,8 @@
     <!-- Connexion -->
     <string name="connexionTitle">Connexion</string>
     <string name="connexionButtonLabel">Se connecter</string>
-    <string name="forgotPasswordLink">Mot de passe oublié?</string>
+    <string name="forgotPasswordLink"><a href="http://10.0.2.2:8000/forgot-password">Mot de passe oublié?</a></string>
+    <string name="userHasNoAccess">Vous n\u2019avez pas accès à l\u2019application. Seuls les utilisateurs et les employés ayant un accès utilisateur peuvent utiliser l\u2019application</string>
 
     <!-- Détails de profil -->
     <string name="detailsProfileTitle">Mon profil</string>
@@ -45,15 +46,54 @@
     <!-- Comptes bancaires -->
     <string name="comptesTitle">Mes comptes</string>
 
+    <!-- Acceuil -->
+    <string name="acceuilTitle">Bonjour</string>
+    <string name="compteTitle">Résumé des comptes</string>
+    <string name="voirPlus">Voir plus</string>
+    <string name="compteName1">Compte chèque</string>
+    <string name="soldeCompte1">500 $</string>
+    <string name="compteName2">Compte épargne</string>
+    <string name="soldeCompte2">1000 $</string>
+
+    <string name="annonceTitle">Annonce</string>
+    <string name="annonceName">Annonce</string>
+    <string name="annonceDescription">Créer un compte REER à 1% de taux d\u2019intérêt.</string>
+    <string name="annonceDate">09/10/2024</string>
+
+    <string name="carteTitle">Carte de crédit</string>
+    <string name="nameCarte">Visa XXXX</string>
+    <string name="montantCarte">500 $</string>
+    <string name="limiteCarte">Limite de crédit : 2500 $</string>
+    <string name="dateCarte">Paiement minimum 12 $ exigible le 30/10/2024</string>
+    <string name="btnPaiement">Payer maintenant</string>
+    <string name="btndDemande">Nouvelle demande</string>
+
+
     <!-- Transactions -->
     <string name="transactionTitle">Transaction</string>
+    <string name="transactionsTitle">Mes transactions</string>
     <string name="createNewTransaction">Nouvelle transaction</string>
+    <string name="cancelTransaction">Annuler une transaction</string>
+    <string name="dateTransaction">10/10/2024</string>
+    <string name="descriptionTransaction">Dépôt de 2000$ depuis compte desjardins</string>
+    <string name="raisonTransaction">Raison de l\u2019annulation</string>
     <string name="titleTypeTransaction">Type : </string>
+    <string name="typeTransaction">Virement </string>
+    <string name="etatTransaction">Status : En cours </string>
     <string name="titleMontantTransaction">Montant : </string>
-    <string name="destinationTransaction">Vers : </string>
+    <string name="montantTransaction">Montant : 800 $</string>
+    <string name="destinationTransaction">Vers : Bob</string>
     <string name="checkVerificationTransaction">Les informations sont exactes </string>
     <string name="valideTransaction">Terminer </string>
     <string name="stopTransaction">Annuler </string>
+    
+    <string-array name="transactionType">
+        <item>Dépôt</item>
+        <item>Rétrait</item>
+        <item>Virement</item>
+    </string-array>
+
+
 
     <!-- Virements -->
     <string name="VirementTitle">Virement</string>
