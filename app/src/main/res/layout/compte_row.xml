@@ -7,6 +7,8 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="5dp"
+    android:layout_marginTop="30dp"
+    android:layout_marginBottom="20dp"
     android:background="@drawable/bordure_row">
 
 

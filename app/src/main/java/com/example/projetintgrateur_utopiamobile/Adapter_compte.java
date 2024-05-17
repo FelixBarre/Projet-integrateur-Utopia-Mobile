@@ -12,8 +12,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+
 public class Adapter_compte extends RecyclerView.Adapter<Adapter_compte.MyViewHolder> {
-    private String comptes[];
+    private ArrayList<CompteBancaire> comptes;
     private Context context;
 
     @NonNull
@@ -24,19 +26,20 @@ public class Adapter_compte extends RecyclerView.Adapter<Adapter_compte.MyViewHo
         return new MyViewHolder(view);
     }
 
-    public Adapter_compte(Context context, String comptes[]) {
+    public Adapter_compte(Context context, ArrayList<CompteBancaire> comptes) {
         this.context = context;
         this.comptes = comptes;
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.nomCompte.setText(comptes[position]);
+        holder.nomCompte.setText(comptes.get(position).getNom());
+        holder.soldeValeurCompte.setText(String.valueOf(comptes.get(position).getSolde()));
     }
 
     @Override
     public int getItemCount() {
-        return comptes.length;
+        return comptes.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
