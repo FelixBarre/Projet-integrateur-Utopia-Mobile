@@ -13,11 +13,12 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <include
-            android:id="@+id/header"
-            layout="@layout/header_layout"
+        <com.example.projetintgrateur_utopiamobile.HeaderView
+            android:id="@+id/HeaderView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -40,7 +41,7 @@
                 android:layout_height="48dp"
                 android:background="@color/utopia_beige"
                 android:scaleType="fitCenter"
-                tools:srcCompat="@drawable/edit"
+                android:src="@drawable/edit"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="20dp"/>
@@ -203,11 +204,18 @@
             </LinearLayout>
 
         </LinearLayout>
-
-        <include
-            layout="@layout/footer_layout"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
     </LinearLayout>
+
+    <com.example.projetintgrateur_utopiamobile.FooterView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
