@@ -12,7 +12,7 @@ import java.net.URL;
 
 public class HttpClient {
     private static HttpClient httpClient;
-    private final String apiUrl = "http://10.0.2.2:8000/api/";
+    private final String apiUrl = "https://orange-toes-grab.loca.lt/api/";
     private static String tokenApi = "";
     private HttpURLConnection connection;
     private final String ROUTETOKEN = "token";
@@ -106,24 +106,7 @@ public class HttpClient {
 
     private boolean validateToken() {
         if (tokenApi.isEmpty()) {
-            this.openConnection(ROUTETOKEN, Methods.POST);
-
-            // TODO À changer pour les infos du User
-            this.ajouterBodyJSON("{ \"email\": \"test3@user.com\", \"password\": \"test3@user.com\", \"token_name\": \"tokenAPI\" }");
-
-            try {
-                JSONObject tokenResponseJSON = new JSONObject(getResponse());
-                tokenApi = tokenResponseJSON.getString("SUCCÈS");
-            }
-            catch (Exception e) {
-                e.printStackTrace();
-                return false;
-            }
-            finally {
-                this.closeConnection();
-            }
-
-            return !tokenApi.isEmpty();
+            return false;
         }
 
         return true;

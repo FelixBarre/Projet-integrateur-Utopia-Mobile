@@ -15,9 +15,9 @@
         tools:layout_editor_absoluteX="79dp"
         tools:layout_editor_absoluteY="0dp">
 
-        <include
-            android:id="@+id/header"
-            layout="@layout/header_layout" />
+        <com.example.projetintgrateur_utopiamobile.HeaderView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/accueilTitle"
@@ -253,10 +253,9 @@
         </LinearLayout>
 
 
-        <include
-            layout="@layout/footer_layout"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+        <com.example.projetintgrateur_utopiamobile.FooterView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
 
 
