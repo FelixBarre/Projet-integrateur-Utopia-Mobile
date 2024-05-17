@@ -19,6 +19,15 @@
             android:name=".LoadingHttp"
             android:exported="false" />
         <activity
+            android:name=".show_transactions"
+            android:exported="false" />
+        <activity
+            android:name=".accueil"
+            android:exported="false" />
+        <activity
+            android:name=".cancel_transaction"
+            android:exported="false" />
+        <activity
             android:name=".changementMotDePasse"
             android:exported="false" />
         <activity

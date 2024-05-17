@@ -5,8 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".transaction">
-
+    tools:context=".cancel_transaction">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -38,89 +37,68 @@
             android:textSize="25dp"
             android:layout_marginBottom="20dp"
             android:layout_marginTop="15dp"
-            android:text="@string/createNewTransaction" />
+            android:text="@string/cancelTransaction" />
 
         <TextView
-            android:id="@+id/titleTypeTransaction"
+            android:id="@+id/dateTransaction"
+            android:textSize="20dp"
+            android:textColor="@color/black"
+            android:layout_marginBottom="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/dateTransaction" />
+
+        <TextView
+            android:id="@+id/descriptionTransaction"
+            android:textSize="20dp"
+            android:textColor="@color/black"
+            android:layout_marginBottom="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/descriptionTransaction" />
+
+
+
+        <TextView
+            android:id="@+id/raisonTransaction"
             android:layout_marginLeft="30dp"
             android:textSize="20dp"
             android:textColor="@color/black"
             android:layout_marginBottom="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/titleTypeTransaction" />
-
-        <Spinner
-            android:id="@+id/typeTransaction"
-            android:layout_width="250dp"
-            android:layout_height="35dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginBottom="30px" />
-
-        <TextView
-            android:id="@+id/titleMontantTransaction"
-            android:layout_marginLeft="30dp"
-            android:textSize="20dp"
-            android:textColor="@color/black"
-            android:layout_marginBottom="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/titleMontantTransaction" />
+            android:text="@string/raisonTransaction" />
 
 
         <EditText
-            android:id="@+id/montantTransaction"
-            android:layout_width="250dp"
-            android:layout_marginLeft="30dp"
-            android:layout_height="35dp"
-            android:layout_marginBottom="20dp"
-            android:ems="10"
-            android:inputType="numberDecimal" />
-
-        <TextView
-            android:id="@+id/titleDestinationTransaction"
-            android:layout_marginLeft="30dp"
-            android:textSize="20dp"
-            android:textColor="@color/black"
-            android:layout_marginBottom="10dp"
-            android:layout_width="match_parent"
+            android:id="@+id/raisonAnnulation"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:text="@string/destinationTransaction" />
-
-        <Spinner
-            android:id="@+id/destinationTansaction"
-            android:layout_width="250dp"
             android:layout_marginLeft="30dp"
-            android:layout_marginBottom="20px"
-            android:layout_marginTop="10dp"
-            android:layout_height="35dp" />
-
+            android:gravity="start|top"
+            android:scrollbars="vertical"
+            android:text="" />
 
         <CheckBox
             android:id="@+id/verifInfosTransaction"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
+            android:layout_marginLeft="30sp"
             android:layout_marginTop="10dp"
             android:text="@string/checkVerificationTransaction" />
 
         <Button
-            android:id="@+id/valideTransaction"
+            android:id="@+id/cancelTransaction"
             android:layout_width="170dp"
             android:layout_marginTop="10dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:backgroundTint="#178CA4"
-            android:text="@string/valideTransaction" />
-
-        <Button
-            android:id="@+id/annulerTransaction"
-            android:layout_width="170dp"
-            android:layout_marginTop="10dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:backgroundTint="#FF0000"
             android:text="@string/stopTransaction" />
+
+
 
 
         <include
