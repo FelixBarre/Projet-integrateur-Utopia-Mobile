@@ -45,9 +45,6 @@ public class HttpClient {
     public void setTokenApi(String token) {
         tokenApi = token;
     }
-    public String getTokenApi() {
-        return tokenApi;
-    }
 
     private void openConnection(String route, Methods method) {
         try {
@@ -145,6 +142,22 @@ public class HttpClient {
 
         return response;
     }
+
+    public String get(String route, String body) throws IOException {
+        if (!this.validateToken()) {
+            return "";
+        }
+
+        this.openConnection(route, Methods.GET);
+        this.ajouterBodyJSON(body);
+
+        String response = this.getResponse();
+
+        this.closeConnection();
+
+        return response;
+    }
+
 
     public String post(String route, String body) throws IOException {
         if (route != ROUTETOKEN) {

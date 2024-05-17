@@ -69,8 +69,13 @@ public class MainActivity extends AppCompatActivity {
                                 }
                             } else if (response.has("SUCCÈS")) {
                                 httpClient.setTokenApi(response.get("SUCCÈS").toString());
-                                Intent intent = new Intent(MainActivity.this, accueil.class);
-                                startActivity(intent);
+                                UserManager userManager = new UserManager();
+                                if (userManager.checkUserIsUser(inputCourriel.getText().toString())) {
+                                    Intent intent = new Intent(MainActivity.this, accueil.class);
+                                    startActivity(intent);
+                                } else {
+                                    outputError.setText(getString(R.string.userHasNoAccess));
+                                }
                             }
                         }
                         catch (Exception e) {
