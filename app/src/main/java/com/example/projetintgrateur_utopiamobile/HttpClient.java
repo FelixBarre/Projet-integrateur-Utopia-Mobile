@@ -12,7 +12,7 @@ import java.net.URL;
 
 public class HttpClient {
     private static HttpClient httpClient;
-    private final String apiUrl = "https://orange-toes-grab.loca.lt/api/";
+    private final String apiUrl = "http://10.0.2.2:8000/api/";
     private static String tokenApi = "";
     private HttpURLConnection connection;
     private final String ROUTETOKEN = "token";
