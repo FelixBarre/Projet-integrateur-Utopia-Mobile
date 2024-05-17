@@ -26,7 +26,7 @@
     <!-- Connexion -->
     <string name="connexionTitle">Connexion</string>
     <string name="connexionButtonLabel">Se connecter</string>
-    <string name="forgotPasswordLink">Mot de passe oublié?</string>
+    <string name="forgotPasswordLink"><a href="http://10.0.2.2:8000/forgot-password">Mot de passe oublié?</a></string>
     <string name="userHasNoAccess">Vous n\u2019avez pas accès à l\u2019application. Seuls les utilisateurs et les employés ayant un accès utilisateur peuvent utiliser l\u2019application</string>
 
     <!-- Détails de profil -->

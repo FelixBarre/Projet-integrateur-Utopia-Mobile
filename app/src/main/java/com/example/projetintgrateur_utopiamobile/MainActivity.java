@@ -2,6 +2,7 @@ package com.example.projetintgrateur_utopiamobile;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -41,8 +42,12 @@ public class MainActivity extends AppCompatActivity {
         EditText inputCourriel = (EditText) findViewById(R.id.courrielInput);
         EditText inputPassword = (EditText) findViewById(R.id.passwordInput);
         TextView outputError = (TextView) findViewById(R.id.erreursOutput);
-
         Button btnConnexion = (Button) findViewById(R.id.btnConnexion);
+
+        TextView linkForgotPassword = (TextView) findViewById(R.id.linkForgotPassword);
+        linkForgotPassword.setMovementMethod(LinkMovementMethod.getInstance());
+        linkForgotPassword.setLinkTextColor(getResources().getColor(R.color.white));
+
         btnConnexion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
