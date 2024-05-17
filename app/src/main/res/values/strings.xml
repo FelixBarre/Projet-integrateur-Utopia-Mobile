@@ -103,4 +103,12 @@
     <string name="solde_compte">Solde : </string>
     <string name="derniere_activite_compte">Dernière activité : %s</string>
     <string name="solde_valeur">%s $</string>
+
+    <!-- demandes de prêt -->
+    <string name="titleDemandePret">Mes demandes de prêt</string>
+    <string name="date_par_defaut"><u>date par défaut</u></string>
+    <string name="statut">Statut :</string>
+    <string name="statut_par_defaut">statut par défaut</string>
+    <string name="montant_demande_pret">Montant: %s $</string>
+    <string name="duree_demande_pret">Durée : %s mois</string>
 </resources>
