@@ -7,35 +7,53 @@
     android:layout_height="match_parent"
     tools:context=".DemandePretActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <include
+        <com.example.projetintgrateur_utopiamobile.HeaderView
             android:id="@+id/header"
-            layout="@layout/header_layout" />
-
-        <TextView
-            android:id="@+id/titleDemandePret"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/titleDemandePret"
-            android:textSize="30sp"
-            android:layout_marginTop="30dp"
-            android:gravity="center"/>
-
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewDemandePret"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <include
-            layout="@layout/footer_layout"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
-    </LinearLayout>
+
+            <ScrollView
+                android:id="@+id/scrollCompte"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/header"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/titleDemandePret"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/titleDemandePret"
+                        android:textSize="30sp"
+                        android:layout_marginTop="30dp"
+                        android:gravity="center"/>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerViewDemandePret"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="150dp"/>
+
+                </LinearLayout>
+            </ScrollView>
+
+    <com.example.projetintgrateur_utopiamobile.FooterView
+        android:id="@+id/footer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

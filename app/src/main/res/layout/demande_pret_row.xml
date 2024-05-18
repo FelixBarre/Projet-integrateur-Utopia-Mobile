@@ -7,6 +7,8 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="5dp"
+    android:layout_marginTop="30dp"
+    android:layout_marginBottom="20dp"
     android:background="@drawable/bordure_row">
 
 
@@ -57,17 +59,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textSize="18sp"
+            android:layout_marginBottom="20dp"
+            android:gravity="center"
             android:text="@string/statut_par_defaut" />
 
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/textDureeDemandePret"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:textSize="18sp"
-        android:layout_marginBottom="20dp"
-        android:text="@string/duree_demande_pret" />
-
 </LinearLayout>

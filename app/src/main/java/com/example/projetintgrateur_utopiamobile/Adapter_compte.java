@@ -34,7 +34,8 @@ public class Adapter_compte extends RecyclerView.Adapter<Adapter_compte.MyViewHo
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.nomCompte.setText(comptes.get(position).getNom());
-        holder.soldeValeurCompte.setText(String.valueOf(comptes.get(position).getSolde()));
+        String solde = " " + comptes.get(position).getSolde() + "$";
+        holder.soldeValeurCompte.setText(solde);
     }
 
     @Override
@@ -44,7 +45,6 @@ public class Adapter_compte extends RecyclerView.Adapter<Adapter_compte.MyViewHo
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView nomCompte;
-        TextView soldeTextCompte;
         TextView soldeValeurCompte;
         TextView derActCompte;
         LinearLayout layoutCompte;
@@ -52,7 +52,6 @@ public class Adapter_compte extends RecyclerView.Adapter<Adapter_compte.MyViewHo
         public MyViewHolder(View itemView) {
             super(itemView);
             nomCompte = (TextView) itemView.findViewById(R.id.textNomCompte);
-            soldeTextCompte = (TextView) itemView.findViewById(R.id.textSoldeCompte);
             soldeValeurCompte = (TextView) itemView.findViewById(R.id.textSoldeValeurCompte);
             derActCompte = (TextView) itemView.findViewById(R.id.textDerAct);
             layoutCompte = (LinearLayout) itemView.findViewById(R.id.layout_compte_row);
