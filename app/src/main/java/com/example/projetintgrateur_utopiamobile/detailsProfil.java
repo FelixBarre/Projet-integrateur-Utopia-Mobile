@@ -24,6 +24,8 @@ public class detailsProfil extends AppCompatActivity {
             return insets;
         });
 
+        SQLiteManager sqLiteManager = SQLiteManager.instanceOfDatabase(this);
+
         ImageButton edit = (ImageButton) findViewById(R.id.editIcon);
         edit.setOnClickListener(new View.OnClickListener() {
             @Override

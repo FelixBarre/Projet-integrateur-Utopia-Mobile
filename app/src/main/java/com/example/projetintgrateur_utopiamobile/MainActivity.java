@@ -76,8 +76,16 @@ public class MainActivity extends AppCompatActivity {
                                 httpClient.setTokenApi(response.get("SUCCÈS").toString());
                                 UserManager userManager = new UserManager();
                                 if (userManager.checkUserIsUser(inputCourriel.getText().toString())) {
-                                    Intent intent = new Intent(MainActivity.this, accueil.class);
-                                    startActivity(intent);
+                                    SQLiteManager sqLiteManager = SQLiteManager.instanceOfDatabase(MainActivity.this);
+
+                                    User user = userManager.getUser(inputCourriel.getText().toString());
+
+                                    if (sqLiteManager.loadUserIntoDatabase(user)) {
+                                        Intent intent = new Intent(MainActivity.this, accueil.class);
+                                        startActivity(intent);
+                                    } else {
+                                        outputError.setText(getString(R.string.erreurChargementUser));
+                                    }
                                 } else {
                                     outputError.setText(getString(R.string.userHasNoAccess));
                                 }
