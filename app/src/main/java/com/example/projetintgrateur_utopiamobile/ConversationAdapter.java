@@ -1,6 +1,7 @@
 package com.example.projetintgrateur_utopiamobile;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +15,10 @@ import java.util.Date;
 import java.util.List;
 
 public class ConversationAdapter extends ArrayAdapter<Conversation> {
+    private Context context;
     public ConversationAdapter(Context context, List<Conversation> conversations) {
         super(context, 0, conversations);
+        this.context = context;
     }
 
     @NonNull
@@ -47,8 +50,17 @@ public class ConversationAdapter extends ArrayAdapter<Conversation> {
         textViewInterlocuteur.setText(interlocuteur.getPrenom() + " " + interlocuteur.getNom());
         textViewMessage.setText(dernierMessage.getTexte());
 
-
         textViewHeureMessage.setText(dernierMessage.getCreatedAtFormatted());
+
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ConversationActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("id_conversation", conversation.getId());
+                context.startActivity(intent);
+            }
+        });
 
         return convertView;
     }

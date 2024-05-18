@@ -87,13 +87,12 @@
     <string name="checkVerificationTransaction">Les informations sont exactes </string>
     <string name="valideTransaction">Terminer </string>
     <string name="stopTransaction">Annuler </string>
-    
+
     <string-array name="transactionType">
         <item>Dépôt</item>
         <item>Rétrait</item>
         <item>Virement</item>
     </string-array>
-
 
 
     <!-- Virements -->

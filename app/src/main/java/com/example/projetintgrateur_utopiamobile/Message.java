@@ -1,5 +1,7 @@
 package com.example.projetintgrateur_utopiamobile;
 
+import android.text.format.DateUtils;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -58,15 +60,11 @@ public class Message {
     public String getCreatedAtFormatted() {
         try {
             DateFormat createdAtFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX", Locale.CANADA_FRENCH);
-            Date dateCreatedAt = createdAtFormat.parse(created_at);
+            Date dateCreatedAt = createdAtFormat.parse(this.getCreatedAt());
 
-            //Si le message est dans les derniers 24 heures
-            if (dateCreatedAt.getTime() > System.currentTimeMillis() - 24 * 60 * 60 * 1000) {
-                SimpleDateFormat heuresMinutes = new SimpleDateFormat("HH:mm");
-                return heuresMinutes.format(dateCreatedAt);
-            }
+            CharSequence ilYA = DateUtils.getRelativeTimeSpanString(dateCreatedAt.getTime(), System.currentTimeMillis(), DateUtils.MINUTE_IN_MILLIS);
 
-            return dateCreatedAt.toString();
+            return ilYA.toString();
         }
         catch (Exception e) {
             return this.getCreatedAt();
