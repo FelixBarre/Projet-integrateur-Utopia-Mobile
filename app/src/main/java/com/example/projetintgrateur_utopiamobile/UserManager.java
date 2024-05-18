@@ -7,6 +7,7 @@ import java.io.IOException;
 
 public class UserManager {
     private static User authUser;
+
     public boolean checkUserIsUser(String email) {
         try {
             HttpClient httpClient = HttpClient.instanceOfClient();
