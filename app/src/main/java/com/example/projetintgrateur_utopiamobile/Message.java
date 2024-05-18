@@ -3,7 +3,14 @@ package com.example.projetintgrateur_utopiamobile;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class Message {
     private int id;
@@ -46,6 +53,24 @@ public class Message {
 
     public String getCreatedAt() {
         return created_at;
+    }
+
+    public String getCreatedAtFormatted() {
+        try {
+            DateFormat createdAtFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX", Locale.CANADA_FRENCH);
+            Date dateCreatedAt = createdAtFormat.parse(created_at);
+
+            //Si le message est dans les derniers 24 heures
+            if (dateCreatedAt.getTime() > System.currentTimeMillis() - 24 * 60 * 60 * 1000) {
+                SimpleDateFormat heuresMinutes = new SimpleDateFormat("HH:mm");
+                return heuresMinutes.format(dateCreatedAt);
+            }
+
+            return dateCreatedAt.toString();
+        }
+        catch (Exception e) {
+            return this.getCreatedAt();
+        }
     }
 
     public void setUpdatedAt(String updated_at) {

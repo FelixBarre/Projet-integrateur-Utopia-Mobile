@@ -60,7 +60,7 @@ public class UserManager {
         authUser = user;
     }
 
-    public User getAuthUser() {
+    public static User getAuthUser() {
         return authUser;
     }
 }
