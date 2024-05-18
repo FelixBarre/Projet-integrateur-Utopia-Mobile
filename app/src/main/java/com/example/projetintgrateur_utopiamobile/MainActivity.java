@@ -76,6 +76,20 @@ public class MainActivity extends AppCompatActivity {
                                 httpClient.setTokenApi(response.get("SUCCÈS").toString());
                                 UserManager userManager = new UserManager();
                                 if (userManager.checkUserIsUser(inputCourriel.getText().toString())) {
+                                    String responseUser = httpClient.get("user");
+                                    JSONObject jsonUser = new JSONObject(responseUser);
+                                    UserManager.setAuthUser(new User(
+                                            jsonUser.getString("nom"),
+                                            jsonUser.getString("prenom"),
+                                            jsonUser.getString("telephone"),
+                                            jsonUser.getString("no_civique"),
+                                            jsonUser.getString("no_porte"),
+                                            jsonUser.getString("rue"),
+                                            jsonUser.getInt("id_ville"),
+                                            jsonUser.getString("code_postal"),
+                                            jsonUser.getString("email")
+                                    ));
+
                                     Intent intent = new Intent(MainActivity.this, accueil.class);
                                     startActivity(intent);
                                 } else {
