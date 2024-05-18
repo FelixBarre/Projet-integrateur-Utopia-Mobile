@@ -1,16 +1,19 @@
 package com.example.projetintgrateur_utopiamobile;
 
 import android.content.Context;
+import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.text.SpannableString;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+
 
 public class Adapter_demandePret extends RecyclerView.Adapter<Adapter_demandePret.MyViewHolder>{
 
@@ -32,7 +35,9 @@ public class Adapter_demandePret extends RecyclerView.Adapter<Adapter_demandePre
 
     @Override
     public void onBindViewHolder(@NonNull Adapter_demandePret.MyViewHolder holder, int position) {
-        holder.DateDemandePret.setText(demandes.get(position).getDate_demande());
+        SpannableString spannableString = new SpannableString(demandes.get(position).getDate_demande());
+        spannableString.setSpan(new UnderlineSpan(), 0, demandes.get(position).getDate_demande().length(), 0);
+        holder.DateDemandePret.setText(spannableString);
         String statut = "En attente";
         if (demandes.get(position).getId_etat_demande() == 1)
             statut = "Approuvée";
@@ -41,12 +46,13 @@ public class Adapter_demandePret extends RecyclerView.Adapter<Adapter_demandePre
         else if (demandes.get(position).getId_etat_demande() == 4)
             statut = "Annulée";
         holder.StatutDemandePret.setText(statut);
-        holder.MontantDemandePret.setText(String.valueOf(demandes.get(position).getMontant()));
+        String montant = "Montant: " + demandes.get(position).getMontant() + "$";
+        holder.MontantDemandePret.setText(montant);
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return demandes.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
