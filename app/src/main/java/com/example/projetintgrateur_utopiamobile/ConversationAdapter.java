@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.util.Date;
 import java.util.List;
 
 public class ConversationAdapter extends ArrayAdapter<Conversation> {
@@ -25,9 +26,29 @@ public class ConversationAdapter extends ArrayAdapter<Conversation> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.row_conversation, parent, false);
         }
 
-        TextView idConversation = convertView.findViewById(R.id.textViewIdConversation);
+        TextView textViewInterlocuteur = convertView.findViewById(R.id.textViewInterlocuteur);
+        TextView textViewMessager = convertView.findViewById(R.id.textViewMessager);
+        TextView textViewMessage = convertView.findViewById(R.id.textViewMessage);
+        TextView textViewHeureMessage = convertView.findViewById(R.id.textViewHeureMessage);
 
-        idConversation.setText(Integer.toString(conversation.getId()));
+        Message dernierMessage = conversation.getDernierMessage();
+
+        User interlocuteur;
+
+        if (dernierMessage.getEnvoyeur().getId() == UserManager.getAuthUser().getId()) {
+            interlocuteur = dernierMessage.getReceveur();
+            textViewMessager.setText(getContext().getResources().getString(R.string.vous) + " : ");
+        }
+        else {
+            interlocuteur = dernierMessage.getEnvoyeur();
+            textViewMessager.setText(interlocuteur.getPrenom() + " : ");
+        }
+
+        textViewInterlocuteur.setText(interlocuteur.getPrenom() + " " + interlocuteur.getNom());
+        textViewMessage.setText(dernierMessage.getTexte());
+
+
+        textViewHeureMessage.setText(dernierMessage.getCreatedAtFormatted());
 
         return convertView;
     }

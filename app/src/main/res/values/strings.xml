@@ -28,6 +28,7 @@
     <string name="connexionButtonLabel">Se connecter</string>
     <string name="forgotPasswordLink"><a href="http://10.0.2.2:8000/forgot-password">Mot de passe oublié?</a></string>
     <string name="userHasNoAccess">Vous n\u2019avez pas accès à l\u2019application. Seuls les utilisateurs et les employés ayant un accès utilisateur peuvent utiliser l\u2019application</string>
+    <string name="erreurChargementUser">Erreur lors du chargement de l\u2019utilisateur.</string>
 
     <!-- Détails de profil -->
     <string name="detailsProfileTitle">Mon profil</string>
@@ -111,4 +112,8 @@
     <string name="statut_par_defaut">statut par défaut</string>
     <string name="montant_demande_pret">Montant: %s $</string>
     <string name="duree_demande_pret">Durée : %s mois</string>
+
+    <!-- Messagerie -->
+    <string name="titreConversations">Vos conversations</string>
+    <string name="vous">Vous</string>
 </resources>

@@ -1,5 +1,6 @@
 package com.example.projetintgrateur_utopiamobile;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -355,5 +356,29 @@ public class SQLiteManager extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
+    }
+
+    public boolean loadUserIntoDatabase(User user) {
+        if (user != null) {
+            SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+
+            ContentValues contentValues = new ContentValues();
+
+            contentValues.put("id", user.getId());
+            contentValues.put("nom", user.getNom());
+            contentValues.put("prenom", user.getPrenom());
+            contentValues.put("telephone", user.getTelephone());
+            contentValues.put("no_civique", user.getNoCivique());
+            contentValues.put("no_porte", user.getNoPorte());
+            contentValues.put("rue", user.getRue());
+            contentValues.put("id_ville", user.getIdVille());
+            contentValues.put("code_postal", user.getCodePostal());
+            contentValues.put("email", user.getEmail());
+
+            sqLiteDatabase.insert("users", null, contentValues);
+
+            return true;
+        }
+        return false;
     }
 }

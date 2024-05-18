@@ -2,20 +2,47 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:padding="25dp">
 
     <TextView
-        android:id="@+id/textViewIdConversation"
-        android:layout_width="wrap_content"
+        android:id="@+id/textViewInterlocuteur"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="TextView" />
+        style="@style/sousTitre"/>
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_weight="1"
-        android:text="Test" />
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textViewMessager"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:maxLines="1"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/textViewMessage"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:maxLines="1"
+            android:ellipsize="end"/>
+
+        <TextView
+            android:id="@+id/textViewHeureMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:maxLines="1"
+            android:gravity="right"
+            android:textAlignment="gravity"
+            android:textStyle="bold"/>
+    </LinearLayout>
+
 </LinearLayout>

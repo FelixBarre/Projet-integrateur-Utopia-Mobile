@@ -7,17 +7,17 @@
     android:layout_height="match_parent"
     tools:context=".changementMotDePasse">
 
+    <com.example.projetintgrateur_utopiamobile.HeaderView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center">
-
-        <include
-            android:id="@+id/header"
-            layout="@layout/header_layout"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/modifierMotDePasseTitle"
@@ -61,11 +61,12 @@
             android:layout_marginTop="25dp"
             android:text="@string/soumettre"
             style="@style/customButton" />
-
-        <include
-            layout="@layout/footer_layout"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
     </LinearLayout>
+
+    <com.example.projetintgrateur_utopiamobile.FooterView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

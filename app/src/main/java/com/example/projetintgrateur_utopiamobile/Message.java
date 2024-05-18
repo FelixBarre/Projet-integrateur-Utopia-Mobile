@@ -1,22 +1,42 @@
 package com.example.projetintgrateur_utopiamobile;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class Message {
-    public static ArrayList<Message> messageArrayList = new ArrayList<>();
     private int id;
     private String created_at;
     private String updated_at;
     private String texte;
     private String chemin_du_fichier;
     private String date_heure_supprime;
-    private int id_envoyeur;
-    private int id_receveur;
+    private User envoyeur;
+    private User receveur;
     private int id_conversation;
-    public Message(JSONObject message) {
-
+    public Message(JSONObject messageJSON) {
+        try {
+            this.setId(messageJSON.getInt("id"));
+            this.setCreatedAt(messageJSON.getString("created_at"));
+            this.setUpdatedAt(messageJSON.getString("updated_at"));
+            this.setTexte(messageJSON.getString("texte"));
+            this.setCheminDuFichier(messageJSON.getString("chemin_du_fichier"));
+            this.setDateHeureSupprime(messageJSON.getString("date_heure_supprime"));
+            this.setEnvoyeur(new User(messageJSON.getJSONObject("envoyeur")));
+            this.setReceveur(new User(messageJSON.getJSONObject("receveur")));
+            this.setIdConversation(messageJSON.getInt("id_conversation"));
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     public void setId(int id) {
@@ -33,6 +53,24 @@ public class Message {
 
     public String getCreatedAt() {
         return created_at;
+    }
+
+    public String getCreatedAtFormatted() {
+        try {
+            DateFormat createdAtFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX", Locale.CANADA_FRENCH);
+            Date dateCreatedAt = createdAtFormat.parse(created_at);
+
+            //Si le message est dans les derniers 24 heures
+            if (dateCreatedAt.getTime() > System.currentTimeMillis() - 24 * 60 * 60 * 1000) {
+                SimpleDateFormat heuresMinutes = new SimpleDateFormat("HH:mm");
+                return heuresMinutes.format(dateCreatedAt);
+            }
+
+            return dateCreatedAt.toString();
+        }
+        catch (Exception e) {
+            return this.getCreatedAt();
+        }
     }
 
     public void setUpdatedAt(String updated_at) {
@@ -67,20 +105,20 @@ public class Message {
         return date_heure_supprime;
     }
 
-    public void setIdEnvoyeur(int id_envoyeur) {
-        this.id_envoyeur = id_envoyeur;
+    public void setEnvoyeur(User envoyeur) {
+        this.envoyeur = envoyeur;
     }
 
-    public int getIdEnvoyeur() {
-        return id_envoyeur;
+    public User getEnvoyeur() {
+        return envoyeur;
     }
 
-    public void setIdReceveur(int id_receveur) {
-        this.id_receveur = id_receveur;
+    public void setReceveur(User receveur) {
+        this.receveur = receveur;
     }
 
-    public int getIdReceveur() {
-        return id_receveur;
+    public User getReceveur() {
+        return receveur;
     }
 
     public void setIdConversation(int id_conversation) {
