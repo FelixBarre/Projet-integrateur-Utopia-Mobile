@@ -6,6 +6,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 
 public class UserManager {
+    private static User authUser;
     public boolean checkUserIsUser(String email) {
         try {
             HttpClient httpClient = HttpClient.instanceOfClient();
@@ -52,5 +53,13 @@ public class UserManager {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static void setAuthUser(User user) {
+        authUser = user;
+    }
+
+    public User getAuthUser() {
+        return authUser;
     }
 }

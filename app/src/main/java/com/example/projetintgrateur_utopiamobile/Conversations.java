@@ -19,6 +19,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.List;
 
 public class Conversations extends AppCompatActivity {
     private ListView conversationsListView;
@@ -55,29 +56,33 @@ public class Conversations extends AppCompatActivity {
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (requestCode == RequestCodes.CONVERSATIONS_REQUEST_CODE) {
-            if (resultCode == Activity.RESULT_OK) {
-                String responseGET = data.getStringExtra("response");
+        switch (requestCode) {
+            case RequestCodes.CONVERSATIONS_REQUEST_CODE:
+                if (resultCode == Activity.RESULT_OK) {
+                    String responseGET = data.getStringExtra("response");
 
-                try {
-                    JSONObject reponse = new JSONObject(responseGET);
+                    try {
+                        JSONObject reponse = new JSONObject(responseGET);
 
-                    if (reponse.has("data")) {
-                        JSONArray conversationsJSON = reponse.getJSONArray("data");
-                        Conversation.conversationArrayList.clear();
-                        conversationAdapter.clear();
-                        conversationAdapter.setNotifyOnChange(false);
-                        for (int i = 0; i < conversationsJSON.length(); i++) {
-                            Conversation.conversationArrayList.add(new Conversation(conversationsJSON.getJSONObject(i)));
+                        if (reponse.has("data")) {
+                            JSONArray conversationsJSON = reponse.getJSONArray("data");
+                            Conversation.conversationArrayList.clear();
+                            conversationAdapter.clear();
+                            conversationAdapter.setNotifyOnChange(false);
+                            for (int i = 0; i < conversationsJSON.length(); i++) {
+                                Conversation.conversationArrayList.add(new Conversation(conversationsJSON.getJSONObject(i)));
+                            }
+                            conversationAdapter.setNotifyOnChange(true);
+                            conversationAdapter.notifyDataSetChanged();
+                            setConversationAdapter();
                         }
-                        conversationAdapter.setNotifyOnChange(true);
-                        conversationAdapter.notifyDataSetChanged();
+                    }
+                    catch (Exception e) {
+                        e.printStackTrace();
                     }
                 }
-                catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
+
+                break;
         }
     }
 }

@@ -79,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
                                     SQLiteManager sqLiteManager = SQLiteManager.instanceOfDatabase(MainActivity.this);
 
                                     User user = userManager.getUser(inputCourriel.getText().toString());
+                                    UserManager.setAuthUser(user);
 
                                     if (sqLiteManager.loadUserIntoDatabase(user)) {
                                         Intent intent = new Intent(MainActivity.this, accueil.class);

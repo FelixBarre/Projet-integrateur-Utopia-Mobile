@@ -1,22 +1,35 @@
 package com.example.projetintgrateur_utopiamobile;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 public class Message {
-    public static ArrayList<Message> messageArrayList = new ArrayList<>();
     private int id;
     private String created_at;
     private String updated_at;
     private String texte;
     private String chemin_du_fichier;
     private String date_heure_supprime;
-    private int id_envoyeur;
-    private int id_receveur;
+    private User envoyeur;
+    private User receveur;
     private int id_conversation;
-    public Message(JSONObject message) {
-
+    public Message(JSONObject messageJSON) {
+        try {
+            this.setId(messageJSON.getInt("id"));
+            this.setCreatedAt(messageJSON.getString("created_at"));
+            this.setUpdatedAt(messageJSON.getString("updated_at"));
+            this.setTexte(messageJSON.getString("texte"));
+            this.setCheminDuFichier(messageJSON.getString("chemin_du_fichier"));
+            this.setDateHeureSupprime(messageJSON.getString("date_heure_supprime"));
+            this.setEnvoyeur(new User(messageJSON.getJSONObject("envoyeur")));
+            this.setReceveur(new User(messageJSON.getJSONObject("receveur")));
+            this.setIdConversation(messageJSON.getInt("id_conversation"));
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     public void setId(int id) {
@@ -67,20 +80,20 @@ public class Message {
         return date_heure_supprime;
     }
 
-    public void setIdEnvoyeur(int id_envoyeur) {
-        this.id_envoyeur = id_envoyeur;
+    public void setEnvoyeur(User envoyeur) {
+        this.envoyeur = envoyeur;
     }
 
-    public int getIdEnvoyeur() {
-        return id_envoyeur;
+    public User getEnvoyeur() {
+        return envoyeur;
     }
 
-    public void setIdReceveur(int id_receveur) {
-        this.id_receveur = id_receveur;
+    public void setReceveur(User receveur) {
+        this.receveur = receveur;
     }
 
-    public int getIdReceveur() {
-        return id_receveur;
+    public User getReceveur() {
+        return receveur;
     }
 
     public void setIdConversation(int id_conversation) {
