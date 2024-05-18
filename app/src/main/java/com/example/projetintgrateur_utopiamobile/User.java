@@ -1,6 +1,10 @@
 package com.example.projetintgrateur_utopiamobile;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class User {
+    public int id;
     public String nom;
     public String prenom;
     public String telephone;
@@ -21,6 +25,32 @@ public class User {
         this.idVille = idVille;
         this.codePostal = codePostal;
         this.email = email;
+    }
+
+    public User (JSONObject userJSON) {
+        try {
+            this.setId(userJSON.getInt("id"));
+            this.setNom(userJSON.getString("nom"));
+            this.setPrenom(userJSON.getString("prenom"));
+            this.setTelephone(userJSON.getString("telephone"));
+            this.setNoCivique(userJSON.getString("no_civique"));
+            this.setNoPorte(userJSON.getString("no_porte"));
+            this.setRue(userJSON.getString("rue"));
+            this.setIdVille(userJSON.getInt("id_ville"));
+            this.setCodePostal(userJSON.getString("code_postal"));
+            this.setEmail(userJSON.getString("email"));
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNom() {
