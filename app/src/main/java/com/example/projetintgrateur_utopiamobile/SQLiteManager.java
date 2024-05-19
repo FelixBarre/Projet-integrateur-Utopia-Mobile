@@ -2,8 +2,16 @@ package com.example.projetintgrateur_utopiamobile;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SQLiteManager extends SQLiteOpenHelper {
     private static SQLiteManager sqLiteManager;
@@ -340,17 +348,6 @@ public class SQLiteManager extends SQLiteOpenHelper {
                 .append(" TINYINT)");
 
         db.execSQL(sql.toString());
-
-        sql = new StringBuilder()
-                .append("CREATE TABLE ")
-                .append(VILLES_TABLE_NAME)
-                .append("(")
-                .append(ID_FIELD)
-                .append(" INTEGER PRIMARY KEY, ")
-                .append(NOM_FIELD)
-                .append(" TEXT)");
-
-        db.execSQL(sql.toString());
     }
 
     @Override
@@ -380,5 +377,18 @@ public class SQLiteManager extends SQLiteOpenHelper {
             return true;
         }
         return false;
+    }
+
+    public List<String> getVilles() {
+        List<String> villes = new ArrayList<>();
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT nom FROM villes", null);
+        if (cursor.moveToFirst()) {
+            do {
+                villes.add(cursor.getString(0));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return villes;
     }
 }
