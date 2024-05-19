@@ -37,6 +37,8 @@
     <string name="modificationProfileTitle">Modifier mon profil</string>
     <string name="modificationMotDePasseLabel">Changer mon mot de passe</string>
     <string name="confirmationEtMotDePasse">Confirmation et mot de passe</string>
+    <string name="selectionVille">Sélection de la ville</string>
+    <string name="rechercheVille">Rechercher la ville...</string>
 
     <!-- Mot de passe -->
     <string name="modificationMDPTitle">Changement de mot de passe</string>
