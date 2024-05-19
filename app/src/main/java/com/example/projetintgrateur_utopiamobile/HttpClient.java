@@ -158,4 +158,19 @@ public class HttpClient {
 
         return response;
     }
+
+    public String put(String route, String body) throws IOException {
+        if (!this.validateToken()) {
+            return "";
+        }
+
+        this.openConnection(route, Methods.PUT);
+        this.ajouterBodyJSON(body);
+
+        String response = this.getResponse();
+
+        this.closeConnection();
+
+        return response;
+    }
 }

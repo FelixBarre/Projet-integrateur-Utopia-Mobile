@@ -9,7 +9,6 @@
 
         <com.example.projetintgrateur_utopiamobile.HeaderView
             android:id="@+id/header"
-            layout="@layout/header_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
@@ -51,7 +50,6 @@
 
         <com.example.projetintgrateur_utopiamobile.FooterView
             android:id="@+id/footer"
-            layout="@layout/footer_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
