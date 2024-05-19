@@ -43,6 +43,7 @@
     <string name="ancienMDP">Ancien mot de passe</string>
     <string name="nouveauMDP">Nouveau mot de passe</string>
     <string name="confirmationMDP">Confirmation du mot de passe</string>
+    <string name="SuccèsConfirmationMDP">Mot de passe changé avec succès</string>
 
     <!-- Comptes bancaires -->
     <string name="comptesTitle">Mes comptes</string>
