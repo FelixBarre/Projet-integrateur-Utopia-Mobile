@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,6 +34,38 @@ public class modifierProfil extends AppCompatActivity implements View.OnClickLis
         btnConfirmation.setOnClickListener(this);
         btnAnnulation.setOnClickListener(this);
         btnMDP.setOnClickListener(this);
+
+        UserManager userManager = new UserManager();
+        User userAuth = userManager.getAuthUser();
+
+        TextView output = (TextView) findViewById(R.id.prenomOutput);
+        output.setText(userAuth.getPrenom());
+        output = (TextView) findViewById(R.id.nomOutput);
+        output.setText(userAuth.getNom());
+
+        EditText input = (EditText) findViewById(R.id.courrielInput);
+        input.setText(userAuth.getEmail());
+
+        input = (EditText) findViewById(R.id.telephoneInput);
+        input.setText(userAuth.getTelephone());
+
+        input = (EditText) findViewById(R.id.noPorteInput);
+        if (userAuth.getNoPorte() != "null") {
+            input.setText(userAuth.getNoPorte());
+        } else {
+            input.setText("");
+        }
+
+        input = (EditText) findViewById(R.id.noCiviqueInput);
+        input.setText(userAuth.getNoCivique());
+
+        input = (EditText) findViewById(R.id.rueInput);
+        input.setText(userAuth.getRue());
+
+        //TODO: add spinner ville
+
+        input = (EditText) findViewById(R.id.codePostalInput);
+        input.setText(userAuth.getCodePostal());
     }
 
     @Override
@@ -40,7 +75,8 @@ public class modifierProfil extends AppCompatActivity implements View.OnClickLis
         } else if (v.getId() == R.id.annulerButton) {
             finish();
         } else if (v.getId() == R.id.changeMotDePasseButton){
-            //Fonctionnalité de priorité 2 à implémenter ici: Popup pour confirmer le changement d'activité. (Sauvegarder les changements avant de changer de fenêtre)
+            //TODO: Fonctionnalité de priorité 2 à implémenter ici: Popup pour confirmer le changement d'activité. (Sauvegarder les changements avant de changer de fenêtre)
+            finish();
             Intent intent = new Intent(modifierProfil.this, changementMotDePasse.class);
             startActivity(intent);
         }
