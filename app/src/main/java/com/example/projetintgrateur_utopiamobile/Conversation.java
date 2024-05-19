@@ -5,6 +5,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 public class Conversation {
@@ -52,5 +55,11 @@ public class Conversation {
 
     public ArrayList<Message> getMessages() {
         return messages;
+    }
+
+    public Message getDernierMessage() {
+        Collections.sort(messages, Comparator.comparingLong(Message::getId));
+
+        return messages.get(messages.size() - 1);
     }
 }
