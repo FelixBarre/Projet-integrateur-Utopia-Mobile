@@ -19,6 +19,9 @@
             android:name=".PlusActivity"
             android:exported="false" />
         <activity
+            android:name=".ConversationActivity"
+            android:exported="false" />
+        <activity
             android:name=".LoadingHttp"
             android:exported="false" />
         <activity
