@@ -94,7 +94,7 @@
     <string name="etatTransaction">Status : En cours </string>
     <string name="titleMontantTransaction">Montant : </string>
     <string name="montantTransaction">Montant : 800 $</string>
-    <string name="destinationTransaction">Vers : Bob</string>
+    <string name="destinationTransaction">Vers : </string>
     <string name="checkVerificationTransaction">Les informations sont exactes </string>
     <string name="valideTransaction">Terminer </string>
     <string name="stopTransaction">Annuler </string>
