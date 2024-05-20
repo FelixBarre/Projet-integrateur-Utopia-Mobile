@@ -379,16 +379,24 @@ public class SQLiteManager extends SQLiteOpenHelper {
         return false;
     }
 
-    public List<String> getVilles() {
-        List<String> villes = new ArrayList<>();
-        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-        Cursor cursor = sqLiteDatabase.rawQuery("SELECT nom FROM villes", null);
-        if (cursor.moveToFirst()) {
-            do {
-                villes.add(cursor.getString(0));
-            } while (cursor.moveToNext());
+    public void updateUserDB(User userUpdated) {
+        if (userUpdated != null) {
+            SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+
+            ContentValues contentValues = new ContentValues();
+
+            contentValues.put("nom", userUpdated.getNom());
+            contentValues.put("prenom", userUpdated.getPrenom());
+            contentValues.put("telephone", userUpdated.getTelephone());
+            contentValues.put("no_civique", userUpdated.getNoCivique());
+            contentValues.put("no_porte", userUpdated.getNoPorte());
+            contentValues.put("rue", userUpdated.getRue());
+            contentValues.put("id_ville", userUpdated.getIdVille());
+            contentValues.put("code_postal", userUpdated.getCodePostal());
+            contentValues.put("email", userUpdated.getEmail());
+
+            sqLiteDatabase.update("users", contentValues, "id = ?", new String[]{String.valueOf(UserManager.getAuthUser().getId())});
         }
-        cursor.close();
-        return villes;
     }
+
 }

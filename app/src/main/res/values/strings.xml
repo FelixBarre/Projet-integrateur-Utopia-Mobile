@@ -39,13 +39,14 @@
     <string name="confirmationEtMotDePasse">Confirmation et mot de passe</string>
     <string name="selectionVille">Sélection de la ville</string>
     <string name="rechercheVille">Rechercher la ville...</string>
+    <string name="succesConfirmationEditProfil">Profil changé avec succès</string>
 
     <!-- Mot de passe -->
     <string name="modificationMDPTitle">Changement de mot de passe</string>
     <string name="ancienMDP">Ancien mot de passe</string>
     <string name="nouveauMDP">Nouveau mot de passe</string>
     <string name="confirmationMDP">Confirmation du mot de passe</string>
-    <string name="SuccèsConfirmationMDP">Mot de passe changé avec succès</string>
+    <string name="succèsConfirmationMDP">Mot de passe changé avec succès</string>
 
     <!-- Comptes bancaires -->
     <string name="comptesTitle">Mes comptes</string>

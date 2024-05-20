@@ -1,5 +1,6 @@
 package com.example.projetintgrateur_utopiamobile;
 
+import android.app.ActionBar;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -12,7 +13,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -23,6 +26,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -31,9 +35,17 @@ import java.util.ArrayList;
  */
 
 public class modifierProfil extends AppCompatActivity implements View.OnClickListener{
-    TextView inputVille;
+    TextView errorsOuput;
     Dialog searchVilleWindow;
     ArrayList<String> villesNom;
+    ArrayList<String> villesId;
+    TextView inputVille;
+    EditText inputEmail;
+    EditText inputTelephone;
+    EditText inputNoPorte;
+    EditText inputNoCivique;
+    EditText inputRue;
+    EditText inputCodePostal;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +60,7 @@ public class modifierProfil extends AppCompatActivity implements View.OnClickLis
         inputVille = (TextView) findViewById(R.id.inputVille);
         searchVilleWindow = new Dialog(modifierProfil.this);
         villesNom = new ArrayList<>();
+        villesId = new ArrayList<>();
 
         Button btnConfirmation = (Button) findViewById(R.id.confirmerButton);
         Button btnAnnulation = (Button) findViewById(R.id.annulerButton);
@@ -60,29 +73,32 @@ public class modifierProfil extends AppCompatActivity implements View.OnClickLis
         UserManager userManager = new UserManager();
         User userAuth = userManager.getAuthUser();
 
+        errorsOuput = findViewById(R.id.erreursOutput);
+        errorsOuput.setText("");
+
         TextView output = findViewById(R.id.prenomOutput);
         output.setText(userAuth.getPrenom());
         output = findViewById(R.id.nomOutput);
         output.setText(userAuth.getNom());
 
-        EditText input = findViewById(R.id.courrielInput);
-        input.setText(userAuth.getEmail());
+        inputEmail = findViewById(R.id.courrielInput);
+        inputEmail.setText(userAuth.getEmail());
 
-        input = findViewById(R.id.telephoneInput);
-        input.setText(userAuth.getTelephone());
+        inputTelephone = findViewById(R.id.telephoneInput);
+        inputTelephone.setText(userAuth.getTelephone());
 
-        input = findViewById(R.id.noPorteInput);
+        inputNoPorte = findViewById(R.id.noPorteInput);
         if (userAuth.getNoPorte() != "null") {
-            input.setText(userAuth.getNoPorte());
+            inputNoPorte.setText(userAuth.getNoPorte());
         } else {
-            input.setText("");
+            inputNoPorte.setText("");
         }
 
-        input = findViewById(R.id.noCiviqueInput);
-        input.setText(userAuth.getNoCivique());
+        inputNoCivique = findViewById(R.id.noCiviqueInput);
+        inputNoCivique.setText(userAuth.getNoCivique());
 
-        input = findViewById(R.id.rueInput);
-        input.setText(userAuth.getRue());
+        inputRue = findViewById(R.id.rueInput);
+        inputRue.setText(userAuth.getRue());
 
         new Thread(new Runnable() {
             @Override
@@ -95,9 +111,11 @@ public class modifierProfil extends AppCompatActivity implements View.OnClickLis
                     JSONArray data = new JSONArray(response.get("data").toString());
                     for (int i = 0; i < data.length(); i++) {
                         JSONObject dataSpecific = new JSONObject(data.get(i).toString());
+                        villesId.add(dataSpecific.get("id").toString());
                         villesNom.add(dataSpecific.get("nom").toString());
                         if (dataSpecific.get("id").equals(userAuth.getIdVille())) {
                             inputVille.setText(dataSpecific.get("nom").toString());
+                            inputVille.setTag(dataSpecific.get("id").toString());
                         }
                     }
                 } catch (Exception e) {
@@ -108,14 +126,76 @@ public class modifierProfil extends AppCompatActivity implements View.OnClickLis
 
         inputVille.setOnClickListener(this);
 
-        input = findViewById(R.id.codePostalInput);
-        input.setText(userAuth.getCodePostal());
+        inputCodePostal = findViewById(R.id.codePostalInput);
+        inputCodePostal.setText(userAuth.getCodePostal());
     }
 
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.confirmerButton) {
-            //Modifier profil
+            SQLiteManager sqLiteManager = SQLiteManager.instanceOfDatabase(modifierProfil.this);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        errorsOuput.setText("");
+
+                        HttpClient httpClient = HttpClient.instanceOfClient();
+
+                        String bodyRequest = "{ ";
+                        bodyRequest += "\"id\" : " + String.valueOf(UserManager.getAuthUser().getId()) + ",";
+                        bodyRequest += "\"prenom\" : \"" + UserManager.getAuthUser().getPrenom() + "\",";
+                        bodyRequest += "\"nom\" : \"" + UserManager.getAuthUser().getNom() + "\",";
+                        bodyRequest += "\"courriel\" : \"" + inputEmail.getText().toString() + "\",";
+                        bodyRequest += "\"telephone\" : \"" + inputTelephone.getText().toString() + "\",";
+                        bodyRequest += "\"appt\" : \"" + inputNoPorte.getText().toString() + "\",";
+                        bodyRequest += "\"noCivique\" : \"" + inputNoCivique.getText().toString() + "\",";
+                        bodyRequest += "\"rue\" : \"" + inputRue.getText().toString() + "\",";
+                        bodyRequest += "\"id_ville\" : \"" + (String) inputVille.getTag().toString() + "\",";
+                        bodyRequest += "\"codePostal\" : \"" + inputCodePostal.getText().toString() + "\"";
+                        bodyRequest += "}";
+
+                        String responsePUT = httpClient.put("modification/profileApi", bodyRequest);
+                        JSONObject response = new JSONObject(responsePUT);
+                        JSONObject erreur = null;
+
+                        if (response.has("ERREUR")) {
+                            if (response.get("ERREUR").getClass() == JSONObject.class) {
+                                erreur = new JSONObject(response.get("ERREUR").toString());
+                                for (int i = 0; i < erreur.length(); i++) {
+                                    String erreurString = erreur.getString(erreur.names().get(i).toString());
+                                    String correctedErreurString = erreurString.replaceAll("[]\"\\[]", "") + "\n";
+                                    errorsOuput.append(correctedErreurString);
+                                }
+                            } else {
+                                errorsOuput.setText(response.get("ERREUR").toString());
+                            }
+                        } else if (response.has("SUCCÈS")) {
+                            UserManager.getAuthUser().setEmail(inputEmail.getText().toString());
+                            UserManager.getAuthUser().setTelephone(inputTelephone.getText().toString());
+                            if (inputNoPorte.getText().toString().isEmpty()) {
+                                UserManager.getAuthUser().setNoPorte(null);
+                            } else {
+                                UserManager.getAuthUser().setNoPorte(inputNoPorte.getText().toString());
+                            }
+                            UserManager.getAuthUser().setNoCivique(inputNoCivique.getText().toString());
+                            UserManager.getAuthUser().setRue(inputRue.getText().toString());
+                            UserManager.getAuthUser().setIdVille(Integer.parseInt(inputVille.getTag().toString()));
+                            UserManager.getAuthUser().setCodePostal(inputCodePostal.getText().toString());
+
+                            sqLiteManager.updateUserDB(UserManager.getAuthUser());
+
+                            finish();
+                            Intent intent = new Intent(modifierProfil.this, detailsProfil.class);
+                            intent.putExtra("status", "profile-updated");
+                            startActivity(intent);
+                        }
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
         } else if (v.getId() == R.id.annulerButton) {
             finish();
         } else if (v.getId() == R.id.changeMotDePasseButton){
@@ -156,6 +236,7 @@ public class modifierProfil extends AppCompatActivity implements View.OnClickLis
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     inputVille.setText(adapter.getItem(position));
+                    inputVille.setTag(villesId.get(position));
 
                     searchVilleWindow.dismiss();
                 }
