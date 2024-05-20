@@ -57,8 +57,6 @@ public class FormCompteActivity extends AppCompatActivity {
                         finish();
                     }
                 }).start();
-
-
             }
         });
     }

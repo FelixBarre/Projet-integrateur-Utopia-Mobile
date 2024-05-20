@@ -76,6 +76,7 @@ public class ComptesBancairesActivity extends AppCompatActivity {
                             for (int j = 0; j < comptes.size(); j++) {
                                 if (comptes.get(j).equals(compte)) {
                                     isIn = true;
+                                    comptes.set(j, compte);
                                 }
                             }
                             if (isIn == false) {
