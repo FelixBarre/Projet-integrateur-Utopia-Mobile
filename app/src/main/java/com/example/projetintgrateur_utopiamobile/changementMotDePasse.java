@@ -59,7 +59,7 @@ public class changementMotDePasse extends AppCompatActivity {
                                 }
                             } else if (response.has("SUCCÈS")) {
                                 outputError.setTextColor(getColor(R.color.green));
-                                outputError.setText(getString(R.string.SuccèsConfirmationMDP));
+                                outputError.setText(getString(R.string.succèsConfirmationMDP));
                             }
                         } catch (Exception e) {
                             e.printStackTrace();

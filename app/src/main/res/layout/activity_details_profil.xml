@@ -47,12 +47,21 @@
                 android:layout_marginRight="20dp"/>
         </RelativeLayout>
 
+        <TextView
+            android:id="@+id/statusLabel"
+            android:layout_width="250dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:text=""
+            style="@style/sousTitre" />
+
         <LinearLayout
             android:layout_height="wrap_content"
             android:orientation="vertical"
             style="@style/contentBlock"
             android:layout_gravity="center"
-            android:layout_marginTop="100dp">
+            android:layout_marginTop="40dp">
 
             <TextView
                 android:id="@+id/nomLabel"

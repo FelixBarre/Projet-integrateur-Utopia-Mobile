@@ -35,6 +35,17 @@ public class detailsProfil extends AppCompatActivity {
         UserManager userManager = new UserManager();
         User userAuth = userManager.getAuthUser();
 
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            if (!extras.getString("status").isEmpty()) {
+                if (extras.getString("status").toString().equals("profile-updated")) {
+                    TextView status = (TextView) findViewById(R.id.statusLabel);
+                    status.setTextColor(getColor(R.color.green));
+                    status.setText(getString(R.string.succesConfirmationEditProfil));
+                }
+            }
+        }
+
         TextView output = (TextView) findViewById(R.id.prenomOutput);
         output.setText(userAuth.getPrenom());
 
