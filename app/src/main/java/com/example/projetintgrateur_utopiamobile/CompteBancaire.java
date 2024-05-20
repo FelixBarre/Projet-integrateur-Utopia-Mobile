@@ -67,4 +67,16 @@ public class CompteBancaire {
     public void setEst_valide(boolean est_valide) {
         this.est_valide = est_valide;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        CompteBancaire compte = (CompteBancaire) o;
+        return id_compte == compte.id_compte;
+    }
 }
