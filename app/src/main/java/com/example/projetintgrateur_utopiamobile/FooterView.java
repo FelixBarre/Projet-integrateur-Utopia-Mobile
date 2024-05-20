@@ -34,7 +34,8 @@ public class FooterView extends RelativeLayout implements View.OnClickListener {
             getContext().startActivity(intent);
         }
         else if (v.getId() == R.id.actionButton) {
-
+            Intent intent = new Intent(getContext(), transaction.class);
+            getContext().startActivity(intent);
         }
         else if (v.getId() == R.id.messageButton) {
             Intent intent = new Intent(getContext(), Conversations.class);

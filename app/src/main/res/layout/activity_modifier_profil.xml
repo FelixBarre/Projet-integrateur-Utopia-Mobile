@@ -8,6 +8,7 @@
     tools:context=".modifierProfil">
 
     <LinearLayout
+        android:id="@+id/linearLayoutEdit"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -28,7 +29,7 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="520dp"
-            android:layout_marginTop="30dp">
+            android:layout_marginTop="5dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -49,6 +50,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="10dp"
+                        android:textSize="25sp"
                         android:text="@string/undefinedLabel" />
 
                     <TextView
@@ -56,15 +58,25 @@
                         style="@style/sousTitre"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textSize="25sp"
                         android:text="@string/undefinedLabel" />
                 </LinearLayout>
+
+                <TextView
+                    android:id="@+id/erreursOutput"
+                    android:layout_width="250dp"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_gravity="center"
+                    android:textColor="@color/red"
+                    android:textStyle="bold"
+                    android:text="" />
 
                 <TextView
                     android:id="@+id/contactLabel"
                     style="@style/sousTitre"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:layout_gravity="center"
                     android:text="@string/contactLabel" />
@@ -132,12 +144,14 @@
                     android:hint="@string/rueLabel"
                     android:inputType="textEmailAddress" />
 
-                <Spinner
-                    android:id="@+id/villeInput"
-                    style="@style/input"
+                <TextView
+                    android:id="@+id/inputVille"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="15dp" />
+                    android:layout_marginTop="15dp"
+                    style="@style/input"
+                    android:textSize="20sp"
+                    app:drawableEndCompat="@drawable/baseline_arrow_drop_down_24" />
 
                 <EditText
                     android:id="@+id/codePostalInput"

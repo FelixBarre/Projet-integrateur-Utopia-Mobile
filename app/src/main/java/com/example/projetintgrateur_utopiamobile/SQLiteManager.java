@@ -2,8 +2,16 @@ package com.example.projetintgrateur_utopiamobile;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SQLiteManager extends SQLiteOpenHelper {
     private static SQLiteManager sqLiteManager;
@@ -340,17 +348,6 @@ public class SQLiteManager extends SQLiteOpenHelper {
                 .append(" TINYINT)");
 
         db.execSQL(sql.toString());
-
-        sql = new StringBuilder()
-                .append("CREATE TABLE ")
-                .append(VILLES_TABLE_NAME)
-                .append("(")
-                .append(ID_FIELD)
-                .append(" INTEGER PRIMARY KEY, ")
-                .append(NOM_FIELD)
-                .append(" TEXT)");
-
-        db.execSQL(sql.toString());
     }
 
     @Override
@@ -381,4 +378,25 @@ public class SQLiteManager extends SQLiteOpenHelper {
         }
         return false;
     }
+
+    public void updateUserDB(User userUpdated) {
+        if (userUpdated != null) {
+            SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+
+            ContentValues contentValues = new ContentValues();
+
+            contentValues.put("nom", userUpdated.getNom());
+            contentValues.put("prenom", userUpdated.getPrenom());
+            contentValues.put("telephone", userUpdated.getTelephone());
+            contentValues.put("no_civique", userUpdated.getNoCivique());
+            contentValues.put("no_porte", userUpdated.getNoPorte());
+            contentValues.put("rue", userUpdated.getRue());
+            contentValues.put("id_ville", userUpdated.getIdVille());
+            contentValues.put("code_postal", userUpdated.getCodePostal());
+            contentValues.put("email", userUpdated.getEmail());
+
+            sqLiteDatabase.update("users", contentValues, "id = ?", new String[]{String.valueOf(UserManager.getAuthUser().getId())});
+        }
+    }
+
 }
