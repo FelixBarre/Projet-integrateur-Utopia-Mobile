@@ -48,4 +48,12 @@
         <item name="android:layout_width">300dp</item>
         <item name="android:padding">10dp</item>
     </style>
+
+    <style name="messageEnvoyeur">
+        <item name="android:background">@color/utopia_turquoise</item>
+    </style>
+
+    <style name="messageReceveur">
+        <item name="android:background">@color/utopia_turquoise_fonce</item>
+    </style>
 </resources>

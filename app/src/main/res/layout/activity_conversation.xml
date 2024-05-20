@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Conversations">
+    tools:context=".ConversationActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,19 +20,17 @@
         </com.example.projetintgrateur_utopiamobile.HeaderView>
 
         <TextView
-            android:id="@+id/titreConversations"
+            android:id="@+id/titreConversation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/titreActivity"
-            android:text="@string/titreConversations"/>
+            style="@style/titreActivity" />
 
         <ListView
-            android:id="@+id/conversationsListView"
+            android:id="@+id/messagesListView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="3dp">
-
-        </ListView>
+            android:divider="@null"
+            android:layout_marginTop="3dp" />
 
     </LinearLayout>
 
