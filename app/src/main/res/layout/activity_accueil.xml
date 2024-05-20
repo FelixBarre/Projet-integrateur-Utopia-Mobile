@@ -102,7 +102,7 @@
 
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/buttonCompte"
             android:layout_width="150sp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
