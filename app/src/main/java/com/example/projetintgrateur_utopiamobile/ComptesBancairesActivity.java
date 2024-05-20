@@ -46,6 +46,7 @@ public class ComptesBancairesActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(ComptesBancairesActivity.this, FormCompteActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
 
