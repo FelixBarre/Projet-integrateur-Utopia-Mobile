@@ -33,87 +33,22 @@
             android:layout_marginTop="15dp"
             android:gravity="center"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#F5F5DC"
-            android:orientation="horizontal"
-            android:padding="10sp">
-
-
-            <TextView
-                android:id="@+id/dateTransaction"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/dateTransaction"
-                android:textSize="15sp" />
-
-            <TextView
-                android:id="@+id/etatTransaction"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="right"
-                android:text="@string/etatTransaction"
-                android:textSize="15sp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#F5F5DC"
-            android:orientation="horizontal"
-            android:padding="10sp">
-
-
-            <TextView
-                android:id="@+id/montantTransaction"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/montantTransaction"
-                android:textSize="15sp" />
-
-            <TextView
-                android:id="@+id/destinataireTransaction"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="right"
-                android:text="@string/destinationTransaction"
-                android:textSize="15sp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#F5F5DC"
-            android:orientation="horizontal"
-            android:padding="10sp">
-
-
-            <TextView
-                android:id="@+id/typeTransaction"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/typeTransaction"
-                android:textSize="15sp" />
-
-
-        </LinearLayout>
-
-
-    <include
-        layout="@layout/footer_layout"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewTransaction"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="150dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
 
 
     </LinearLayout>
+
+    <com.example.projetintgrateur_utopiamobile.FooterView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
