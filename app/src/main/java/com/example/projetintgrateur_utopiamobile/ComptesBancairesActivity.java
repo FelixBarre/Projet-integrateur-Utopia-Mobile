@@ -25,6 +25,7 @@ import java.util.ArrayList;
 public class ComptesBancairesActivity extends AppCompatActivity {
 
     public static ArrayList<CompteBancaire> comptes = new ArrayList<>();
+    public boolean isIn = false;
     RecyclerView recyclerViewCompte;
 
     @Override
@@ -45,7 +46,6 @@ public class ComptesBancairesActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(ComptesBancairesActivity.this, FormCompteActivity.class);
                 startActivity(intent);
-                finish();
             }
         });
 
@@ -59,19 +59,27 @@ public class ComptesBancairesActivity extends AppCompatActivity {
                     JSONArray arrayJson = Json.getJSONArray("data");
 
                     for (int i = 0; i < arrayJson.length(); i++) {
-                        JSONObject objJson = arrayJson.getJSONObject(i);
-                        CompteBancaire compte = new CompteBancaire();
-                        compte.setId_compte(objJson.getInt("id"));
-                        compte.setNom(objJson.getString("nom"));
-                        compte.setSolde(objJson.getDouble("solde"));
-                        compte.setTaux_interet(objJson.getDouble("taux_interet"));
-                        compte.setId_user(objJson.getInt("id_user"));
-                        if (objJson.getInt("est_valide") == 1) {
-                            compte.setEst_valide(true);
-                        } else {
-                            compte.setEst_valide(false);
-                        }
-                        comptes.add(compte);
+                            isIn = false;
+                            JSONObject objJson = arrayJson.getJSONObject(i);
+                            CompteBancaire compte = new CompteBancaire();
+                            compte.setId_compte(objJson.getInt("id"));
+                            compte.setNom(objJson.getString("nom"));
+                            compte.setSolde(objJson.getDouble("solde"));
+                            compte.setTaux_interet(objJson.getDouble("taux_interet"));
+                            compte.setId_user(objJson.getInt("id_user"));
+                            if (objJson.getInt("est_valide") == 1) {
+                                compte.setEst_valide(true);
+                            } else {
+                                compte.setEst_valide(false);
+                            }
+                            for (int j = 0; j < comptes.size(); j++) {
+                                if (comptes.get(j).equals(compte)) {
+                                    isIn = true;
+                                }
+                            }
+                            if (isIn == false) {
+                                comptes.add(compte);
+                            }
                     }
 
                     runOnUiThread(new Runnable() {
