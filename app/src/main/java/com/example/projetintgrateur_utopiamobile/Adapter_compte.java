@@ -3,9 +3,12 @@ package com.example.projetintgrateur_utopiamobile;
 import static androidx.core.content.ContextCompat.startActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -36,6 +39,21 @@ public class Adapter_compte extends RecyclerView.Adapter<Adapter_compte.MyViewHo
         holder.nomCompte.setText(comptes.get(position).getNom());
         String solde = " " + comptes.get(position).getSolde() + "$";
         holder.soldeValeurCompte.setText(solde);
+        holder.modifButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, EditCompteActivity.class);
+                intent.putExtra("id_compte", comptes.get(position).getId_compte());
+                startActivity(context, intent, null);
+            }
+        });
+        //joel met ta page transaction d'un compte dans cette fonction
+        /*holder.layoutCompte.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });*/
     }
 
     @Override
@@ -47,6 +65,7 @@ public class Adapter_compte extends RecyclerView.Adapter<Adapter_compte.MyViewHo
         TextView nomCompte;
         TextView soldeValeurCompte;
         TextView derActCompte;
+        ImageView modifButton;
         LinearLayout layoutCompte;
 
         public MyViewHolder(View itemView) {
@@ -54,6 +73,7 @@ public class Adapter_compte extends RecyclerView.Adapter<Adapter_compte.MyViewHo
             nomCompte = (TextView) itemView.findViewById(R.id.textNomCompte);
             soldeValeurCompte = (TextView) itemView.findViewById(R.id.textSoldeValeurCompte);
             derActCompte = (TextView) itemView.findViewById(R.id.textDerAct);
+            modifButton = (ImageView) itemView.findViewById(R.id.editCompte);
             layoutCompte = (LinearLayout) itemView.findViewById(R.id.layout_compte_row);
         }
     }
