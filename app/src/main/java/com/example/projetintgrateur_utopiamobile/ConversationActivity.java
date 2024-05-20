@@ -13,6 +13,8 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class ConversationActivity extends AppCompatActivity {
     private TextView titreConversation;
+    private ListView messagesListView;
+    private MessageAdapter messageAdapter;
     private Conversation conversation;
     private User interlocuteur;
 
@@ -49,9 +51,16 @@ public class ConversationActivity extends AppCompatActivity {
 
         if (conversation != null) {
             titreConversation.setText(interlocuteur.getPrenom() + " " + interlocuteur.getNom());
+            messagesListView = (ListView) findViewById(R.id.messagesListView);
+            setMessageAdapter();
         }
         else {
             finish();
         }
+    }
+
+    private void setMessageAdapter() {
+        messageAdapter = new MessageAdapter(getApplicationContext(), conversation.getMessages());
+        messagesListView.setAdapter(messageAdapter);
     }
 }

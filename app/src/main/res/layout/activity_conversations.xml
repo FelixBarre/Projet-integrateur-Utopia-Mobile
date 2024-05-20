@@ -10,7 +10,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginBottom="50dp">
 
         <com.example.projetintgrateur_utopiamobile.HeaderView
             android:layout_width="match_parent"
@@ -29,7 +30,7 @@
             android:id="@+id/conversationsListView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="3dp" >
+            android:layout_marginTop="3dp">
 
         </ListView>
 
