@@ -22,7 +22,7 @@ import java.util.ArrayList;
 
 public class ComptesBancairesActivity extends AppCompatActivity {
 
-    ArrayList<CompteBancaire> comptes = new ArrayList<>();
+    public static ArrayList<CompteBancaire> comptes = new ArrayList<>();
     RecyclerView recyclerViewCompte;
 
     @Override
