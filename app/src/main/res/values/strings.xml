@@ -50,6 +50,13 @@
 
     <!-- Comptes bancaires -->
     <string name="comptesTitle">Mes comptes</string>
+    <string name="nom_de_compte_par_defaut">Nom de compte</string>
+    <string name="solde_compte">Solde : </string>
+    <string name="derniere_activite_compte">Dernière activité : %s</string>
+    <string name="solde_valeur">%s $</string>
+    <string name="newName">Entrer le nom du nouveau compte :</string>
+    <string name="ajouter_un_compte">Ajouter un compte</string>
+    <string name="ajouterButton">Ajouter</string>
 
     <!-- Acceuil -->
     <string name="acceuilTitle">Bonjour</string>
@@ -98,15 +105,8 @@
         <item>Virement</item>
     </string-array>
 
-
     <!-- Virements -->
     <string name="VirementTitle">Virement</string>
-
-    <!-- Comptes Bancaires -->
-    <string name="nom_de_compte_par_defaut">Nom de compte</string>
-    <string name="solde_compte">Solde : </string>
-    <string name="derniere_activite_compte">Dernière activité : %s</string>
-    <string name="solde_valeur">%s $</string>
 
     <!-- demandes de prêt -->
     <string name="titleDemandePret">Mes demandes de prêt</string>
@@ -119,8 +119,8 @@
     <!-- Messagerie -->
     <string name="titreConversations">Vos conversations</string>
     <string name="vous">Vous</string>
-    <string name="plus">Plus</string>
-    <string name="onglet_demande_pret">Demandes de prêt</string>
 
     <!-- Plus -->
+    <string name="plus">Plus</string>
+    <string name="onglet_demande_pret">Demandes de prêt</string>
 </resources>
