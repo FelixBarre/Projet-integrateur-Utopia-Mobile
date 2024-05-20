@@ -27,10 +27,18 @@
             android:layout_marginTop="20dp"
             android:text="@string/modificationMDPTitle" />
 
+        <TextView
+            android:id="@+id/erreursOutput"
+            android:layout_width="300dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+            android:text=""
+            android:textColor="@color/red"/>
+
         <EditText
             android:id="@+id/oldPasswordInput"
             android:layout_height="wrap_content"
-            android:layout_marginTop="75dp"
             android:ems="10"
             android:inputType="textPassword"
             style="@style/input"

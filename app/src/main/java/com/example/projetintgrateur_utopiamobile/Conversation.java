@@ -62,4 +62,25 @@ public class Conversation {
 
         return messages.get(messages.size() - 1);
     }
+
+    public User getInterlocuteur() {
+        Message dernierMessage = this.getDernierMessage();
+
+        if (dernierMessage.getEnvoyeur().getId() == UserManager.getAuthUser().getId()) {
+            return dernierMessage.getReceveur();
+        }
+        else {
+            return dernierMessage.getEnvoyeur();
+        }
+    }
+
+    public static Conversation getConversationById(int id_conversation) {
+        for (int i = 0; i < conversationArrayList.size(); i++) {
+            if (conversationArrayList.get(i).getId() == id_conversation) {
+                return conversationArrayList.get(i);
+            }
+        }
+
+        return null;
+    }
 }

@@ -49,6 +49,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="10dp"
+                        android:textSize="25sp"
                         android:text="@string/undefinedLabel" />
 
                     <TextView
@@ -56,6 +57,7 @@
                         style="@style/sousTitre"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textSize="25sp"
                         android:text="@string/undefinedLabel" />
                 </LinearLayout>
 
@@ -132,12 +134,14 @@
                     android:hint="@string/rueLabel"
                     android:inputType="textEmailAddress" />
 
-                <Spinner
-                    android:id="@+id/villeInput"
-                    style="@style/input"
+                <TextView
+                    android:id="@+id/inputVille"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="15dp" />
+                    android:layout_marginTop="15dp"
+                    style="@style/input"
+                    android:textSize="20sp"
+                    app:drawableEndCompat="@drawable/baseline_arrow_drop_down_24" />
 
                 <EditText
                     android:id="@+id/codePostalInput"
