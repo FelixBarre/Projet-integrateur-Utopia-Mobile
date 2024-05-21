@@ -1,7 +1,6 @@
 package com.example.projetintgrateur_utopiamobile;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +9,6 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.annotation.GravityInt;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -41,6 +39,7 @@ public class MessageAdapter extends ArrayAdapter<Message> {
         }
         else {
             textMessage.setBackgroundColor(context.getColor(R.color.utopia_turquoise_fonce));
+            layoutMessage.setGravity(Gravity.LEFT);
         }
 
         textHeureMessage.setText(message.getCreatedAtFormatted());

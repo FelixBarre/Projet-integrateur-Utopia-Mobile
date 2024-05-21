@@ -15,6 +15,10 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class transaction extends AppCompatActivity implements View.OnClickListener{
@@ -64,14 +68,20 @@ public class transaction extends AppCompatActivity implements View.OnClickListen
     public void onClick(View v){
 
         Spinner type = (Spinner) findViewById(R.id.typeTransaction);
-        EditText Montant = (EditText) findViewById(R.id.montantTransaction);
-
+        EditText montant = (EditText) findViewById(R.id.montantTransaction);
+        Spinner destinataire = (Spinner) findViewById(R.id.destinationTansaction);
 
         if (v.getId()==R.id.valideTransaction) {
             Intent intent = new Intent(transaction.this, ComptesBancairesActivity.class);
             startActivity(intent);
         } else if (v.getId()==R.id.annulerTransaction) {
             Intent intent = new Intent(transaction.this, cancel_transaction.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            Bundle bundle = new Bundle();
+            bundle.putString("typeTransaction", type.getSelectedItem().toString());
+            bundle.putString("montantTransaction", montant.getText().toString());
+            bundle.putString("destinataireTransaction", destinataire.getSelectedItem().toString());
+            intent.putExtras(bundle);
 
             startActivity(intent);
         }

@@ -1,7 +1,9 @@
 package com.example.projetintgrateur_utopiamobile;
 
 import android.app.ActionBar;
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -46,6 +48,7 @@ public class modifierProfil extends AppCompatActivity implements View.OnClickLis
     EditText inputNoCivique;
     EditText inputRue;
     EditText inputCodePostal;
+    AlertDialog.Builder builderConfirm;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +64,7 @@ public class modifierProfil extends AppCompatActivity implements View.OnClickLis
         searchVilleWindow = new Dialog(modifierProfil.this);
         villesNom = new ArrayList<>();
         villesId = new ArrayList<>();
+        builderConfirm = new AlertDialog.Builder(this);
 
         Button btnConfirmation = (Button) findViewById(R.id.confirmerButton);
         Button btnAnnulation = (Button) findViewById(R.id.annulerButton);
@@ -199,10 +203,26 @@ public class modifierProfil extends AppCompatActivity implements View.OnClickLis
         } else if (v.getId() == R.id.annulerButton) {
             finish();
         } else if (v.getId() == R.id.changeMotDePasseButton){
-            //TODO: Fonctionnalité de priorité 2 à implémenter ici: Popup pour confirmer le changement d'activité. (Sauvegarder les changements avant de changer de fenêtre)
-            finish();
-            Intent intent = new Intent(modifierProfil.this, changementMotDePasse.class);
-            startActivity(intent);
+            builderConfirm.setMessage(R.string.confirmationContinuationVersMDPLabel);
+            builderConfirm.setPositiveButton(R.string.confirmer, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    finish();
+                    Intent intent = new Intent(modifierProfil.this, changementMotDePasse.class);
+                    startActivity(intent);
+                }
+            });
+
+            builderConfirm.setNegativeButton(R.string.annuler, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+
+            AlertDialog alertConfirm = builderConfirm.create();
+            alertConfirm.setTitle(R.string.attentionAlert);
+            alertConfirm.show();
         } else if (v.getId() == R.id.inputVille) {
             searchVilleWindow.setContentView(R.layout.dialog_searchable_spinner_ville);
             searchVilleWindow.getWindow().setLayout(650, 800);
