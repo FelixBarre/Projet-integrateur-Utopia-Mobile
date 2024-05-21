@@ -6,6 +6,9 @@
     <string name="soumettre">Soumettre</string>
     <string name="confirmer">Confirmer</string>
     <string name="annuler">Annuler</string>
+    <string name="continuer">Continuer</string>
+    <string name="cancel">Annuler</string>
+    <string name="attentionAlert">Attention - action requise pour continuer</string>
 
     <!-- Profil général -->
     <string name="courrielLabel">Courriel</string>
@@ -40,6 +43,7 @@
     <string name="selectionVille">Sélection de la ville</string>
     <string name="rechercheVille">Rechercher la ville...</string>
     <string name="succesConfirmationEditProfil">Profil changé avec succès</string>
+    <string name="confirmationContinuationVersMDPLabel">Vos changements ne seront pas enregistrés si vous continuer. Assurez vous d\u2019enregistrer les changements s\u2019il y a lieu</string>
 
     <!-- Mot de passe -->
     <string name="modificationMDPTitle">Changement de mot de passe</string>
