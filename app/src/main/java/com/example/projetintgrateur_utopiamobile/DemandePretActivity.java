@@ -1,6 +1,9 @@
 package com.example.projetintgrateur_utopiamobile;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -33,13 +36,22 @@ public class DemandePretActivity extends AppCompatActivity {
         });
 
         recyclerViewDemandes = (RecyclerView) findViewById(R.id.recyclerViewDemandePret);
+        ImageView addDemande = (ImageView) findViewById(R.id.addDemandePret);
+        addDemande.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DemandePretActivity.this, FormDemandePretActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
                     HttpClient httpClient = HttpClient.instanceOfClient();
-                    String responseGET = httpClient.get("demandes_de_pret");
+                    String responseGET = httpClient.get("demandes_de_pret/");
                     JSONObject Json = new JSONObject(responseGET);
                     JSONArray arrayJson = Json.getJSONArray("data");
 
