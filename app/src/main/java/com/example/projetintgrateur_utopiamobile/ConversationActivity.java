@@ -36,6 +36,7 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
     private Conversation conversation;
     private User interlocuteur;
     private String dateDerniereUpdate;
+    private int idMessageUpdating = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,46 +88,24 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
     }
 
     private void setMessageAdapter() {
-        messageAdapter = new MessageAdapter(getApplicationContext(), conversation.getMessages());
+        messageAdapter = new MessageAdapter(this, conversation.getMessages());
         messagesListView.setAdapter(messageAdapter);
+    }
+
+    public void updateMessage(Message message) {
+        idMessageUpdating = message.getId();
+        editTextMessage.setText(message.getTexte());
+        buttonEnvoyerMessage.setText(getResources().getString(R.string.modifier));
     }
 
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.buttonEnvoyerMessage) {
-            String messageString = editTextMessage.getText().toString();
-
-            if (messageString.length() > 255) {
-                Toast.makeText(this, getResources().getString(R.string.erreur255), Toast.LENGTH_LONG).show();
-            } else {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            HttpClient httpClient = HttpClient.instanceOfClient();
-
-                            String body = "{ \"texte\" : \"" + messageString + "\", \"id_conversation\" : " + conversation.getId() + " }";
-                            String response = "";
-
-                            response = httpClient.post("messages", body);
-
-                            JSONObject responseJSON = new JSONObject(response);
-
-                            if (responseJSON.has("SUCCÈS")) {
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        editTextMessage.setText("");
-                                    }
-                                });
-                            } else if (responseJSON.has("ERREUR")) {
-                                Toast.makeText(context, responseJSON.getString("ERREUR"), Toast.LENGTH_LONG).show();
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }).start();
+            if (buttonEnvoyerMessage.getText() == getResources().getString(R.string.envoyer)) {
+                envoyerMessage();
+            }
+            else if (buttonEnvoyerMessage.getText() == getResources().getString(R.string.modifier)) {
+                modifierMessage();
             }
         }
     }
@@ -248,6 +227,84 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
         }
         else if (responseJSON.has("ERREUR")) {
             Toast.makeText(context, responseJSON.getString("ERREUR"), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void envoyerMessage() {
+        String messageString = editTextMessage.getText().toString();
+
+        if (messageString.length() > 255) {
+            Toast.makeText(this, getResources().getString(R.string.erreur255), Toast.LENGTH_LONG).show();
+        } else {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        HttpClient httpClient = HttpClient.instanceOfClient();
+
+                        String body = "{ \"texte\" : \"" + messageString + "\", \"id_conversation\" : " + conversation.getId() + " }";
+                        String response = "";
+
+                        response = httpClient.post("messages", body);
+
+                        JSONObject responseJSON = new JSONObject(response);
+
+                        if (responseJSON.has("SUCCÈS")) {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    editTextMessage.setText("");
+                                }
+                            });
+                        } else if (responseJSON.has("ERREUR")) {
+                            Toast.makeText(context, responseJSON.getString("ERREUR"), Toast.LENGTH_LONG).show();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+        }
+    }
+
+    private void modifierMessage() {
+        if (idMessageUpdating != 0) {
+            String messageString = editTextMessage.getText().toString();
+
+            if (messageString.length() > 255) {
+                Toast.makeText(this, getResources().getString(R.string.erreur255), Toast.LENGTH_LONG).show();
+            } else {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            HttpClient httpClient = HttpClient.instanceOfClient();
+
+                            String body = "{ \"texte\" : \"" + messageString + "\" }";
+                            String response = "";
+
+                            response = httpClient.put("messages/" + idMessageUpdating, body);
+
+                            JSONObject responseJSON = new JSONObject(response);
+
+                            if (responseJSON.has("SUCCÈS")) {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        editTextMessage.setText("");
+                                        idMessageUpdating = 0;
+                                        buttonEnvoyerMessage.setText(getResources().getString(R.string.envoyer));
+                                    }
+                                });
+                            } else if (responseJSON.has("ERREUR")) {
+                                Toast.makeText(context, responseJSON.getString("ERREUR"), Toast.LENGTH_LONG).show();
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }).start();
+            }
         }
     }
 }
