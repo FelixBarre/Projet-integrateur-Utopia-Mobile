@@ -133,5 +133,6 @@
     <!-- Plus -->
     <string name="plus">Plus</string>
     <string name="onglet_demande_pret">Demandes de prêt</string>
+    <string name="onglet_demande_desactivation">Désactivation de compte bancaire</string>
 
 </resources>
