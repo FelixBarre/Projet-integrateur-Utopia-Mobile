@@ -48,6 +48,7 @@ public class FooterView extends RelativeLayout implements View.OnClickListener {
         else if (v.getId() == R.id.plusButton) {
             Intent intent = new Intent(getContext(), PlusActivity.class);
             getContext().startActivity(intent);
+
         }
     }
 }
