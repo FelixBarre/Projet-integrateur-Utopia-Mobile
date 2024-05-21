@@ -58,7 +58,7 @@ public class MessageAdapter extends ArrayAdapter<Message> {
         imageButtonEditMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ((ConversationActivity) context).updateMessage(message);
             }
         });
         imageButtonDeleteMessage.setOnClickListener(new View.OnClickListener() {
