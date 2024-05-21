@@ -13,9 +13,11 @@ import androidx.core.app.ActivityCompat;
 
 public class FooterView extends RelativeLayout implements View.OnClickListener {
     private LayoutInflater inflater;
+    private Context context;
 
     public FooterView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        this.context = context;
 
         inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.footer_layout, this, true);
@@ -32,23 +34,35 @@ public class FooterView extends RelativeLayout implements View.OnClickListener {
         if (v.getId() == R.id.accueilButton) {
             Intent intent = new Intent(getContext(), accueil.class);
             getContext().startActivity(intent);
+            ((Activity) context).finish();
         }
         else if (v.getId() == R.id.actionButton) {
             Intent intent = new Intent(getContext(), transaction.class);
             getContext().startActivity(intent);
+            if (!(getContext() instanceof accueil)) {
+                ((Activity) context).finish();
+            }
         }
         else if (v.getId() == R.id.messageButton) {
             Intent intent = new Intent(getContext(), Conversations.class);
             getContext().startActivity(intent);
+            if (!(getContext() instanceof accueil)) {
+                ((Activity) context).finish();
+            }
         }
         else if (v.getId() == R.id.comptesButton) {
             Intent intent = new Intent(getContext(), ComptesBancairesActivity.class);
             getContext().startActivity(intent);
+            if (!(getContext() instanceof accueil)) {
+                ((Activity) context).finish();
+            }
         }
         else if (v.getId() == R.id.plusButton) {
             Intent intent = new Intent(getContext(), PlusActivity.class);
             getContext().startActivity(intent);
-
+            if (!(getContext() instanceof accueil)) {
+                ((Activity) context).finish();
+            }
         }
     }
 }

@@ -44,7 +44,7 @@ public class FormCompteActivity extends AppCompatActivity {
                     public void run() {
                         try {
                             HttpClient httpClient = HttpClient.instanceOfClient();
-                            String responsePOST = httpClient.post("creation/compteBancaire", "{ \"nom\": \"" + nomCompte + "\", \"token_name\": \"tokenAPI\" }");
+                            String responsePOST = httpClient.post("creation/compteBancaire", "{ \"nom\": \"" + nomCompte + "\"}");
                             JSONObject Json = new JSONObject(responsePOST);
 
                         } catch (IOException e) {
