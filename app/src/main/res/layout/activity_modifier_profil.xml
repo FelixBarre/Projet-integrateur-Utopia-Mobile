@@ -11,6 +11,7 @@
         android:id="@+id/linearLayoutEdit"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="60dp"
         android:orientation="vertical">
 
         <com.example.projetintgrateur_utopiamobile.HeaderView
@@ -28,8 +29,11 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="520dp"
-            android:layout_marginTop="5dp">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            app:layout_constraintTop_toBottomOf="@id/modifierProfileTitle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -207,12 +211,13 @@
                     android:text="@string/modificationMotDePasseLabel" />
             </LinearLayout>
         </ScrollView>
-
-        <com.example.projetintgrateur_utopiamobile.FooterView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
     </LinearLayout>
+
+    <com.example.projetintgrateur_utopiamobile.FooterView
+        android:id="@+id/footer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
