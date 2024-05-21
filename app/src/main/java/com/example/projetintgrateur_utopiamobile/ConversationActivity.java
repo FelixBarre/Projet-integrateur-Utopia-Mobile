@@ -34,7 +34,6 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
     private ListView messagesListView;
     private MessageAdapter messageAdapter;
     private Conversation conversation;
-    private ArrayList<Message> messages;
     private User interlocuteur;
     private String dateDerniereUpdate;
 
@@ -80,7 +79,6 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
         if (conversation != null) {
             titreConversation.setText(interlocuteur.getPrenom() + " " + interlocuteur.getNom());
             messagesListView = (ListView) findViewById(R.id.messagesListView);
-            messages = conversation.getMessages();
             setMessageAdapter();
             messagesListView.setSelection(messageAdapter.getCount() - 1);
         } else {
@@ -89,7 +87,7 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
     }
 
     private void setMessageAdapter() {
-        messageAdapter = new MessageAdapter(getApplicationContext(), messages);
+        messageAdapter = new MessageAdapter(getApplicationContext(), conversation.getMessages());
         messagesListView.setAdapter(messageAdapter);
     }
 
@@ -115,21 +113,12 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
                             JSONObject responseJSON = new JSONObject(response);
 
                             if (responseJSON.has("SUCCÈS")) {
-                                try {
-                                    Message message = new Message(responseJSON.getJSONObject("message"));
-
-                                    runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            editTextMessage.setText("");
-                                            messages.add(message);
-                                            messageAdapter.notifyDataSetChanged();
-                                            messagesListView.setSelection(messageAdapter.getCount() - 1);
-                                        }
-                                    });
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        editTextMessage.setText("");
+                                    }
+                                });
                             } else if (responseJSON.has("ERREUR")) {
                                 Toast.makeText(context, responseJSON.getString("ERREUR"), Toast.LENGTH_LONG).show();
                             }
@@ -151,6 +140,10 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
         }
     }
 
+    private void setDateDerniereUpdate(String date) {
+        this.dateDerniereUpdate = date;
+    }
+
     private void startBackgroundThreads() {
         new Thread(new Runnable() {
             @Override
@@ -159,11 +152,11 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
                     try {
                         getNewMessages();
 
-                        Thread.sleep(1000);
+                        Thread.sleep(500);
 
                         getUpdatedMessages();
 
-                        Thread.sleep(1000);
+                        Thread.sleep(500);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -195,7 +188,7 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            messages.addAll(newMessages);
+                            messageAdapter.addAll(newMessages);
                             messageAdapter.notifyDataSetChanged();
                             messagesListView.setSelection(messageAdapter.getCount() - 1);
                         }
@@ -212,7 +205,9 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
     private void getUpdatedMessages() throws Exception {
         HttpClient httpClient = HttpClient.instanceOfClient();
 
-        String response = httpClient.get("messages/updated/" + conversation.getId() + "/" + dateDerniereUpdate);
+        String lastUpdate = dateDerniereUpdate;
+
+        String response = httpClient.get("messages/updated/" + conversation.getId() + "/" + lastUpdate);
 
         JSONObject responseJSON = new JSONObject(response);
 
@@ -220,19 +215,19 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
             try {
                 JSONArray data = responseJSON.getJSONArray("data");
 
-                setDateDerniereUpdate();
-
                 if (data.length() > 0) {
+                    setDateDerniereUpdate(lastUpdate);
+
                     for (int i = 0; i < data.length(); i++) {
                         Message updatedMessage = new Message(data.getJSONObject(i));
 
-                        for (int j = 0; j < messages.size(); j++) {
-                            if (messages.get(j).getId() == updatedMessage.getId()) {
+                        for (int j = 0; j < messageAdapter.getCount(); j++) {
+                            if (messageAdapter.getItem(j).getId() == updatedMessage.getId()) {
                                 if (updatedMessage.getDateHeureSupprime() != "null") {
-                                    messages.remove(j);
+                                    messageAdapter.remove(messageAdapter.getItem(j));
                                 }
                                 else {
-                                    messages.get(j).setTexte(updatedMessage.getTexte());
+                                    messageAdapter.getItem(j).setTexte(updatedMessage.getTexte());
                                 }
 
                                 break;
