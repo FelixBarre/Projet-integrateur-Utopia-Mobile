@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TableRow;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,16 +25,23 @@ public class PlusActivity extends AppCompatActivity implements View.OnClickListe
             return insets;
         });
 
-        LinearLayout demandesPret = (LinearLayout) findViewById(R.id.ongletDemandePret);
-        demandesPret.setOnClickListener(this);
+        TableRow tableRow = (TableRow) findViewById(R.id.ongletDemandePret);
+        tableRow.setOnClickListener(this);
+
+        tableRow = (TableRow) findViewById(R.id.ongletDemandeDesactivation);
+        tableRow.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.ongletDemandePret) {
+            finish();
             Intent intent = new Intent(PlusActivity.this, DemandePretActivity.class);
             startActivity(intent);
+        } else if (v.getId() == R.id.ongletDemandeDesactivation) {
             finish();
+            Intent intent = new Intent(PlusActivity.this, DesactivationCompte.class);
+            startActivity(intent);
         }
     }
 }
