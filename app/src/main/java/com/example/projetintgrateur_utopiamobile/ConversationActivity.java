@@ -20,7 +20,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 public class ConversationActivity extends AppCompatActivity implements View.OnClickListener {
     private Context context;
@@ -32,6 +36,7 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
     private Conversation conversation;
     private ArrayList<Message> messages;
     private User interlocuteur;
+    private String dateDerniereUpdate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +51,7 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
 
         context = this;
 
+        setDateDerniereUpdate();
         getConversation();
         initWidgets();
         startBackgroundThreads();
@@ -77,8 +83,7 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
             messages = conversation.getMessages();
             setMessageAdapter();
             messagesListView.setSelection(messageAdapter.getCount() - 1);
-        }
-        else {
+        } else {
             finish();
         }
     }
@@ -95,8 +100,7 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
 
             if (messageString.length() > 255) {
                 Toast.makeText(this, getResources().getString(R.string.erreur255), Toast.LENGTH_LONG).show();
-            }
-            else {
+            } else {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -123,16 +127,13 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
                                             messagesListView.setSelection(messageAdapter.getCount() - 1);
                                         }
                                     });
-                                }
-                                catch (JSONException e) {
+                                } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
-                            }
-                            else if (responseJSON.has("ERREUR")) {
+                            } else if (responseJSON.has("ERREUR")) {
                                 Toast.makeText(context, responseJSON.getString("ERREUR"), Toast.LENGTH_LONG).show();
                             }
-                        }
-                        catch (Exception e) {
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
@@ -141,60 +142,117 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
         }
     }
 
-    private void startBackgroundThreads() {
-        startGetNewMessagesThread();
+    private void setDateDerniereUpdate() {
+        try {
+            DateFormat dateDerniereUpdateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CANADA_FRENCH);
+            this.dateDerniereUpdate = dateDerniereUpdateFormat.format(new Date());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    private void startGetNewMessagesThread() {
+    private void startBackgroundThreads() {
         new Thread(new Runnable() {
             @Override
             public void run() {
                 while (true) {
                     try {
-                        HttpClient httpClient = HttpClient.instanceOfClient();
-
-                        String response = "";
-
-                        response = httpClient.get("messages/" + conversation.getId() + "/" + messageAdapter.getItem(messageAdapter.getCount() - 1).getId());
-
-                        JSONObject responseJSON = new JSONObject(response);
-
-                        if (responseJSON.has("data")) {
-                            try {
-                                JSONArray data = responseJSON.getJSONArray("data");
-
-                                if (data.length() > 0) {
-                                    ArrayList<Message> newMessages = new ArrayList<>();
-
-                                    for (int i = 0; i < data.length(); i++) {
-                                        newMessages.add(new Message(data.getJSONObject(i)));
-                                    }
-
-                                    runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            messages.addAll(newMessages);
-                                            messageAdapter.notifyDataSetChanged();
-                                            messagesListView.setSelection(messageAdapter.getCount() - 1);
-                                        }
-                                    });
-                                }
-                            }
-                            catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        else if (responseJSON.has("ERREUR")) {
-                            Toast.makeText(context, responseJSON.getString("ERREUR"), Toast.LENGTH_LONG).show();
-                        }
+                        getNewMessages();
 
                         Thread.sleep(1000);
-                    }
-                    catch (Exception e) {
+
+                        getUpdatedMessages();
+
+                        Thread.sleep(1000);
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
             }
         }).start();
+    }
+
+    private void getNewMessages() throws Exception {
+        HttpClient httpClient = HttpClient.instanceOfClient();
+
+        String response = "";
+
+        response = httpClient.get("messages/" + conversation.getId() + "/" + messageAdapter.getItem(messageAdapter.getCount() - 1).getId());
+
+        JSONObject responseJSON = new JSONObject(response);
+
+        if (responseJSON.has("data")) {
+            try {
+                JSONArray data = responseJSON.getJSONArray("data");
+
+                if (data.length() > 0) {
+                    ArrayList<Message> newMessages = new ArrayList<>();
+
+                    for (int i = 0; i < data.length(); i++) {
+                        newMessages.add(new Message(data.getJSONObject(i)));
+                    }
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            messages.addAll(newMessages);
+                            messageAdapter.notifyDataSetChanged();
+                            messagesListView.setSelection(messageAdapter.getCount() - 1);
+                        }
+                    });
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        } else if (responseJSON.has("ERREUR")) {
+            Toast.makeText(context, responseJSON.getString("ERREUR"), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void getUpdatedMessages() throws Exception {
+        HttpClient httpClient = HttpClient.instanceOfClient();
+
+        String response = httpClient.get("messages/updated/" + conversation.getId() + "/" + dateDerniereUpdate);
+
+        JSONObject responseJSON = new JSONObject(response);
+
+        if (responseJSON.has("data")) {
+            try {
+                JSONArray data = responseJSON.getJSONArray("data");
+
+                setDateDerniereUpdate();
+
+                if (data.length() > 0) {
+                    for (int i = 0; i < data.length(); i++) {
+                        Message updatedMessage = new Message(data.getJSONObject(i));
+
+                        for (int j = 0; j < messages.size(); j++) {
+                            if (messages.get(j).getId() == updatedMessage.getId()) {
+                                if (updatedMessage.getDateHeureSupprime() != "null") {
+                                    messages.remove(j);
+                                }
+                                else {
+                                    messages.get(j).setTexte(updatedMessage.getTexte());
+                                }
+
+                                break;
+                            }
+                        }
+                    }
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            messageAdapter.notifyDataSetChanged();
+                        }
+                    });
+                }
+            }
+            catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        else if (responseJSON.has("ERREUR")) {
+            Toast.makeText(context, responseJSON.getString("ERREUR"), Toast.LENGTH_LONG).show();
+        }
     }
 }
