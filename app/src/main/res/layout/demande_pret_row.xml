@@ -8,7 +8,7 @@
     android:orientation="vertical"
     android:padding="5dp"
     android:layout_marginTop="30dp"
-    android:layout_marginBottom="20dp"
+    android:layout_marginBottom="15dp"
     android:background="@drawable/bordure_row">
 
 
@@ -26,6 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textSize="18sp"
+            android:layout_marginTop="5dp"
             android:text="@string/date_par_defaut" />
 
         <TextView
@@ -34,7 +35,16 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textSize="18sp"
+            android:layout_marginTop="5dp"
             android:text="@string/statut" />
+
+        <ImageView
+            android:id="@+id/editCompte"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/supp" />
 
     </LinearLayout>
 
