@@ -37,6 +37,8 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
     private User interlocuteur;
     private String dateDerniereUpdate;
     private int idMessageUpdating = 0;
+    private DateFormat isoFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX", Locale.CANADA_FRENCH);
+    private DateFormat anneeMoisJour = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CANADA_FRENCH);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -184,9 +186,7 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
     private void getUpdatedMessages() throws Exception {
         HttpClient httpClient = HttpClient.instanceOfClient();
 
-        String lastUpdate = dateDerniereUpdate;
-
-        String response = httpClient.get("messages/updated/" + conversation.getId() + "/" + lastUpdate);
+        String response = httpClient.get("messages/updated/" + conversation.getId() + "/" + dateDerniereUpdate);
 
         JSONObject responseJSON = new JSONObject(response);
 
@@ -195,10 +195,16 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
                 JSONArray data = responseJSON.getJSONArray("data");
 
                 if (data.length() > 0) {
-                    setDateDerniereUpdate(lastUpdate);
+                    Date dateLastMessageUpdate = anneeMoisJour.parse(dateDerniereUpdate);
 
                     for (int i = 0; i < data.length(); i++) {
                         Message updatedMessage = new Message(data.getJSONObject(i));
+
+                        Date dateUpdatedMessage = isoFormat.parse(updatedMessage.getUpdatedAt());
+
+                        if (dateUpdatedMessage.getTime() > dateLastMessageUpdate.getTime()) {
+                            dateLastMessageUpdate = dateUpdatedMessage;
+                        }
 
                         for (int j = 0; j < messageAdapter.getCount(); j++) {
                             if (messageAdapter.getItem(j).getId() == updatedMessage.getId()) {
@@ -213,12 +219,18 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
                             }
                         }
                     }
+
+                    setDateDerniereUpdate(anneeMoisJour.format(dateLastMessageUpdate));
+
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             messageAdapter.notifyDataSetChanged();
                         }
                     });
+                }
+                else {
+                    setDateDerniereUpdate();
                 }
             }
             catch (JSONException e) {
@@ -232,6 +244,7 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
 
     private void envoyerMessage() {
         String messageString = editTextMessage.getText().toString();
+        editTextMessage.setText("");
 
         if (messageString.length() > 255) {
             Toast.makeText(this, getResources().getString(R.string.erreur255), Toast.LENGTH_LONG).show();
@@ -250,12 +263,7 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
                         JSONObject responseJSON = new JSONObject(response);
 
                         if (responseJSON.has("SUCCÈS")) {
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    editTextMessage.setText("");
-                                }
-                            });
+
                         } else if (responseJSON.has("ERREUR")) {
                             Toast.makeText(context, responseJSON.getString("ERREUR"), Toast.LENGTH_LONG).show();
                         }
@@ -270,6 +278,8 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
     private void modifierMessage() {
         if (idMessageUpdating != 0) {
             String messageString = editTextMessage.getText().toString();
+            editTextMessage.setText("");
+            buttonEnvoyerMessage.setText(getResources().getString(R.string.envoyer));
 
             if (messageString.length() > 255) {
                 Toast.makeText(this, getResources().getString(R.string.erreur255), Toast.LENGTH_LONG).show();
@@ -288,14 +298,7 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
                             JSONObject responseJSON = new JSONObject(response);
 
                             if (responseJSON.has("SUCCÈS")) {
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        editTextMessage.setText("");
-                                        idMessageUpdating = 0;
-                                        buttonEnvoyerMessage.setText(getResources().getString(R.string.envoyer));
-                                    }
-                                });
+                                idMessageUpdating = 0;
                             } else if (responseJSON.has("ERREUR")) {
                                 Toast.makeText(context, responseJSON.getString("ERREUR"), Toast.LENGTH_LONG).show();
                             }
