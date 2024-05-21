@@ -173,4 +173,18 @@ public class HttpClient {
 
         return response;
     }
+
+    public String delete(String route) throws IOException {
+        if (!this.validateToken()) {
+            return "";
+        }
+
+        this.openConnection(route, Methods.DELETE);
+
+        String response = this.getResponse();
+
+        this.closeConnection();
+
+        return response;
+    }
 }

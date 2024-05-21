@@ -9,6 +9,9 @@
     <string name="continuer">Continuer</string>
     <string name="cancel">Annuler</string>
     <string name="attentionAlert">Attention - action requise pour continuer</string>
+    <string name="raison">Raison</string>
+    <string name="description">Description</string>
+    <string name="compte">Compte</string>
 
     <!-- Profil général -->
     <string name="courrielLabel">Courriel</string>
@@ -122,6 +125,14 @@
     <string name="statut_par_defaut">statut par défaut</string>
     <string name="montant_demande_pret">Montant: %s $</string>
     <string name="duree_demande_pret">Durée : %s mois</string>
+    <string name="ajoutDemande">Ajouter une \ndemande de prêt</string>
+    <string name="entrerRaisonText">Entrer la raison de la demande:</string>
+    <string name="montantDemande">Entrer le montant à emprunter:</string>
+
+    
+    <!-- Désactivation de comnptes -->
+    <string name="titleDesactivationCompte">Désactivation de compte</string>
+
 
     <!-- Messagerie -->
     <string name="titreConversations">Vos conversations</string>
@@ -133,5 +144,6 @@
     <!-- Plus -->
     <string name="plus">Plus</string>
     <string name="onglet_demande_pret">Demandes de prêt</string>
+    <string name="onglet_demande_desactivation">Désactivation de compte bancaire</string>
 
 </resources>

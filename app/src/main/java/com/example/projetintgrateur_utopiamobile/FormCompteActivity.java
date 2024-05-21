@@ -39,24 +39,28 @@ public class FormCompteActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String nomCompte = editNomCompte.getText().toString();
 
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            HttpClient httpClient = HttpClient.instanceOfClient();
-                            String responsePOST = httpClient.post("creation/compteBancaire", "{ \"nom\": \"" + nomCompte + "\", \"token_name\": \"tokenAPI\" }");
-                            JSONObject Json = new JSONObject(responsePOST);
+                if (nomCompte.isEmpty()) {
+                    editNomCompte.setError("Ce champ est obligatoire");
+                } else {
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                HttpClient httpClient = HttpClient.instanceOfClient();
+                                String responsePOST = httpClient.post("creation/compteBancaire", "{ \"nom\": \"" + nomCompte + "\"}");
+                                JSONObject Json = new JSONObject(responsePOST);
 
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        } catch (JSONException e) {
-                            throw new RuntimeException(e);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            } catch (JSONException e) {
+                                throw new RuntimeException(e);
+                            }
+                            Intent intent = new Intent(FormCompteActivity.this, ComptesBancairesActivity.class);
+                            startActivity(intent);
+                            finish();
                         }
-                        Intent intent = new Intent(FormCompteActivity.this, ComptesBancairesActivity.class);
-                        startActivity(intent);
-                        finish();
-                    }
-                }).start();
+                    }).start();
+                }
             }
         });
     }

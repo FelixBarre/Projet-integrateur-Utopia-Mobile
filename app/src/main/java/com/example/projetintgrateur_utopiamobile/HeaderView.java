@@ -13,9 +13,11 @@ import androidx.core.app.ActivityCompat;
 
 public class HeaderView extends RelativeLayout implements View.OnClickListener {
     private LayoutInflater inflater;
+    private Context context;
 
     public HeaderView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        this.context = context;
 
         inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.header_layout, this, true);
@@ -35,10 +37,14 @@ public class HeaderView extends RelativeLayout implements View.OnClickListener {
         else if (v.getId() == R.id.utopiaButton) {
             Intent intent = new Intent(getContext(), accueil.class);
             getContext().startActivity(intent);
+            ((Activity) context).finish();
         }
         else if (v.getId() == R.id.profilButton) {
             Intent intent = new Intent(getContext(), detailsProfil.class);
             getContext().startActivity(intent);
+            if (!(getContext() instanceof accueil)) {
+                ((Activity) context).finish();
+            }
         }
     }
 }

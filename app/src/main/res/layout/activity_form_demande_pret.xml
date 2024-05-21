@@ -15,7 +15,67 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/header"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
+
+        <TextView
+            android:id="@+id/titleAddCompte"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ajoutDemande"
+            android:textSize="30sp"
+            android:layout_marginTop="30dp"
+            android:layout_gravity="center"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/raison"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="10dp"
+            android:text="@string/entrerRaisonText" />
+
+        <EditText
+            android:id="@+id/editTextRaison"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:ems="10"
+            android:inputType="text" />
+
+        <TextView
+            android:id="@+id/montantDemande"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="10dp"
+            android:text="@string/montantDemande" />
+
+        <EditText
+            android:id="@+id/editTextMontant"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:ems="10"
+            android:inputType="numberDecimal" />
+
+        <Button
+            android:id="@+id/ajoutDemandebutton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:backgroundTint="@color/utopia_turquoise_moyen"
+            android:text="@string/ajouterButton" />
+
+
+    </LinearLayout>
 
     <com.example.projetintgrateur_utopiamobile.FooterView
         android:id="@+id/footer"
