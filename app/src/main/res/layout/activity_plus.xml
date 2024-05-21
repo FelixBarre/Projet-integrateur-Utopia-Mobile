@@ -33,33 +33,60 @@
             android:layout_marginBottom="15dp"
             android:layout_marginStart="10dp"/>
 
-        <LinearLayout
-            android:id="@+id/ongletDemandePret"
+        <TableLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginStart="10dp">
+            android:layout_height="match_parent">
 
-            <ImageView
-                android:id="@+id/iconeOngletDemandePret"
-                android:layout_width="0dp"
+            <TableRow
+                android:id="@+id/ongletDemandePret"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@drawable/loan" />
+                android:orientation="horizontal"
+                android:layout_marginStart="10dp" >
 
-            <TextView
-                android:id="@+id/textOngletDemandePret"
-                android:layout_width="wrap_content"
+                <ImageView
+                    android:id="@+id/iconeOngletDemandePret"
+                    android:layout_gravity="center"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/loan" />
+
+                <TextView
+                    android:id="@+id/textOngletDemandePret"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4"
+                    android:text="@string/onglet_demande_pret"
+                    android:textSize="22sp"
+                    android:layout_marginStart="10dp"/>
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/ongletDemandeDesactivation"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/onglet_demande_pret"
-                android:textSize="22sp"
-                android:layout_weight="4"/>
+                android:orientation="horizontal"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp">
 
-        </LinearLayout>
+                <ImageView
+                    android:id="@+id/iconeDemandeDesactivation"
+                    android:layout_gravity="center"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/supp" />
 
-
-
-
+                <TextView
+                    android:id="@+id/textDemandeDesactivation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4"
+                    android:text="@string/onglet_demande_desactivation"
+                    android:textSize="22sp"
+                    android:layout_marginStart="10dp" />
+            </TableRow>
+        </TableLayout>
     </LinearLayout>
 
 
@@ -71,5 +98,4 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

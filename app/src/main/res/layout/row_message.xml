@@ -7,6 +7,29 @@
     android:padding="15dp">
 
     <LinearLayout
+        android:id="@+id/layoutButtonsMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="5dp"
+        android:visibility="gone">
+
+        <ImageButton
+            android:id="@+id/imageButtonEditMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ecrire" />
+
+        <ImageButton
+            android:id="@+id/imageButtonDeleteMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/supp" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:orientation="vertical"
