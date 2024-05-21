@@ -1,6 +1,6 @@
 package com.example.projetintgrateur_utopiamobile;
 
-import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -15,15 +15,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class ConversationActivity extends AppCompatActivity implements View.OnClickListener {
+    private Context context;
     private TextView titreConversation;
     private EditText editTextMessage;
     private Button buttonEnvoyerMessage;
@@ -44,8 +44,11 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
             return insets;
         });
 
+        context = this;
+
         getConversation();
         initWidgets();
+        startBackgroundThreads();
     }
 
     private void getConversation() {
@@ -126,7 +129,7 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
                                 }
                             }
                             else if (responseJSON.has("ERREUR")) {
-
+                                Toast.makeText(context, responseJSON.getString("ERREUR"), Toast.LENGTH_LONG).show();
                             }
                         }
                         catch (Exception e) {
@@ -136,5 +139,62 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
                 }).start();
             }
         }
+    }
+
+    private void startBackgroundThreads() {
+        startGetNewMessagesThread();
+    }
+
+    private void startGetNewMessagesThread() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    try {
+                        HttpClient httpClient = HttpClient.instanceOfClient();
+
+                        String response = "";
+
+                        response = httpClient.get("messages/" + conversation.getId() + "/" + messageAdapter.getItem(messageAdapter.getCount() - 1).getId());
+
+                        JSONObject responseJSON = new JSONObject(response);
+
+                        if (responseJSON.has("data")) {
+                            try {
+                                JSONArray data = responseJSON.getJSONArray("data");
+
+                                if (data.length() > 0) {
+                                    ArrayList<Message> newMessages = new ArrayList<>();
+
+                                    for (int i = 0; i < data.length(); i++) {
+                                        newMessages.add(new Message(data.getJSONObject(i)));
+                                    }
+
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            messages.addAll(newMessages);
+                                            messageAdapter.notifyDataSetChanged();
+                                            messagesListView.setSelection(messageAdapter.getCount() - 1);
+                                        }
+                                    });
+                                }
+                            }
+                            catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        else if (responseJSON.has("ERREUR")) {
+                            Toast.makeText(context, responseJSON.getString("ERREUR"), Toast.LENGTH_LONG).show();
+                        }
+
+                        Thread.sleep(1000);
+                    }
+                    catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
     }
 }
