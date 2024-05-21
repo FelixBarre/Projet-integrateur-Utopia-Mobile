@@ -122,6 +122,9 @@
     <string name="statut_par_defaut">statut par défaut</string>
     <string name="montant_demande_pret">Montant: %s $</string>
     <string name="duree_demande_pret">Durée : %s mois</string>
+    <string name="ajoutDemande">Ajouter une \ndemande de prêt</string>
+    <string name="entrerRaisonText">Entrer la raison de la demande:</string>
+    <string name="montantDemande">Entrer le montant à emprunter:</string>
 
     <!-- Messagerie -->
     <string name="titreConversations">Vos conversations</string>
