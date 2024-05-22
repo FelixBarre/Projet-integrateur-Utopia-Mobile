@@ -98,7 +98,6 @@ public class MainActivity extends AppCompatActivity {
             case RequestCodes.MAIN_ACTIVITY_REQUEST_CODE:
                 outputError.setText("");
                 if (resultCode == Activity.RESULT_OK) {
-                    assert data != null;
                     String responsePOST = data.getStringExtra("response");
                     try {
                         JSONObject response = new JSONObject(responsePOST);
@@ -148,24 +147,6 @@ public class MainActivity extends AppCompatActivity {
                                     }
                                 }
                             }).start();
-
-                            /*
-                            if (userManager.checkUserIsUser(inputCourriel.getText().toString(), MainActivity.this)) {
-                                SQLiteManager sqLiteManager = SQLiteManager.instanceOfDatabase(MainActivity.this);
-
-                                User user = userManager.getUser(inputCourriel.getText().toString());
-                                UserManager.setAuthUser(user);
-
-                                if (sqLiteManager.loadUserIntoDatabase(user)) {
-                                    Intent intent = new Intent(MainActivity.this, accueil.class);
-                                    startActivity(intent);
-                                } else {
-                                    outputError.setText(getString(R.string.erreurChargementUser));
-                                }
-                            } else {
-                                outputError.setText(getString(R.string.userHasNoAccess));
-                            }
-                             */
                         }
 
                     } catch (Exception e) {
