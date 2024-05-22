@@ -1,6 +1,8 @@
 package com.example.projetintgrateur_utopiamobile;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
@@ -30,6 +32,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class MainActivity extends AppCompatActivity {
+    AlertDialog.Builder builderConfirm;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
         sqLiteManager.close();
         context.deleteDatabase("BanqueUtopia");
 
+        builderConfirm = new AlertDialog.Builder(this);
+
         EditText inputCourriel = (EditText) findViewById(R.id.courrielInput);
         EditText inputPassword = (EditText) findViewById(R.id.passwordInput);
         TextView outputError = (TextView) findViewById(R.id.erreursOutput);
@@ -58,52 +63,67 @@ public class MainActivity extends AppCompatActivity {
         btnConnexion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                outputError.setText("");
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            HttpClient httpClient = HttpClient.instanceOfClient();
-                            String responsePOST = httpClient.post("token", "{ \"email\": \"" + inputCourriel.getText() + "\", \"password\": \"" + inputPassword.getText() + "\", \"token_name\": \"tokenAPI\" }");
-                            JSONObject response = new JSONObject(responsePOST);
-                            JSONObject erreur = null;
+                ConnectionManager connectionManager = new ConnectionManager(MainActivity.this);
+                if (connectionManager.isConnected()) {
+                    outputError.setText("");
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                HttpClient httpClient = HttpClient.instanceOfClient();
+                                String responsePOST = httpClient.post("token", "{ \"email\": \"" + inputCourriel.getText() + "\", \"password\": \"" + inputPassword.getText() + "\", \"token_name\": \"tokenAPI\" }");
+                                JSONObject response = new JSONObject(responsePOST);
+                                JSONObject erreur = null;
 
-                            if (response.has("ERREUR")) {
-                                if (response.get("ERREUR").getClass() == JSONObject.class) {
-                                    erreur = new JSONObject(response.get("ERREUR").toString());
-                                    for (int i = 0; i < erreur.length(); i++) {
-                                        String erreurString = erreur.getString(erreur.names().get(i).toString());
-                                        String correctedErreurString = erreurString.replaceAll("[]\"\\[]", "") + "\n";
-                                        outputError.append(correctedErreurString);
-                                    }
-                                } else {
-                                    outputError.setText(response.get("ERREUR").toString());
-                                }
-                            } else if (response.has("SUCCÈS")) {
-                                httpClient.setTokenApi(response.get("SUCCÈS").toString());
-                                UserManager userManager = new UserManager();
-                                if (userManager.checkUserIsUser(inputCourriel.getText().toString())) {
-                                    SQLiteManager sqLiteManager = SQLiteManager.instanceOfDatabase(MainActivity.this);
-
-                                    User user = userManager.getUser(inputCourriel.getText().toString());
-                                    UserManager.setAuthUser(user);
-
-                                    if (sqLiteManager.loadUserIntoDatabase(user)) {
-                                        Intent intent = new Intent(MainActivity.this, accueil.class);
-                                        startActivity(intent);
+                                if (response.has("ERREUR")) {
+                                    if (response.get("ERREUR").getClass() == JSONObject.class) {
+                                        erreur = new JSONObject(response.get("ERREUR").toString());
+                                        for (int i = 0; i < erreur.length(); i++) {
+                                            String erreurString = erreur.getString(erreur.names().get(i).toString());
+                                            String correctedErreurString = erreurString.replaceAll("[]\"\\[]", "") + "\n";
+                                            outputError.append(correctedErreurString);
+                                        }
                                     } else {
-                                        outputError.setText(getString(R.string.erreurChargementUser));
+                                        outputError.setText(response.get("ERREUR").toString());
                                     }
-                                } else {
-                                    outputError.setText(getString(R.string.userHasNoAccess));
+                                } else if (response.has("SUCCÈS")) {
+                                    httpClient.setTokenApi(response.get("SUCCÈS").toString());
+                                    UserManager userManager = new UserManager();
+                                    if (userManager.checkUserIsUser(inputCourriel.getText().toString())) {
+                                        SQLiteManager sqLiteManager = SQLiteManager.instanceOfDatabase(MainActivity.this);
+
+                                        User user = userManager.getUser(inputCourriel.getText().toString());
+                                        UserManager.setAuthUser(user);
+
+                                        if (sqLiteManager.loadUserIntoDatabase(user)) {
+                                            Intent intent = new Intent(MainActivity.this, accueil.class);
+                                            startActivity(intent);
+                                        } else {
+                                            outputError.setText(getString(R.string.erreurChargementUser));
+                                        }
+                                    } else {
+                                        outputError.setText(getString(R.string.userHasNoAccess));
+                                    }
                                 }
                             }
+                            catch (Exception e) {
+                                e.printStackTrace();
+                            }
                         }
-                        catch (Exception e) {
-                            e.printStackTrace();
+                    }).start();
+                } else {
+                    builderConfirm.setMessage(getString(R.string.connexionFailedMessage));
+                    builderConfirm.setPositiveButton(getString(R.string.retour), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
                         }
-                    }
-                }).start();
+                    });
+
+                    AlertDialog alertConfirm = builderConfirm.create();
+                    alertConfirm.setTitle(getString(R.string.attentionAlert));
+                    alertConfirm.show();
+                }
             }
         });
     }
