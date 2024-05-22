@@ -1,12 +1,15 @@
 package com.example.projetintgrateur_utopiamobile;
 
+import android.app.Activity;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,6 +19,8 @@ import androidx.annotation.Nullable;
 
 import org.json.JSONObject;
 
+import java.io.InputStream;
+import java.net.URL;
 import java.util.List;
 
 public class MessageAdapter extends ArrayAdapter<Message> {
@@ -40,6 +45,8 @@ public class MessageAdapter extends ArrayAdapter<Message> {
         TextView textMessage = (TextView) convertView.findViewById(R.id.textMessage);
         ImageButton imageButtonEditMessage = (ImageButton) convertView.findViewById(R.id.imageButtonEditMessage);
         ImageButton imageButtonDeleteMessage = (ImageButton) convertView.findViewById(R.id.imageButtonDeleteMessage);
+        ImageView imageViewPieceJointe = (ImageView) convertView.findViewById(R.id.imageViewPieceJointe);
+        TextView textViewPieceJointe = (TextView) convertView.findViewById(R.id.textViewPieceJointe);
 
         if (message.getEnvoyeur().getId() == UserManager.getAuthUser().getId()) {
             layoutMessage.setGravity(Gravity.RIGHT);
@@ -90,6 +97,37 @@ public class MessageAdapter extends ArrayAdapter<Message> {
                 }).start();
             }
         });
+
+        imageViewPieceJointe.setVisibility(View.GONE);
+        textViewPieceJointe.setVisibility(View.GONE);
+
+        if (message.getCheminDuFichier() != "null") {
+            String chemin = message.getCheminDuFichier();
+
+            if (chemin.endsWith("jpg") || chemin.endsWith("jpeg") || chemin.endsWith("png")) {
+                imageViewPieceJointe.setVisibility(View.VISIBLE);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            Drawable image = Drawable.createFromStream((InputStream) new URL(HttpClient.urlSite + chemin).getContent(), chemin);
+
+                            ((Activity) context).runOnUiThread(new Runnable() {
+                                public void run() {
+                                    imageViewPieceJointe.setImageDrawable(image);
+                                }
+                            });
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }).start();
+            }
+            else if (chemin.endsWith("pdf")) {
+                textViewPieceJointe.setVisibility(View.VISIBLE);
+                textViewPieceJointe.setText(chemin.substring(chemin.lastIndexOf("/") + 1));
+            }
+        }
 
         return convertView;
     }
