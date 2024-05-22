@@ -2,7 +2,10 @@ package com.example.projetintgrateur_utopiamobile;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,6 +42,7 @@ public class MessageAdapter extends ArrayAdapter<Message> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.row_message, parent, false);
         }
 
+        LinearLayout layoutContenuMessage = (LinearLayout) convertView.findViewById(R.id.layoutContenuMessage);
         LinearLayout layoutMessage = (LinearLayout) convertView.findViewById(R.id.layoutMessage);
         LinearLayout layoutButtonsMessage = (LinearLayout) convertView.findViewById(R.id.layoutButtonsMessage);
         TextView textHeureMessage = (TextView) convertView.findViewById(R.id.textHeureMessage);
@@ -50,11 +54,11 @@ public class MessageAdapter extends ArrayAdapter<Message> {
 
         if (message.getEnvoyeur().getId() == UserManager.getAuthUser().getId()) {
             layoutMessage.setGravity(Gravity.RIGHT);
-            textMessage.setBackgroundColor(context.getColor(R.color.utopia_turquoise));
+            layoutContenuMessage.setBackgroundColor(context.getColor(R.color.utopia_turquoise));
             layoutButtonsMessage.setVisibility(View.VISIBLE);
         }
         else {
-            textMessage.setBackgroundColor(context.getColor(R.color.utopia_turquoise_fonce));
+            layoutContenuMessage.setBackgroundColor(context.getColor(R.color.utopia_turquoise_fonce));
             layoutMessage.setGravity(Gravity.LEFT);
             layoutButtonsMessage.setVisibility(View.GONE);
         }
@@ -123,9 +127,18 @@ public class MessageAdapter extends ArrayAdapter<Message> {
                     }
                 }).start();
             }
-            else if (chemin.endsWith("pdf")) {
+            else {
                 textViewPieceJointe.setVisibility(View.VISIBLE);
                 textViewPieceJointe.setText(chemin.substring(chemin.lastIndexOf("/") + 1));
+
+                textViewPieceJointe.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(HttpClient.urlSite + chemin));
+                        intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                        context.startActivity(intent);
+                    }
+                });
             }
         }
 

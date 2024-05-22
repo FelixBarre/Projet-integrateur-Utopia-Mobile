@@ -36,27 +36,31 @@ public class EditCompteActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String nomCompte = editNomCompte.getText().toString();
-                Intent intent = getIntent();
-                int idCompte = intent.getIntExtra("id_compte", 0);
+                if (nomCompte.isEmpty()) {
+                    editNomCompte.setError("Ce champ est obligatoire");
+                } else {
+                    Intent intent = getIntent();
+                    int idCompte = intent.getIntExtra("id_compte", 0);
 
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            HttpClient httpClient = HttpClient.instanceOfClient();
-                            String responsePOST = httpClient.post("modification/compteBancaire", "{ \"id\": \"" + idCompte + "\", \"nom\": \"" + nomCompte + "\", \"token_name\": \"tokenAPI\" }");
-                            JSONObject Json = new JSONObject(responsePOST);
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                HttpClient httpClient = HttpClient.instanceOfClient();
+                                String responsePOST = httpClient.post("modification/compteBancaire", "{ \"id\": \"" + idCompte + "\", \"nom\": \"" + nomCompte + "\", \"token_name\": \"tokenAPI\" }");
+                                JSONObject Json = new JSONObject(responsePOST);
 
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        } catch (JSONException e) {
-                            throw new RuntimeException(e);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            } catch (JSONException e) {
+                                throw new RuntimeException(e);
+                            }
+                            Intent intent = new Intent(EditCompteActivity.this, ComptesBancairesActivity.class);
+                            startActivity(intent);
+                            finish();
                         }
-                        Intent intent = new Intent(EditCompteActivity.this, ComptesBancairesActivity.class);
-                        startActivity(intent);
-                        finish();
-                    }
-                }).start();
+                    }).start();
+                }
             }
         });
     }
