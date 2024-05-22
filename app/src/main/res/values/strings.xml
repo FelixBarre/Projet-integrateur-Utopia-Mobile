@@ -109,6 +109,7 @@
     <string name="valideTransaction">Terminer </string>
     <string name="stopTransaction">Annuler </string>
     <string name="confirmCancel">Confirmer </string>
+    <string name="textErrorTransaction">Désolé, il y a aucune transaction pour ce compte.</string>
 
     <string-array name="transactionType">
         <item>Dépôt</item>

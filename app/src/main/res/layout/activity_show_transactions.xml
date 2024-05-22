@@ -33,6 +33,14 @@
             android:layout_marginTop="15dp"
             android:gravity="center"/>
 
+        <TextView
+            android:id="@+id/textError"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="25dp"
+            android:layout_gravity="center"
+            android:text="" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewTransaction"
             android:layout_width="wrap_content"
@@ -40,7 +48,10 @@
             android:layout_gravity="center_horizontal" />
 
 
+
     </LinearLayout>
+
+
 
     <com.example.projetintgrateur_utopiamobile.FooterView
         android:layout_width="match_parent"
