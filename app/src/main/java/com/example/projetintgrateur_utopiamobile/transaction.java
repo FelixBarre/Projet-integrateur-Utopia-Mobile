@@ -86,7 +86,6 @@ public class transaction extends AppCompatActivity implements View.OnClickListen
             transactionEtat = 3;
             destionataireTransaction = 1;
             expediteurTransaction = 0;
-
         } else if (typeTransaction.equals("Rétrait")) {
             transactionType = 2;
             transactionEtat = 3;
@@ -132,6 +131,7 @@ public class transaction extends AppCompatActivity implements View.OnClickListen
             startActivity(intent);
 
         } else if (v.getId()==R.id.annulerTransaction) {
+            transactionEtat = 3;
             new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -141,7 +141,7 @@ public class transaction extends AppCompatActivity implements View.OnClickListen
                                 "\"id_compte_envoyeur\":\""+expediteurTransaction + "\","+
                                 "\"id_compte_receveur\":\""+destionataireTransaction +"\"," +
                                 "\"id_type_transaction\":\""+transactionType+"\"," +
-                                "\"id_etat_transaction\":\""+ 2 +"\"" +
+                                "\"id_etat_transaction\":\""+transactionEtat+"\"" +
                                 " }");
                         int i=0;
                         JSONObject Json = new JSONObject(responsePOST);
