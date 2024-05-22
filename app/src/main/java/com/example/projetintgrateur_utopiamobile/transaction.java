@@ -81,19 +81,18 @@ public class transaction extends AppCompatActivity implements View.OnClickListen
 
         String typeTransaction = type.getSelectedItem().toString();
 
-        if(typeTransaction == "Dépôt"){
+        if(typeTransaction.equals("Dépôt")){
             transactionType = 1;
             transactionEtat = 3;
             destionataireTransaction = 1;
             expediteurTransaction = 0;
-
-        } else if (typeTransaction =="Rétrait") {
+        } else if (typeTransaction.equals("Rétrait")) {
             transactionType = 2;
             transactionEtat = 3;
             destionataireTransaction = 0;
             expediteurTransaction = 1;
 
-        } else if (type.getSelectedItem().toString()=="Virement") {
+        } else if (typeTransaction.equals("Virement")) {
             transactionType = 3;
             transactionEtat = 1;
             destionataireTransaction = 2;
@@ -103,22 +102,21 @@ public class transaction extends AppCompatActivity implements View.OnClickListen
 
         String montantTransaction = montant.getText().toString();
         double transactionMontant = Double.parseDouble(montantTransaction);
-        destionataireTransaction = 2;
-        expediteurTransaction = 1;
-
 
 
         if (v.getId()==R.id.valideTransaction) {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
+
                     try {
+
                         HttpClient httpClient = HttpClient.instanceOfClient();
                         String responsePOST = httpClient.post("transactionApi/new", "{ \"montant\": \""+ transactionMontant +"\", " +
                                 "\"id_compte_envoyeur\":\""+expediteurTransaction + "\","+
-                                "\"id_compte_receveur\":\""+ destionataireTransaction +"\"," +
-                                "\"id_type_transaction\":\""+ transactionType+"\"," +
-                                "\"id_etat_transaction\":\""+ 1 +"\"" +
+                                "\"id_compte_receveur\":\""+destionataireTransaction +"\"," +
+                                "\"id_type_transaction\":\""+transactionType+"\"," +
+                                "\"id_etat_transaction\":\""+transactionEtat+"\"" +
                                 " }");
 
                         JSONObject Json = new JSONObject(responsePOST);
@@ -134,7 +132,9 @@ public class transaction extends AppCompatActivity implements View.OnClickListen
             Intent intent = new Intent(transaction.this, accueil.class);
             startActivity(intent);
 
+
         } else if (v.getId()==R.id.annulerTransaction) {
+            transactionEtat = 2;
             new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -142,9 +142,9 @@ public class transaction extends AppCompatActivity implements View.OnClickListen
                         HttpClient httpClient = HttpClient.instanceOfClient();
                         String responsePOST = httpClient.post("transactionApi/new", "{ \"montant\": \""+ transactionMontant +"\", " +
                                 "\"id_compte_envoyeur\":\""+expediteurTransaction + "\","+
-                                "\"id_compte_receveur\":\""+ destionataireTransaction +"\"," +
-                                "\"id_type_transaction\":\""+ transactionType+"\"," +
-                                "\"id_etat_transaction\":\""+ 2 +"\"" +
+                                "\"id_compte_receveur\":\""+destionataireTransaction +"\"," +
+                                "\"id_type_transaction\":\""+transactionType+"\"," +
+                                "\"id_etat_transaction\":\""+transactionEtat+"\"" +
                                 " }");
 
                         JSONObject Json = new JSONObject(responsePOST);
