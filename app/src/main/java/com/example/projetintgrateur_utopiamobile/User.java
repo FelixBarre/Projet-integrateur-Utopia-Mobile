@@ -4,16 +4,16 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class User {
-    public int id;
-    public String nom;
-    public String prenom;
-    public String telephone;
-    public String noCivique;
-    public String noPorte;
-    public String rue;
-    public int idVille;
-    public String codePostal;
-    public String email;
+    private int id;
+    private String nom;
+    private String prenom;
+    private String telephone;
+    private String noCivique;
+    private String noPorte;
+    private String rue;
+    private int idVille;
+    private String codePostal;
+    private String email;
 
     public User() {
         this.id = Integer.parseInt(null);
