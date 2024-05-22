@@ -28,6 +28,7 @@ import java.util.Locale;
 
 public class ConversationActivity extends AppCompatActivity implements View.OnClickListener {
     private Context context;
+    private HttpClient httpClient;
     private TextView titreConversation;
     private EditText editTextMessage;
     private Button buttonEnvoyerMessage;
@@ -73,6 +74,7 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
     }
 
     private void initWidgets() {
+        httpClient = HttpClient.instanceOfClient();
         titreConversation = (TextView) findViewById(R.id.titreConversation);
         editTextMessage = (EditText) findViewById(R.id.editTextMessage);
         buttonEnvoyerMessage = (Button) findViewById(R.id.buttonEnvoyerMessage);
@@ -147,8 +149,6 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
     }
 
     private void getNewMessages() throws Exception {
-        HttpClient httpClient = HttpClient.instanceOfClient();
-
         String response = "";
 
         response = httpClient.get("messages/" + conversation.getId() + "/" + messageAdapter.getItem(messageAdapter.getCount() - 1).getId());
@@ -184,8 +184,6 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
     }
 
     private void getUpdatedMessages() throws Exception {
-        HttpClient httpClient = HttpClient.instanceOfClient();
-
         String response = httpClient.get("messages/updated/" + conversation.getId() + "/" + dateDerniereUpdate);
 
         JSONObject responseJSON = new JSONObject(response);
@@ -244,7 +242,6 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
 
     private void envoyerMessage() {
         String messageString = editTextMessage.getText().toString();
-        editTextMessage.setText("");
 
         if (messageString.length() > 255) {
             Toast.makeText(this, getResources().getString(R.string.erreur255), Toast.LENGTH_LONG).show();
@@ -253,8 +250,6 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
                 @Override
                 public void run() {
                     try {
-                        HttpClient httpClient = HttpClient.instanceOfClient();
-
                         String body = "{ \"texte\" : \"" + messageString + "\", \"id_conversation\" : " + conversation.getId() + " }";
                         String response = "";
 
@@ -263,7 +258,12 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
                         JSONObject responseJSON = new JSONObject(response);
 
                         if (responseJSON.has("SUCCÈS")) {
-
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    editTextMessage.setText("");
+                                }
+                            });
                         } else if (responseJSON.has("ERREUR")) {
                             Toast.makeText(context, responseJSON.getString("ERREUR"), Toast.LENGTH_LONG).show();
                         }
@@ -278,8 +278,6 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
     private void modifierMessage() {
         if (idMessageUpdating != 0) {
             String messageString = editTextMessage.getText().toString();
-            editTextMessage.setText("");
-            buttonEnvoyerMessage.setText(getResources().getString(R.string.envoyer));
 
             if (messageString.length() > 255) {
                 Toast.makeText(this, getResources().getString(R.string.erreur255), Toast.LENGTH_LONG).show();
@@ -288,8 +286,6 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
                     @Override
                     public void run() {
                         try {
-                            HttpClient httpClient = HttpClient.instanceOfClient();
-
                             String body = "{ \"texte\" : \"" + messageString + "\" }";
                             String response = "";
 
@@ -299,6 +295,13 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
 
                             if (responseJSON.has("SUCCÈS")) {
                                 idMessageUpdating = 0;
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        editTextMessage.setText("");
+                                        buttonEnvoyerMessage.setText(getResources().getString(R.string.envoyer));
+                                    }
+                                });
                             } else if (responseJSON.has("ERREUR")) {
                                 Toast.makeText(context, responseJSON.getString("ERREUR"), Toast.LENGTH_LONG).show();
                             }
