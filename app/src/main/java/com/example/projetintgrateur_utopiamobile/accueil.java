@@ -46,6 +46,13 @@ public class accueil  extends AppCompatActivity implements View.OnClickListener{
         if (v.getId()==R.id.buttonCompte) {
             Intent intent = new Intent(accueil.this, ComptesBancairesActivity.class);
             startActivity(intent);
+        } else if (v.getId()==R.id.btnPaiement) {
+            Intent intent = new Intent(accueil.this, transaction.class);
+            startActivity(intent);
+
+        } else if (v.getId()==R.id.btnDemande) {
+            Intent intent = new Intent(accueil.this, DemandePretActivity.class);
+            startActivity(intent);
         }
 
     }

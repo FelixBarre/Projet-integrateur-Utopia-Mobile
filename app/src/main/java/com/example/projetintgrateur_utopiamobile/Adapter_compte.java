@@ -42,18 +42,22 @@ public class Adapter_compte extends RecyclerView.Adapter<Adapter_compte.MyViewHo
         holder.modifButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, EditCompteActivity.class);
-                intent.putExtra("id_compte", comptes.get(position).getId_compte());
-                startActivity(context, intent, null);
+                    Intent intent = new Intent(context, EditCompteActivity.class);
+                    intent.putExtra("id_compte", comptes.get(position).getId_compte());
+                    startActivity(context, intent, null);
             }
         });
-        //joel met ta page transaction d'un compte dans cette fonction
-        /*holder.layoutCompte.setOnClickListener(new View.OnClickListener() {
+
+        holder.layoutCompte.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                Intent intent = new Intent(context, show_transactions.class);
+                //intent.putExtra("id_compte", comptes.get(position).getId_compte());
+                startActivity(context, intent, null);
+
             }
-        });*/
+        });
     }
 
     @Override
