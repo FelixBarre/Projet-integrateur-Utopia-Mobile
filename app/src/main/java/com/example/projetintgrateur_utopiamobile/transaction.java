@@ -108,13 +108,14 @@ public class transaction extends AppCompatActivity implements View.OnClickListen
             new Thread(new Runnable() {
                 @Override
                 public void run() {
+                    transactionEtat = 1;
                     try {
                         HttpClient httpClient = HttpClient.instanceOfClient();
                         String responsePOST = httpClient.post("transactionApi/new", "{ \"montant\": \""+ transactionMontant +"\", " +
                                 "\"id_compte_envoyeur\":\""+expediteurTransaction + "\","+
-                                "\"id_compte_receveur\":\""+ destionataireTransaction +"\"," +
-                                "\"id_type_transaction\":\""+ transactionType+"\"," +
-                                "\"id_etat_transaction\":\""+ 1 +"\"" +
+                                "\"id_compte_receveur\":\""+destionataireTransaction+"\"," +
+                                "\"id_type_transaction\":\""+transactionType+"\"," +
+                                "\"id_etat_transaction\":\""+transactionEtat +"\"" +
                                 " }");
 
                         JSONObject Json = new JSONObject(responsePOST);
