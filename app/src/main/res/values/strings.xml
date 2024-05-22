@@ -128,6 +128,7 @@
     <string name="ajoutDemande">Ajouter une \ndemande de prêt</string>
     <string name="entrerRaisonText">Entrer la raison de la demande:</string>
     <string name="montantDemande">Entrer le montant à emprunter:</string>
+    <string name="raison_par_defaut">raison_par_defaut</string>
 
     
     <!-- Désactivation de comnptes -->

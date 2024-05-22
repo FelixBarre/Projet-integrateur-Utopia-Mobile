@@ -52,7 +52,6 @@ public class FormDemandePretActivity extends AppCompatActivity {
                 }  else if (!match) {
                     editMontant.setError("Le montant doit avoir deux chiffres après le point.");
                 } else {
-
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
