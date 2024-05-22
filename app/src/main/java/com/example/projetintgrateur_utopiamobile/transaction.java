@@ -108,16 +108,17 @@ public class transaction extends AppCompatActivity implements View.OnClickListen
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    transactionEtat = 1;
+
                     try {
+
                         HttpClient httpClient = HttpClient.instanceOfClient();
                         String responsePOST = httpClient.post("transactionApi/new", "{ \"montant\": \""+ transactionMontant +"\", " +
                                 "\"id_compte_envoyeur\":\""+expediteurTransaction + "\","+
-                                "\"id_compte_receveur\":\""+destionataireTransaction+"\"," +
+                                "\"id_compte_receveur\":\""+destionataireTransaction +"\"," +
                                 "\"id_type_transaction\":\""+transactionType+"\"," +
-                                "\"id_etat_transaction\":\""+transactionEtat +"\"" +
+                                "\"id_etat_transaction\":\""+transactionEtat+"\"" +
                                 " }");
-
+                        int i=0;
                         JSONObject Json = new JSONObject(responsePOST);
 
                     } catch (IOException e) {
@@ -130,6 +131,7 @@ public class transaction extends AppCompatActivity implements View.OnClickListen
 
             Intent intent = new Intent(transaction.this, accueil.class);
             startActivity(intent);
+
 
         } else if (v.getId()==R.id.annulerTransaction) {
             transactionEtat = 3;
@@ -144,7 +146,7 @@ public class transaction extends AppCompatActivity implements View.OnClickListen
                                 "\"id_type_transaction\":\""+transactionType+"\"," +
                                 "\"id_etat_transaction\":\""+transactionEtat+"\"" +
                                 " }");
-                        int i=0;
+
                         JSONObject Json = new JSONObject(responsePOST);
 
                     } catch (IOException e) {
