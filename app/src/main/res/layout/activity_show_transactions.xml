@@ -37,8 +37,7 @@
             android:id="@+id/recyclerViewTransaction"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="150dp" />
+            android:layout_gravity="center_horizontal" />
 
 
     </LinearLayout>
