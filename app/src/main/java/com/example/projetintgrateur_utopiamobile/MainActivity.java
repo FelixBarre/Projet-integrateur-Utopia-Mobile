@@ -1,6 +1,8 @@
 package com.example.projetintgrateur_utopiamobile;
 
+import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.view.View;
@@ -38,6 +40,11 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        Context context = MainActivity.this;
+        SQLiteManager sqLiteManager = SQLiteManager.instanceOfDatabase(MainActivity.this);
+        sqLiteManager.close();
+        context.deleteDatabase("BanqueUtopia");
 
         EditText inputCourriel = (EditText) findViewById(R.id.courrielInput);
         EditText inputPassword = (EditText) findViewById(R.id.passwordInput);
