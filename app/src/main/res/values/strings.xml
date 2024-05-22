@@ -7,11 +7,12 @@
     <string name="confirmer">Confirmer</string>
     <string name="annuler">Annuler</string>
     <string name="continuer">Continuer</string>
-    <string name="cancel">Annuler</string>
+    <string name="retour">Retour</string>
     <string name="attentionAlert">Attention - action requise pour continuer</string>
     <string name="raison">Raison</string>
     <string name="description">Description</string>
     <string name="compte">Compte</string>
+    <string name="connexionFailedMessage">Vous n\u2019êtes pas connecté à internet. Veuillez vous connecter à internet pour effectuer cette action.</string>
 
     <!-- Profil général -->
     <string name="courrielLabel">Courriel</string>
@@ -128,6 +129,7 @@
     <string name="ajoutDemande">Ajouter une \ndemande de prêt</string>
     <string name="entrerRaisonText">Entrer la raison de la demande:</string>
     <string name="montantDemande">Entrer le montant à emprunter:</string>
+    <string name="raison_par_defaut">raison_par_defaut</string>
 
     
     <!-- Désactivation de comnptes -->
