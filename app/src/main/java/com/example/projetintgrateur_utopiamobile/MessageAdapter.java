@@ -1,12 +1,18 @@
 package com.example.projetintgrateur_utopiamobile;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,6 +22,8 @@ import androidx.annotation.Nullable;
 
 import org.json.JSONObject;
 
+import java.io.InputStream;
+import java.net.URL;
 import java.util.List;
 
 public class MessageAdapter extends ArrayAdapter<Message> {
@@ -34,20 +42,23 @@ public class MessageAdapter extends ArrayAdapter<Message> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.row_message, parent, false);
         }
 
+        LinearLayout layoutContenuMessage = (LinearLayout) convertView.findViewById(R.id.layoutContenuMessage);
         LinearLayout layoutMessage = (LinearLayout) convertView.findViewById(R.id.layoutMessage);
         LinearLayout layoutButtonsMessage = (LinearLayout) convertView.findViewById(R.id.layoutButtonsMessage);
         TextView textHeureMessage = (TextView) convertView.findViewById(R.id.textHeureMessage);
         TextView textMessage = (TextView) convertView.findViewById(R.id.textMessage);
         ImageButton imageButtonEditMessage = (ImageButton) convertView.findViewById(R.id.imageButtonEditMessage);
         ImageButton imageButtonDeleteMessage = (ImageButton) convertView.findViewById(R.id.imageButtonDeleteMessage);
+        ImageView imageViewPieceJointe = (ImageView) convertView.findViewById(R.id.imageViewPieceJointe);
+        TextView textViewPieceJointe = (TextView) convertView.findViewById(R.id.textViewPieceJointe);
 
         if (message.getEnvoyeur().getId() == UserManager.getAuthUser().getId()) {
             layoutMessage.setGravity(Gravity.RIGHT);
-            textMessage.setBackgroundColor(context.getColor(R.color.utopia_turquoise));
+            layoutContenuMessage.setBackgroundColor(context.getColor(R.color.utopia_turquoise));
             layoutButtonsMessage.setVisibility(View.VISIBLE);
         }
         else {
-            textMessage.setBackgroundColor(context.getColor(R.color.utopia_turquoise_fonce));
+            layoutContenuMessage.setBackgroundColor(context.getColor(R.color.utopia_turquoise_fonce));
             layoutMessage.setGravity(Gravity.LEFT);
             layoutButtonsMessage.setVisibility(View.GONE);
         }
@@ -90,6 +101,46 @@ public class MessageAdapter extends ArrayAdapter<Message> {
                 }).start();
             }
         });
+
+        imageViewPieceJointe.setVisibility(View.GONE);
+        textViewPieceJointe.setVisibility(View.GONE);
+
+        if (message.getCheminDuFichier() != "null") {
+            String chemin = message.getCheminDuFichier();
+
+            if (chemin.endsWith("jpg") || chemin.endsWith("jpeg") || chemin.endsWith("png")) {
+                imageViewPieceJointe.setVisibility(View.VISIBLE);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            Drawable image = Drawable.createFromStream((InputStream) new URL(HttpClient.urlSite + chemin).getContent(), chemin);
+
+                            ((Activity) context).runOnUiThread(new Runnable() {
+                                public void run() {
+                                    imageViewPieceJointe.setImageDrawable(image);
+                                }
+                            });
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }).start();
+            }
+            else {
+                textViewPieceJointe.setVisibility(View.VISIBLE);
+                textViewPieceJointe.setText(chemin.substring(chemin.lastIndexOf("/") + 1));
+
+                textViewPieceJointe.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(HttpClient.urlSite + chemin));
+                        intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                        context.startActivity(intent);
+                    }
+                });
+            }
+        }
 
         return convertView;
     }

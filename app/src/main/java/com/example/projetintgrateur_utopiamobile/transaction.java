@@ -26,6 +26,12 @@ public class transaction extends AppCompatActivity implements View.OnClickListen
     private Button btnTermine;
     private Button btnAnnule;
 
+    Integer transactionType;
+    Integer transactionEtat;
+
+    Integer destionataireTransaction;
+    Integer expediteurTransaction;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,10 +77,86 @@ public class transaction extends AppCompatActivity implements View.OnClickListen
         EditText montant = (EditText) findViewById(R.id.montantTransaction);
         Spinner destinataire = (Spinner) findViewById(R.id.destinationTansaction);
 
+
+
+        String typeTransaction = type.getSelectedItem().toString();
+
+        if(typeTransaction.equals("Dépôt")){
+            transactionType = 1;
+            transactionEtat = 3;
+            destionataireTransaction = 1;
+            expediteurTransaction = 0;
+        } else if (typeTransaction.equals("Rétrait")) {
+            transactionType = 2;
+            transactionEtat = 3;
+            destionataireTransaction = 0;
+            expediteurTransaction = 1;
+
+        } else if (typeTransaction.equals("Virement")) {
+            transactionType = 3;
+            transactionEtat = 1;
+            destionataireTransaction = 2;
+            expediteurTransaction = 1;
+
+        }
+
+        String montantTransaction = montant.getText().toString();
+        double transactionMontant = Double.parseDouble(montantTransaction);
+
+
         if (v.getId()==R.id.valideTransaction) {
-            Intent intent = new Intent(transaction.this, ComptesBancairesActivity.class);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+
+                    try {
+
+                        HttpClient httpClient = HttpClient.instanceOfClient();
+                        String responsePOST = httpClient.post("transactionApi/new", "{ \"montant\": \""+ transactionMontant +"\", " +
+                                "\"id_compte_envoyeur\":\""+expediteurTransaction + "\","+
+                                "\"id_compte_receveur\":\""+destionataireTransaction +"\"," +
+                                "\"id_type_transaction\":\""+transactionType+"\"," +
+                                "\"id_etat_transaction\":\""+transactionEtat+"\"" +
+                                " }");
+
+                        JSONObject Json = new JSONObject(responsePOST);
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }).start();
+
+            Intent intent = new Intent(transaction.this, accueil.class);
             startActivity(intent);
+
+
         } else if (v.getId()==R.id.annulerTransaction) {
+            transactionEtat = 2;
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        HttpClient httpClient = HttpClient.instanceOfClient();
+                        String responsePOST = httpClient.post("transactionApi/new", "{ \"montant\": \""+ transactionMontant +"\", " +
+                                "\"id_compte_envoyeur\":\""+expediteurTransaction + "\","+
+                                "\"id_compte_receveur\":\""+destionataireTransaction +"\"," +
+                                "\"id_type_transaction\":\""+transactionType+"\"," +
+                                "\"id_etat_transaction\":\""+transactionEtat+"\"" +
+                                " }");
+
+                        JSONObject Json = new JSONObject(responsePOST);
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }).start();
+
             Intent intent = new Intent(transaction.this, cancel_transaction.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
             Bundle bundle = new Bundle();
@@ -82,8 +164,8 @@ public class transaction extends AppCompatActivity implements View.OnClickListen
             bundle.putString("montantTransaction", montant.getText().toString());
             bundle.putString("destinataireTransaction", destinataire.getSelectedItem().toString());
             intent.putExtras(bundle);
-
             startActivity(intent);
+
         }
 
     }

@@ -28,6 +28,7 @@ import java.util.Locale;
 
 public class ConversationActivity extends AppCompatActivity implements View.OnClickListener {
     private Context context;
+    private HttpClient httpClient;
     private TextView titreConversation;
     private EditText editTextMessage;
     private Button buttonEnvoyerMessage;
@@ -37,6 +38,8 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
     private User interlocuteur;
     private String dateDerniereUpdate;
     private int idMessageUpdating = 0;
+    private DateFormat isoFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX", Locale.CANADA_FRENCH);
+    private DateFormat anneeMoisJour = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CANADA_FRENCH);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +74,7 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
     }
 
     private void initWidgets() {
+        httpClient = HttpClient.instanceOfClient();
         titreConversation = (TextView) findViewById(R.id.titreConversation);
         editTextMessage = (EditText) findViewById(R.id.editTextMessage);
         buttonEnvoyerMessage = (Button) findViewById(R.id.buttonEnvoyerMessage);
@@ -145,8 +149,6 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
     }
 
     private void getNewMessages() throws Exception {
-        HttpClient httpClient = HttpClient.instanceOfClient();
-
         String response = "";
 
         response = httpClient.get("messages/" + conversation.getId() + "/" + messageAdapter.getItem(messageAdapter.getCount() - 1).getId());
@@ -182,11 +184,7 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
     }
 
     private void getUpdatedMessages() throws Exception {
-        HttpClient httpClient = HttpClient.instanceOfClient();
-
-        String lastUpdate = dateDerniereUpdate;
-
-        String response = httpClient.get("messages/updated/" + conversation.getId() + "/" + lastUpdate);
+        String response = httpClient.get("messages/updated/" + conversation.getId() + "/" + dateDerniereUpdate);
 
         JSONObject responseJSON = new JSONObject(response);
 
@@ -195,10 +193,16 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
                 JSONArray data = responseJSON.getJSONArray("data");
 
                 if (data.length() > 0) {
-                    setDateDerniereUpdate(lastUpdate);
+                    Date dateLastMessageUpdate = anneeMoisJour.parse(dateDerniereUpdate);
 
                     for (int i = 0; i < data.length(); i++) {
                         Message updatedMessage = new Message(data.getJSONObject(i));
+
+                        Date dateUpdatedMessage = isoFormat.parse(updatedMessage.getUpdatedAt());
+
+                        if (dateUpdatedMessage.getTime() > dateLastMessageUpdate.getTime()) {
+                            dateLastMessageUpdate = dateUpdatedMessage;
+                        }
 
                         for (int j = 0; j < messageAdapter.getCount(); j++) {
                             if (messageAdapter.getItem(j).getId() == updatedMessage.getId()) {
@@ -213,12 +217,18 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
                             }
                         }
                     }
+
+                    setDateDerniereUpdate(anneeMoisJour.format(dateLastMessageUpdate));
+
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             messageAdapter.notifyDataSetChanged();
                         }
                     });
+                }
+                else {
+                    setDateDerniereUpdate();
                 }
             }
             catch (JSONException e) {
@@ -240,8 +250,6 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
                 @Override
                 public void run() {
                     try {
-                        HttpClient httpClient = HttpClient.instanceOfClient();
-
                         String body = "{ \"texte\" : \"" + messageString + "\", \"id_conversation\" : " + conversation.getId() + " }";
                         String response = "";
 
@@ -278,8 +286,6 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
                     @Override
                     public void run() {
                         try {
-                            HttpClient httpClient = HttpClient.instanceOfClient();
-
                             String body = "{ \"texte\" : \"" + messageString + "\" }";
                             String response = "";
 
@@ -288,11 +294,11 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
                             JSONObject responseJSON = new JSONObject(response);
 
                             if (responseJSON.has("SUCCÈS")) {
+                                idMessageUpdating = 0;
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
                                         editTextMessage.setText("");
-                                        idMessageUpdating = 0;
                                         buttonEnvoyerMessage.setText(getResources().getString(R.string.envoyer));
                                     }
                                 });
