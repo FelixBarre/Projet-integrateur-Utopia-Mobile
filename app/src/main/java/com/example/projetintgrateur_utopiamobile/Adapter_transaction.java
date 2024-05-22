@@ -32,7 +32,12 @@ public class Adapter_transaction extends RecyclerView.Adapter<Adapter_transactio
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.montant.setText(String.valueOf(transactions.get(position).getMontant()));
-        holder.compteReceveur.setText("Vers : " + transactions.get(position).getCompteReceveur());
+        if(transactions.get(position).getCompteReceveur().equals(null)){
+            holder.compteReceveur.setText("Vers : " + transactions.get(position).getCompteEnvoyeur());
+        } else if (transactions.get(position).getCompteEnvoyeur().equals(null)) {
+            holder.compteReceveur.setText("Vers : " + transactions.get(position).getCompteReceveur());
+        }
+
         holder.typeTransaction.setText(transactions.get(position).getTypeTransaction());
         holder.etatTransaction.setText(transactions.get(position).getEtatTransaction());
         holder.dateTransaction.setText(transactions.get(position).getDateTransaction());

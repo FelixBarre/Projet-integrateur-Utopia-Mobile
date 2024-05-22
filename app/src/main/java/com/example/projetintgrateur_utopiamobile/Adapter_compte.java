@@ -53,7 +53,7 @@ public class Adapter_compte extends RecyclerView.Adapter<Adapter_compte.MyViewHo
             public void onClick(View v) {
 
                 Intent intent = new Intent(context, show_transactions.class);
-                //intent.putExtra("id_compte", comptes.get(position).getId_compte());
+                intent.putExtra("id_compte", comptes.get(position).getId_compte());
                 startActivity(context, intent, null);
 
             }

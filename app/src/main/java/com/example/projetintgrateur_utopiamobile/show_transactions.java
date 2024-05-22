@@ -49,8 +49,15 @@ public class show_transactions extends AppCompatActivity {
                         TransactionClass  transaction = new TransactionClass();
                         transaction.setId(objJson.getInt("id"));
                         transaction.setMontant(objJson.getDouble("montant"));
-                        transaction.setCompteEnvoyeur(objJson.getString("id_compte_envoyeur"));
-                        transaction.setCompteReceveur(objJson.getString("id_compte_receveur"));
+                        if (objJson.getString("id_compte_envoyeur").equals(null)){
+                            transaction.setCompteEnvoyeur(objJson.getString("id_compte_receveur"));
+                        } else if (objJson.getString("id_compte_receveur").equals(null)) {
+                            transaction.setCompteReceveur(objJson.getString("id_compte_envoyeur"));
+                        }else{
+                            transaction.setCompteEnvoyeur(objJson.getString("id_compte_envoyeur"));
+                            transaction.setCompteReceveur(objJson.getString("id_compte_receveur"));
+                        }
+
                         transaction.setTypeTransaction(objJson.getString("id_type_transaction"));
                         transaction.setEtatTransaction(objJson.getString("id_etat_transaction"));
                         transaction.setDateTransaction(objJson.getString("created_at"));
