@@ -134,7 +134,7 @@ public class transaction extends AppCompatActivity implements View.OnClickListen
 
 
         } else if (v.getId()==R.id.annulerTransaction) {
-            transactionEtat = 3;
+            transactionEtat = 2;
             new Thread(new Runnable() {
                 @Override
                 public void run() {
