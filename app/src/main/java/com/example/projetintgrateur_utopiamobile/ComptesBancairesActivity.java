@@ -25,8 +25,12 @@ import java.util.ArrayList;
 public class ComptesBancairesActivity extends AppCompatActivity {
 
     public static ArrayList<CompteBancaire> comptes = new ArrayList<>();
+    public ArrayList<CompteBancaire> prets = new ArrayList<>();
+    public ArrayList<Integer> listPret = new ArrayList<>();
     public boolean isIn = false;
+    public boolean estPret = false;
     RecyclerView recyclerViewCompte;
+    RecyclerView recyclerViewPret;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +44,7 @@ public class ComptesBancairesActivity extends AppCompatActivity {
         });
         SQLiteManager sqLiteManager = SQLiteManager.instanceOfDatabase(ComptesBancairesActivity.this);
         recyclerViewCompte = (RecyclerView) findViewById(R.id.recyclerViewCompte);
+        recyclerViewPret = (RecyclerView) findViewById(R.id.recyclerViewPret);
         ImageView addCompte = (ImageView) findViewById(R.id.addCompte);
         addCompte.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,9 +63,18 @@ public class ComptesBancairesActivity extends AppCompatActivity {
                     String responseGET = httpClient.get("comptesBancaires");
                     JSONObject Json = new JSONObject(responseGET);
                     JSONArray arrayJson = Json.getJSONArray("data");
+                    String responsePret = httpClient.get("prets");
+                    JSONObject JsonPret = new JSONObject(responsePret);
+                    JSONArray arrayPret = JsonPret.getJSONArray("data");
+
+                    for (int i = 0; i < arrayPret.length(); i++) {
+                        JSONObject objPretJson = arrayPret.getJSONObject(i);
+                        listPret.add(objPretJson.getInt("id_compte"));
+                    }
 
                     for (int i = 0; i < arrayJson.length(); i++) {
                             isIn = false;
+                            estPret = false;
                             JSONObject objJson = arrayJson.getJSONObject(i);
                             CompteBancaire compte = new CompteBancaire();
                             compte.setId_compte(objJson.getInt("id"));
@@ -81,7 +95,17 @@ public class ComptesBancairesActivity extends AppCompatActivity {
                             }
                             if (isIn == false) {
                                 sqLiteManager.addComptetoDB(compte);
-                                comptes.add(compte);
+                                for (int p = 0; p < listPret.size(); p++) {
+                                    if (compte.getId_compte() == listPret.get(p)) {
+                                        estPret = true;
+                                    }
+                                }
+                                if (estPret == false) {
+                                    comptes.add(compte);
+                                } else {
+                                    prets.add(compte);
+                                }
+
                             }
                     }
 
@@ -92,6 +116,9 @@ public class ComptesBancairesActivity extends AppCompatActivity {
                             recyclerViewCompte.setAdapter(adapterCompte);
                             recyclerViewCompte.setLayoutManager(new LinearLayoutManager(ComptesBancairesActivity.this));
 
+                            Adapter_compte adapterPret = new Adapter_compte(ComptesBancairesActivity.this, prets);
+                            recyclerViewPret.setAdapter(adapterPret);
+                            recyclerViewPret.setLayoutManager(new LinearLayoutManager(ComptesBancairesActivity.this));
                         }
                     });
 
