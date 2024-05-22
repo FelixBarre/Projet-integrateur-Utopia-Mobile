@@ -108,6 +108,7 @@
     <string name="checkVerificationTransaction">Les informations sont exactes </string>
     <string name="valideTransaction">Terminer </string>
     <string name="stopTransaction">Annuler </string>
+    <string name="confirmCancel">Confirmer </string>
 
     <string-array name="transactionType">
         <item>Dépôt</item>

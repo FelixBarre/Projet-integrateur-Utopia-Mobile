@@ -14,6 +14,8 @@ import androidx.core.view.WindowInsetsCompat;
 public class accueil  extends AppCompatActivity implements View.OnClickListener{
 
     private Button btnVoirPlus;
+    private Button btnPayer;
+    private Button btnDemande;
 
 
     @Override
@@ -28,7 +30,12 @@ public class accueil  extends AppCompatActivity implements View.OnClickListener{
         });
 
         btnVoirPlus = (Button) findViewById(R.id.buttonCompte);
+        btnPayer = (Button) findViewById(R.id.btnPaiement);
+        btnDemande = (Button) findViewById(R.id.btnDemande);
+
         btnVoirPlus.setOnClickListener(this);
+        btnPayer.setOnClickListener(this);
+        btnDemande.setOnClickListener(this);
 
 
     }

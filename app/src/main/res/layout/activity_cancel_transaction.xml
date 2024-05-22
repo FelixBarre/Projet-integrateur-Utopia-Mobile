@@ -90,12 +90,21 @@
             android:text="@string/checkVerificationTransaction" />
 
         <Button
-            android:id="@+id/cancelTransaction"
+            android:id="@+id/confirmCancel"
             android:layout_width="170dp"
             android:layout_marginTop="10dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:backgroundTint="#178CA4"
+            android:text="@string/confirmCancel" />
+
+        <Button
+            android:id="@+id/cancelTransaction"
+            android:layout_width="170dp"
+            android:layout_marginTop="10dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:backgroundTint="#FF0000"
             android:text="@string/stopTransaction" />
 
 
