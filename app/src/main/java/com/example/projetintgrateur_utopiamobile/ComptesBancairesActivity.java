@@ -38,7 +38,7 @@ public class ComptesBancairesActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
+        SQLiteManager sqLiteManager = SQLiteManager.instanceOfDatabase(ComptesBancairesActivity.this);
         recyclerViewCompte = (RecyclerView) findViewById(R.id.recyclerViewCompte);
         ImageView addCompte = (ImageView) findViewById(R.id.addCompte);
         addCompte.setOnClickListener(new View.OnClickListener() {
@@ -80,6 +80,7 @@ public class ComptesBancairesActivity extends AppCompatActivity {
                                 }
                             }
                             if (isIn == false) {
+                                sqLiteManager.addComptetoDB(compte);
                                 comptes.add(compte);
                             }
                     }
