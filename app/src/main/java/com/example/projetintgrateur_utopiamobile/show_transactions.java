@@ -1,5 +1,6 @@
 package com.example.projetintgrateur_utopiamobile;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -33,6 +34,9 @@ public class show_transactions extends AppCompatActivity {
             return insets;
         });
 
+        Intent intent = getIntent();
+        int idCompte = intent.getIntExtra("id_compte", 0);
+
         recyclerViewTransaction = (RecyclerView) findViewById(R.id.recyclerViewTransaction);
 
         new Thread(new Runnable() {
@@ -40,7 +44,7 @@ public class show_transactions extends AppCompatActivity {
             public void run() {
                 try {
                     HttpClient httpClient = HttpClient.instanceOfClient();
-                    String responseGET = httpClient.get("transactionsApiAll");
+                    String responseGET = httpClient.get("transactionsApiAll/"+idCompte);
                     JSONObject Json = new JSONObject(responseGET);
                     JSONArray arrayJson = Json.getJSONArray("data");
 
