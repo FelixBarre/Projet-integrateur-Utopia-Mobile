@@ -28,6 +28,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -37,10 +38,12 @@ import java.util.Locale;
 public class ConversationActivity extends AppCompatActivity implements View.OnClickListener {
     private Context context;
     private HttpClient httpClient;
+    private HttpClient httpClientEnvoi;
     private TextView titreConversation;
     private EditText editTextMessage;
     private Button buttonEnvoyerMessage;
     private ImageButton imageButtonCamera;
+    private Bitmap imagePieceJointe;
     private ListView messagesListView;
     private MessageAdapter messageAdapter;
     private Conversation conversation;
@@ -84,6 +87,7 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
 
     private void initWidgets() {
         httpClient = HttpClient.instanceOfClient();
+        httpClientEnvoi = new HttpClient();
         titreConversation = (TextView) findViewById(R.id.titreConversation);
         editTextMessage = (EditText) findViewById(R.id.editTextMessage);
         buttonEnvoyerMessage = (Button) findViewById(R.id.buttonEnvoyerMessage);
@@ -264,7 +268,12 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
                         String body = "{ \"texte\" : \"" + messageString + "\", \"id_conversation\" : " + conversation.getId() + " }";
                         String response = "";
 
-                        response = httpClient.post("messages", body);
+                        if (imagePieceJointe == null) {
+                            response = httpClientEnvoi.post("messages", body);
+                        }
+                        else {
+                            response = httpClientEnvoi.postMessageWithImage(body, imagePieceJointe);
+                        }
 
                         JSONObject responseJSON = new JSONObject(response);
 
@@ -342,9 +351,7 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode == RequestCodes.CAMERA_REQUEST_CODE) {
-            Bitmap image = (Bitmap) data.getExtras().get("data");
-
-            //Utiliser l'image
+            imagePieceJointe = (Bitmap) data.getExtras().get("data");
         }
     }
 
