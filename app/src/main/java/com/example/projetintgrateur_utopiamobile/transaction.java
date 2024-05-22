@@ -118,7 +118,7 @@ public class transaction extends AppCompatActivity implements View.OnClickListen
                                 "\"id_type_transaction\":\""+transactionType+"\"," +
                                 "\"id_etat_transaction\":\""+transactionEtat+"\"" +
                                 " }");
-                        int i=0;
+
                         JSONObject Json = new JSONObject(responsePOST);
 
                     } catch (IOException e) {
