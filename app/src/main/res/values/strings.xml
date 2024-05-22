@@ -68,6 +68,9 @@
     <string name="modifierCompte">Modifier le nom \n d\'un compte</string>
     <string name="editCompteNom">Entrer le nouveau du compte:</string>
     <string name="modifier">Modifier</string>
+    <string name="titlePret">Mes prêts</string>
+    <string name="taux_text">Taux d\'intérêt:</string>
+    <string name="taux_par_defaut">taux_par_defaut</string>
 
     <!-- Acceuil -->
     <string name="acceuilTitle">Bonjour</string>

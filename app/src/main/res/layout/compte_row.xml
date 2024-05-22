@@ -8,8 +8,8 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="5dp"
-    android:layout_marginTop="30dp"
-    android:layout_marginBottom="15dp"
+    android:layout_marginTop="20dp"
+    android:layout_marginBottom="10dp"
     android:background="@drawable/bordure_row">
 
 
@@ -55,12 +55,28 @@
             android:text="@string/solde_valeur" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/textDerAct"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:textSize="18sp"
-        android:layout_marginBottom="20dp"
-        android:text="@string/derniere_activite_compte" />
+        android:layout_marginBottom="5dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textTaux"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginEnd="10dp"
+            android:text="@string/taux_text" />
+
+        <TextView
+            android:id="@+id/ValeurTaux"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_marginBottom="20dp"
+            android:text="@string/taux_par_defaut" />
+    </LinearLayout>
 </LinearLayout>

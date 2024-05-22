@@ -185,7 +185,7 @@ public class HttpClient {
 
 
     public String post(String route, String body) throws IOException {
-        if (route != ROUTETOKEN) {
+        if (!route.equals(ROUTETOKEN)) {
             if (!this.validateToken()) {
                 return "";
             }

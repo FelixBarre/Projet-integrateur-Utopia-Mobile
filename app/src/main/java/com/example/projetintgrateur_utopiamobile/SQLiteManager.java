@@ -398,4 +398,33 @@ public class SQLiteManager extends SQLiteOpenHelper {
         }
     }
 
+    public boolean addComptetoDB(CompteBancaire compte) {
+        if (compte != null) {
+            SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+
+            ContentValues contentValues = new ContentValues();
+
+            contentValues.put("id", compte.getId_compte());
+            contentValues.put("nom", compte.getNom());
+            contentValues.put("solde", compte.getSolde());
+            contentValues.put("taux_interet", compte.getTaux_interet());
+            contentValues.put("id_user", compte.getId_user());
+
+            sqLiteDatabase.insert("compte_bancaires", null, contentValues);
+
+            return true;
+        }
+        return false;
+    }
+
+    public void updateNomCompteDB(int id_compte, String nom) {
+            SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+
+            ContentValues contentValues = new ContentValues();
+
+            contentValues.put("nom", nom);
+
+            sqLiteDatabase.update("compte_bancaires", contentValues, "id = ?", new String[]{String.valueOf(id_compte)});
+    }
+
 }

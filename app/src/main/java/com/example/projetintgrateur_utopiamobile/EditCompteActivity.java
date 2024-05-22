@@ -30,6 +30,7 @@ public class EditCompteActivity extends AppCompatActivity {
             return insets;
         });
 
+        SQLiteManager sqLiteManager = SQLiteManager.instanceOfDatabase(EditCompteActivity.this);
         EditText editNomCompte = (EditText) findViewById(R.id.editTextEditNomCompte);
         Button modifButton = (Button) findViewById(R.id.editComptebutton);
         modifButton.setOnClickListener(new View.OnClickListener() {
@@ -49,6 +50,7 @@ public class EditCompteActivity extends AppCompatActivity {
                                 HttpClient httpClient = HttpClient.instanceOfClient();
                                 String responsePOST = httpClient.post("modification/compteBancaire", "{ \"id\": \"" + idCompte + "\", \"nom\": \"" + nomCompte + "\", \"token_name\": \"tokenAPI\" }");
                                 JSONObject Json = new JSONObject(responsePOST);
+                                sqLiteManager.updateNomCompteDB(idCompte, nomCompte);
 
                             } catch (IOException e) {
                                 e.printStackTrace();
