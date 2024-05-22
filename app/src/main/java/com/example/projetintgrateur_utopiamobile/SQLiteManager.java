@@ -17,7 +17,6 @@ public class SQLiteManager extends SQLiteOpenHelper {
     private static SQLiteManager sqLiteManager;
     private static final String DATABASE_NAME = "BanqueUtopia";
     private static final int DATABASE_VERSION = 1;
-
     private static final String COMPTE_BANCAIRES_TABLE_NAME = "compte_bancaires";
     private static final String CONVERSATIONS_TABLE_NAME = "conversations";
     private static final String CREDITS_TABLE_NAME = "credits";
