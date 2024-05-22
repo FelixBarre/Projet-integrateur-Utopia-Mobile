@@ -1,5 +1,6 @@
 package com.example.projetintgrateur_utopiamobile;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -33,6 +35,9 @@ import java.net.URL;
 
 public class MainActivity extends AppCompatActivity {
     AlertDialog.Builder builderConfirm;
+    TextView outputError;
+    EditText inputCourriel;
+    EditText inputPassword;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,9 +56,9 @@ public class MainActivity extends AppCompatActivity {
 
         builderConfirm = new AlertDialog.Builder(this);
 
-        EditText inputCourriel = (EditText) findViewById(R.id.courrielInput);
-        EditText inputPassword = (EditText) findViewById(R.id.passwordInput);
-        TextView outputError = (TextView) findViewById(R.id.erreursOutput);
+        inputCourriel = (EditText) findViewById(R.id.courrielInput);
+        inputPassword = (EditText) findViewById(R.id.passwordInput);
+        outputError = (TextView) findViewById(R.id.erreursOutput);
         Button btnConnexion = (Button) findViewById(R.id.btnConnexion);
 
         TextView linkForgotPassword = (TextView) findViewById(R.id.linkForgotPassword);
@@ -65,52 +70,11 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 ConnectionManager connectionManager = new ConnectionManager(MainActivity.this);
                 if (connectionManager.isConnected()) {
-                    outputError.setText("");
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                HttpClient httpClient = HttpClient.instanceOfClient();
-                                String responsePOST = httpClient.post("token", "{ \"email\": \"" + inputCourriel.getText() + "\", \"password\": \"" + inputPassword.getText() + "\", \"token_name\": \"tokenAPI\" }");
-                                JSONObject response = new JSONObject(responsePOST);
-                                JSONObject erreur = null;
-
-                                if (response.has("ERREUR")) {
-                                    if (response.get("ERREUR").getClass() == JSONObject.class) {
-                                        erreur = new JSONObject(response.get("ERREUR").toString());
-                                        for (int i = 0; i < erreur.length(); i++) {
-                                            String erreurString = erreur.getString(erreur.names().get(i).toString());
-                                            String correctedErreurString = erreurString.replaceAll("[]\"\\[]", "") + "\n";
-                                            outputError.append(correctedErreurString);
-                                        }
-                                    } else {
-                                        outputError.setText(response.get("ERREUR").toString());
-                                    }
-                                } else if (response.has("SUCCÈS")) {
-                                    httpClient.setTokenApi(response.get("SUCCÈS").toString());
-                                    UserManager userManager = new UserManager();
-                                    if (userManager.checkUserIsUser(inputCourriel.getText().toString())) {
-                                        SQLiteManager sqLiteManager = SQLiteManager.instanceOfDatabase(MainActivity.this);
-
-                                        User user = userManager.getUser(inputCourriel.getText().toString());
-                                        UserManager.setAuthUser(user);
-
-                                        if (sqLiteManager.loadUserIntoDatabase(user)) {
-                                            Intent intent = new Intent(MainActivity.this, accueil.class);
-                                            startActivity(intent);
-                                        } else {
-                                            outputError.setText(getString(R.string.erreurChargementUser));
-                                        }
-                                    } else {
-                                        outputError.setText(getString(R.string.userHasNoAccess));
-                                    }
-                                }
-                            }
-                            catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }).start();
+                    Intent loadingHttp = new Intent(MainActivity.this, LoadingHttp.class);
+                    loadingHttp.putExtra("method", "POST");
+                    loadingHttp.putExtra("route", "token");
+                    loadingHttp.putExtra("body", "{ \"email\": \"" + inputCourriel.getText() + "\", \"password\": \"" + inputPassword.getText() + "\", \"token_name\": \"tokenAPI\" }");
+                    startActivityForResult(loadingHttp, RequestCodes.MAIN_ACTIVITY_REQUEST_CODE);
                 } else {
                     builderConfirm.setMessage(getString(R.string.connexionFailedMessage));
                     builderConfirm.setPositiveButton(getString(R.string.retour), new DialogInterface.OnClickListener() {
@@ -126,5 +90,89 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        switch (requestCode) {
+            case RequestCodes.MAIN_ACTIVITY_REQUEST_CODE:
+                outputError.setText("");
+                if (resultCode == Activity.RESULT_OK) {
+                    assert data != null;
+                    String responsePOST = data.getStringExtra("response");
+                    try {
+                        JSONObject response = new JSONObject(responsePOST);
+
+                        JSONObject erreur = null;
+
+                        if (response.has("ERREUR")) {
+                            if (response.get("ERREUR").getClass() == JSONObject.class) {
+                                erreur = new JSONObject(response.get("ERREUR").toString());
+                                for (int i = 0; i < erreur.length(); i++) {
+                                    String erreurString = erreur.getString(erreur.names().get(i).toString());
+                                    String correctedErreurString = erreurString.replaceAll("[]\"\\[]", "") + "\n";
+                                    outputError.append(correctedErreurString);
+                                }
+                            } else {
+                                outputError.setText(response.get("ERREUR").toString());
+                            }
+                        } else if (response.has("SUCCÈS")) {
+                            HttpClient httpClient = HttpClient.instanceOfClient();
+                            httpClient.setTokenApi(response.get("SUCCÈS").toString());
+                            UserManager userManager = new UserManager();
+                            new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    try {
+                                        HttpClient httpClient = HttpClient.instanceOfClient();
+                                        String responseGET = httpClient.get("profilesApi/" + inputCourriel.getText().toString());
+
+                                        JSONObject response = new JSONObject(responseGET);
+                                        if (response.toString().contains("Utilisateur")) {
+                                            SQLiteManager sqLiteManager = SQLiteManager.instanceOfDatabase(MainActivity.this);
+
+                                            User user = userManager.getUser(inputCourriel.getText().toString());
+                                            UserManager.setAuthUser(user);
+
+                                            if (sqLiteManager.loadUserIntoDatabase(user)) {
+                                                Intent intent = new Intent(MainActivity.this, accueil.class);
+                                                startActivity(intent);
+                                            } else {
+                                                outputError.setText(getString(R.string.erreurChargementUser));
+                                            }
+                                        } else {
+                                            outputError.setText(getString(R.string.userHasNoAccess));
+                                        }
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }).start();
+
+                            /*
+                            if (userManager.checkUserIsUser(inputCourriel.getText().toString(), MainActivity.this)) {
+                                SQLiteManager sqLiteManager = SQLiteManager.instanceOfDatabase(MainActivity.this);
+
+                                User user = userManager.getUser(inputCourriel.getText().toString());
+                                UserManager.setAuthUser(user);
+
+                                if (sqLiteManager.loadUserIntoDatabase(user)) {
+                                    Intent intent = new Intent(MainActivity.this, accueil.class);
+                                    startActivity(intent);
+                                } else {
+                                    outputError.setText(getString(R.string.erreurChargementUser));
+                                }
+                            } else {
+                                outputError.setText(getString(R.string.userHasNoAccess));
+                            }
+                             */
+                        }
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                break;
+        }
     }
 }
