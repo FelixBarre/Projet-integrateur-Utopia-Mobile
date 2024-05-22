@@ -12,7 +12,8 @@ import java.net.URL;
 
 public class HttpClient {
     private static HttpClient httpClient;
-    private final String apiUrl = "http://10.0.2.2:8000/api/";
+    public static final String urlSite = "http://10.0.2.2:8000";
+    private final String apiUrl = urlSite + "/api/";
     private static String tokenApi = "";
     private HttpURLConnection connection;
     private final String ROUTETOKEN = "token";
