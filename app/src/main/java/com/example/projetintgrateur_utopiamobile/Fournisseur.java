@@ -1,3 +1,6 @@
+/*
+ * Auteur(s):
+ */
 package com.example.projetintgrateur_utopiamobile;
 
 public class Fournisseur {

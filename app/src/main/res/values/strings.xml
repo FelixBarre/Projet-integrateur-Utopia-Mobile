@@ -10,7 +10,7 @@
     <string name="retour">Retour</string>
     <string name="attentionAlert">Attention - action requise pour continuer</string>
     <string name="raison">Raison</string>
-    <string name="description">Description</string>
+    <string name="precision">Précision</string>
     <string name="compte">Compte</string>
     <string name="connexionFailedMessage">Vous n\u2019êtes pas connecté à internet. Veuillez vous connecter à internet pour effectuer cette action.</string>
 
@@ -151,6 +151,12 @@
 
     <!-- Désactivation de comnptes -->
     <string name="titleDesactivationCompte">Désactivation de compte</string>
+    <string-array name="raisonsDesactivation">
+        <item>Compte inutile / non utilisé</item>
+        <item>Changement vers un autre compte</item>
+        <item>Changement de banque</item>
+        <item>Autre - Veuillez préciser</item>
+    </string-array>
 
 
     <!-- Messagerie -->
