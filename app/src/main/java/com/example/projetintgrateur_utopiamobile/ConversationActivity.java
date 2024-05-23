@@ -298,6 +298,8 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
     private void modifierMessage() {
         if (idMessageUpdating != 0) {
             String messageString = editTextMessage.getText().toString();
+            editTextMessage.setText("");
+            buttonEnvoyerMessage.setText(getResources().getString(R.string.envoyer));
 
             if (messageString.length() > 255) {
                 Toast.makeText(this, getResources().getString(R.string.erreur255), Toast.LENGTH_LONG).show();
@@ -315,13 +317,6 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
 
                             if (responseJSON.has("SUCCÈS")) {
                                 idMessageUpdating = 0;
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        editTextMessage.setText("");
-                                        buttonEnvoyerMessage.setText(getResources().getString(R.string.envoyer));
-                                    }
-                                });
                             } else if (responseJSON.has("ERREUR")) {
                                 Toast.makeText(context, responseJSON.getString("ERREUR"), Toast.LENGTH_LONG).show();
                             }
