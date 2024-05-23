@@ -1,5 +1,5 @@
 /*
- * Auteur(s):
+ * Auteur(s): Félix Barré
  */
 package com.example.projetintgrateur_utopiamobile;
 

@@ -1,3 +1,6 @@
+/*
+ * Auteur(s): Félix Barré
+ */
 package com.example.projetintgrateur_utopiamobile;
 
 import android.graphics.Bitmap;
