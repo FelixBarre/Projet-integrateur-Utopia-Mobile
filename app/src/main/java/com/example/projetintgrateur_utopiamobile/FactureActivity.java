@@ -2,6 +2,7 @@ package com.example.projetintgrateur_utopiamobile;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -62,7 +63,9 @@ public class FactureActivity extends AppCompatActivity {
                             @Override
                             public void run() {
 
-
+                                ArrayAdapter<Fournisseur> adapter = new ArrayAdapter<>(FactureActivity.this, android.R.layout.simple_spinner_item, fournisseurs);
+                                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                spinnerFournisseur.setAdapter(adapter);
                             }
                         });
 
