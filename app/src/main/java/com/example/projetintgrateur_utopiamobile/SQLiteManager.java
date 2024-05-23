@@ -5,10 +5,13 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +29,7 @@ public class SQLiteManager extends SQLiteOpenHelper {
     private static final String FACTURES_TABLE_NAME = "factures";
     private static final String FOURNISSEURS_TABLE_NAME = "fournisseurs";
     private static final String MESSAGES_TABLE_NAME = "messages";
+    private static final String MESSAGES_LOCAUX_TABLE_NAME = "messages_locaux";
     private static final String PRETS_TABLE_NAME = "prets";
     private static final String TRANSACTIONS_TABLE_NAME = "transactions";
     private static final String TYPE_DEMANDES_TABLE_NAME = "type_demandes";
@@ -74,6 +78,7 @@ public class SQLiteManager extends SQLiteOpenHelper {
     private static final String CREATED_AT_FIELD = "created_at";
     private static final String UPDATED_AT_FIELD = "updated_at";
     private static final String TEXTE_FIELD = "texte";
+    private static final String IMAGE_FIELD = "image";
     private static final String CHEMIN_DU_FICHIER_FIELD = "chemin_du_fichier";
     private static final String DATE_HEURE_SUPPRIME_FIELD = "date_heure_supprime";
     private static final String DATE_DEBUT_FIELD = "date_debut";
@@ -240,6 +245,21 @@ public class SQLiteManager extends SQLiteOpenHelper {
                 .append(" TEXT, ")
                 .append(DATE_HEURE_SUPPRIME_FIELD)
                 .append(" DATETIME)");
+
+        db.execSQL(sql.toString());
+
+        sql = new StringBuilder()
+                .append("CREATE TABLE ")
+                .append(MESSAGES_LOCAUX_TABLE_NAME)
+                .append("(")
+                .append(ID_FIELD)
+                .append(" INTEGER PRIMARY KEY AUTOINCREMENT, ")
+                .append(ID_CONVERSATION_FIELD)
+                .append(" INTEGER, ")
+                .append(IMAGE_FIELD)
+                .append(" BLOB, ")
+                .append(TEXTE_FIELD)
+                .append(" TEXT)");
 
         db.execSQL(sql.toString());
 
@@ -427,4 +447,51 @@ public class SQLiteManager extends SQLiteOpenHelper {
             sqLiteDatabase.update("compte_bancaires", contentValues, "id = ?", new String[]{String.valueOf(id_compte)});
     }
 
+    public long addMessageLocalDB(MessageLocal messageLocal) {
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(ID_CONVERSATION_FIELD, messageLocal.getIdConversation());
+        contentValues.put(TEXTE_FIELD, messageLocal.getTexte());
+
+        if (messageLocal.getImage() != null) {
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            messageLocal.getImage().compress(Bitmap.CompressFormat.JPEG, 90, stream);
+            contentValues.put(IMAGE_FIELD, stream.toByteArray());
+        }
+
+        return sqLiteDatabase.insert(MESSAGES_LOCAUX_TABLE_NAME, null, contentValues);
+    }
+
+    public int deleteMessageLocal(long id_message_local) {
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        return sqLiteDatabase.delete(MESSAGES_LOCAUX_TABLE_NAME, "id = ?", new String[]{String.valueOf(id_message_local)});
+    }
+
+    public void populateMessagesLocauxArrayList() {
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+
+        MessageLocal.messagesLocauxArrayList.clear();
+
+        try (Cursor result = sqLiteDatabase.rawQuery("SELECT * FROM " + MESSAGES_LOCAUX_TABLE_NAME, null)) {
+            if (result.getCount() != 0) {
+                while (result.moveToNext()) {
+                    int id = result.getInt(0);
+
+                    int id_conversation = result.getInt(1);
+
+                    byte[] blob = result.getBlob(2);
+                    Bitmap image = null;
+
+                    if (blob != null) {
+                        image = BitmapFactory.decodeByteArray(blob, 0, blob.length);
+                    }
+
+                    String texte = result.getString(3);
+
+                    MessageLocal.messagesLocauxArrayList.add(new MessageLocal(id, id_conversation, image, texte));
+                }
+            }
+        }
+    }
 }

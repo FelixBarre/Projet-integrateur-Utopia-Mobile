@@ -28,7 +28,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.ByteArrayOutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -52,6 +51,8 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
     private int idMessageUpdating = 0;
     private DateFormat isoFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX", Locale.CANADA_FRENCH);
     private DateFormat anneeMoisJour = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CANADA_FRENCH);
+    private SQLiteManager sqLiteManager;
+    private ConnectionManager connectionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +70,8 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
         setDateDerniereUpdate();
         getConversation();
         initWidgets();
+        sqLiteManager = SQLiteManager.instanceOfDatabase(this);
+        connectionManager = new ConnectionManager(this);
         startBackgroundThreads();
     }
 
@@ -150,19 +153,65 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
             public void run() {
                 while (true) {
                     try {
-                        getNewMessages();
+                        if (connectionManager.isConnected()) {
+                            postLocalMessages();
 
-                        Thread.sleep(500);
+                            Thread.sleep(250);
 
-                        getUpdatedMessages();
+                            getNewMessages();
 
-                        Thread.sleep(500);
+                            Thread.sleep(250);
+
+                            getUpdatedMessages();
+
+                            Thread.sleep(250);
+                        }
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
             }
         }).start();
+    }
+
+    private void postLocalMessages() {
+        sqLiteManager = SQLiteManager.instanceOfDatabase(this);
+        sqLiteManager.populateMessagesLocauxArrayList();
+
+        for (int i = 0; i < MessageLocal.messagesLocauxArrayList.size(); i++) {
+            MessageLocal messageLocal = MessageLocal.messagesLocauxArrayList.get(i);
+
+            try {
+                String response = postMessage(messageLocal.getTexte(), messageLocal.getIdConversation(), messageLocal.getImage());
+
+                JSONObject responseJSON = new JSONObject(response);
+
+                sqLiteManager.deleteMessageLocal(messageLocal.getId());
+
+                if (responseJSON.has("SUCCÈS")) {
+                    imagePieceJointe = null;
+                    imageButtonCamera.setBackgroundColor(getResources().getColor(R.color.utopia_turquoise_moyen));
+                } else if (responseJSON.has("ERREUR")) {
+                    Toast.makeText(context, responseJSON.getString("ERREUR"), Toast.LENGTH_LONG).show();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private String postMessage(String texte, int id_conversation, Bitmap image) throws Exception {
+        String body = "{ \"texte\" : \"" + texte + "\", \"id_conversation\" : " + id_conversation + " }";
+        String response = "";
+
+        if (image == null) {
+            response = httpClientEnvoi.post("messages", body);
+        }
+        else {
+            response = httpClientEnvoi.postMessageWithImage(body, image);
+        }
+
+        return response;
     }
 
     private void getNewMessages() throws Exception {
@@ -266,38 +315,33 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
         if (messageString.length() > 255) {
             Toast.makeText(this, getResources().getString(R.string.erreur255), Toast.LENGTH_LONG).show();
         } else {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        String body = "{ \"texte\" : \"" + messageString + "\", \"id_conversation\" : " + conversation.getId() + " }";
-                        String response = "";
+            editTextMessage.setText("");
 
-                        if (imagePieceJointe == null) {
-                            response = httpClientEnvoi.post("messages", body);
-                        }
-                        else {
-                            response = httpClientEnvoi.postMessageWithImage(body, imagePieceJointe);
-                            imageButtonCamera.setBackgroundColor(getResources().getColor(R.color.utopia_turquoise_moyen));
-                        }
+            long id_message_local = sqLiteManager.addMessageLocalDB(new MessageLocal(0, conversation.getId(), imagePieceJointe, messageString));
 
-                        JSONObject responseJSON = new JSONObject(response);
+            if (connectionManager.isConnected()) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            String response = postMessage(messageString, conversation.getId(), imagePieceJointe);
 
-                        if (responseJSON.has("SUCCÈS")) {
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    editTextMessage.setText("");
-                                }
-                            });
-                        } else if (responseJSON.has("ERREUR")) {
-                            Toast.makeText(context, responseJSON.getString("ERREUR"), Toast.LENGTH_LONG).show();
+                            JSONObject responseJSON = new JSONObject(response);
+
+                            sqLiteManager.deleteMessageLocal(id_message_local);
+
+                            if (responseJSON.has("SUCCÈS")) {
+                                imagePieceJointe = null;
+                                imageButtonCamera.setBackgroundColor(getResources().getColor(R.color.utopia_turquoise_moyen));
+                            } else if (responseJSON.has("ERREUR")) {
+                                Toast.makeText(context, responseJSON.getString("ERREUR"), Toast.LENGTH_LONG).show();
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
-                    } catch (Exception e) {
-                        e.printStackTrace();
                     }
-                }
-            }).start();
+                }).start();
+            }
         }
     }
 
