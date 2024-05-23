@@ -49,7 +49,6 @@ public class FormCompteActivity extends AppCompatActivity {
                                 HttpClient httpClient = HttpClient.instanceOfClient();
                                 String responsePOST = httpClient.post("creation/compteBancaire", "{ \"nom\": \"" + nomCompte + "\"}");
                                 JSONObject Json = new JSONObject(responsePOST);
-
                             } catch (IOException e) {
                                 e.printStackTrace();
                             } catch (JSONException e) {

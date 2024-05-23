@@ -52,7 +52,7 @@ public class transaction extends AppCompatActivity implements View.OnClickListen
         Spinner destinataire = (Spinner) findViewById(R.id.destinationTansaction);
 
         ArrayList<String> nomComptes = new ArrayList<>();
-        for (CompteBancaire compte : ComptesBancairesActivity.comptes) {
+        for (CompteBancaire compte : CompteBancaireManager.comptes) {
             nomComptes.add(compte.getNom());
         }
 

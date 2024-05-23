@@ -10,11 +10,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class accueil  extends AppCompatActivity implements View.OnClickListener{
-
+    CompteBancaireManager compteManager = new CompteBancaireManager();
     private Button btnVoirPlus;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,10 +34,9 @@ public class accueil  extends AppCompatActivity implements View.OnClickListener{
             return insets;
         });
 
+        compteManager.initComptes(accueil.this);
         btnVoirPlus = (Button) findViewById(R.id.buttonCompte);
         btnVoirPlus.setOnClickListener(this);
-
-
     }
 
     public void onClick(View v){
