@@ -112,6 +112,8 @@
     <string name="checkVerificationTransaction">Les informations sont exactes </string>
     <string name="valideTransaction">Terminer </string>
     <string name="stopTransaction">Annuler </string>
+    <string name="confirmCancel">Confirmer </string>
+    <string name="textErrorTransaction">Désolé, il y a aucune transaction pour ce compte.</string>
 
     <string-array name="transactionType">
         <item>Dépôt</item>
@@ -121,6 +123,18 @@
 
     <!-- Virements -->
     <string name="VirementTitle">Virement</string>
+
+    <!-- facture-->
+    <string name="factureTitle">Facture</string>
+    <string name="factureCreateTitle">Payer une facture</string>
+    <string name="fournisseur">Fournisseur</string>
+    <string name="nomFacture">Nom de la facture : </string>
+    <string name="descriptionFacture">Description : </string>
+    <string name="montantFacture">Montant : </string>
+    <string name="jourFacture">Jours du mois : </string>
+    <string name="btnPayerFacture">Payer</string>
+    <string name="btnAnnulerFacture">Annuler</string>
+
 
     <!-- demandes de prêt -->
     <string name="titleDemandePret">Mes demandes de prêt</string>
@@ -134,7 +148,7 @@
     <string name="montantDemande">Entrer le montant à emprunter:</string>
     <string name="raison_par_defaut">raison_par_defaut</string>
 
-    
+
     <!-- Désactivation de comnptes -->
     <string name="titleDesactivationCompte">Désactivation de compte</string>
 
