@@ -17,7 +17,6 @@ public class SQLiteManager extends SQLiteOpenHelper {
     private static SQLiteManager sqLiteManager;
     private static final String DATABASE_NAME = "BanqueUtopia";
     private static final int DATABASE_VERSION = 1;
-
     private static final String COMPTE_BANCAIRES_TABLE_NAME = "compte_bancaires";
     private static final String CONVERSATIONS_TABLE_NAME = "conversations";
     private static final String CREDITS_TABLE_NAME = "credits";
@@ -397,6 +396,35 @@ public class SQLiteManager extends SQLiteOpenHelper {
 
             sqLiteDatabase.update("users", contentValues, "id = ?", new String[]{String.valueOf(UserManager.getAuthUser().getId())});
         }
+    }
+
+    public boolean addComptetoDB(CompteBancaire compte) {
+        if (compte != null) {
+            SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+
+            ContentValues contentValues = new ContentValues();
+
+            contentValues.put("id", compte.getId_compte());
+            contentValues.put("nom", compte.getNom());
+            contentValues.put("solde", compte.getSolde());
+            contentValues.put("taux_interet", compte.getTaux_interet());
+            contentValues.put("id_user", compte.getId_user());
+
+            sqLiteDatabase.insert("compte_bancaires", null, contentValues);
+
+            return true;
+        }
+        return false;
+    }
+
+    public void updateNomCompteDB(int id_compte, String nom) {
+            SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+
+            ContentValues contentValues = new ContentValues();
+
+            contentValues.put("nom", nom);
+
+            sqLiteDatabase.update("compte_bancaires", contentValues, "id = ?", new String[]{String.valueOf(id_compte)});
     }
 
 }

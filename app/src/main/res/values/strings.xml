@@ -7,11 +7,12 @@
     <string name="confirmer">Confirmer</string>
     <string name="annuler">Annuler</string>
     <string name="continuer">Continuer</string>
-    <string name="cancel">Annuler</string>
+    <string name="retour">Retour</string>
     <string name="attentionAlert">Attention - action requise pour continuer</string>
     <string name="raison">Raison</string>
     <string name="description">Description</string>
     <string name="compte">Compte</string>
+    <string name="connexionFailedMessage">Vous n\u2019êtes pas connecté à internet. Veuillez vous connecter à internet pour effectuer cette action.</string>
 
     <!-- Profil général -->
     <string name="courrielLabel">Courriel</string>
@@ -67,6 +68,9 @@
     <string name="modifierCompte">Modifier le nom \n d\'un compte</string>
     <string name="editCompteNom">Entrer le nouveau du compte:</string>
     <string name="modifier">Modifier</string>
+    <string name="titlePret">Mes prêts</string>
+    <string name="taux_text">Taux d\'intérêt:</string>
+    <string name="taux_par_defaut">taux_par_defaut</string>
 
     <!-- Acceuil -->
     <string name="acceuilTitle">Bonjour</string>
@@ -130,6 +134,7 @@
     <string name="ajoutDemande">Ajouter une \ndemande de prêt</string>
     <string name="entrerRaisonText">Entrer la raison de la demande:</string>
     <string name="montantDemande">Entrer le montant à emprunter:</string>
+    <string name="raison_par_defaut">raison_par_defaut</string>
 
     
     <!-- Désactivation de comnptes -->
@@ -140,8 +145,11 @@
     <string name="titreConversations">Vos conversations</string>
     <string name="vous">Vous</string>
     <string name="envoyer">Envoyer</string>
-    <string name="entrezMessage">Entrez votre message ici</string>
+    <string name="entrezMessage">Votre message</string>
     <string name="erreur255">Votre message ne peut pas dépasser 255 caractères.</string>
+    <string name="erreurEnvoi">Erreur à l\'envoi du message.</string>
+    <string name="erreurModif">Erreur à la modification du message.</string>
+    <string name="permissionCameraRequise">La permission de la caméra est requise pour utiliser la caméra.</string>
 
     <!-- Plus -->
     <string name="plus">Plus</string>

@@ -39,6 +39,7 @@ public class Adapter_compte extends RecyclerView.Adapter<Adapter_compte.MyViewHo
         holder.nomCompte.setText(comptes.get(position).getNom());
         String solde = " " + comptes.get(position).getSolde() + "$";
         holder.soldeValeurCompte.setText(solde);
+        holder.tauxCompte.setText(String.valueOf(comptes.get(position).getTaux_interet()));
         holder.modifButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,7 +69,7 @@ public class Adapter_compte extends RecyclerView.Adapter<Adapter_compte.MyViewHo
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView nomCompte;
         TextView soldeValeurCompte;
-        TextView derActCompte;
+        TextView tauxCompte;
         ImageView modifButton;
         LinearLayout layoutCompte;
 
@@ -76,7 +77,7 @@ public class Adapter_compte extends RecyclerView.Adapter<Adapter_compte.MyViewHo
             super(itemView);
             nomCompte = (TextView) itemView.findViewById(R.id.textNomCompte);
             soldeValeurCompte = (TextView) itemView.findViewById(R.id.textSoldeValeurCompte);
-            derActCompte = (TextView) itemView.findViewById(R.id.textDerAct);
+            tauxCompte = (TextView) itemView.findViewById(R.id.ValeurTaux);
             modifButton = (ImageView) itemView.findViewById(R.id.editCompte);
             layoutCompte = (LinearLayout) itemView.findViewById(R.id.layout_compte_row);
         }

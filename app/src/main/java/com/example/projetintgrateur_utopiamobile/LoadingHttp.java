@@ -40,6 +40,7 @@ public class LoadingHttp extends AppCompatActivity {
                     if (intentData.hasExtra("method") && intentData.hasExtra("route")) {
                         String method = intentData.getStringExtra("method");
                         String route = intentData.getStringExtra("route");
+                        String body = intentData.getStringExtra("body");
                         switch (method) {
                             case "GET":
                                 try {
@@ -50,7 +51,6 @@ public class LoadingHttp extends AppCompatActivity {
                                 }
                                 break;
                             case "POST":
-                                String body = intentData.getStringExtra("body");
                                 try {
                                     response = httpClient.post(route, body);
                                 }
@@ -58,6 +58,12 @@ public class LoadingHttp extends AppCompatActivity {
                                     e.printStackTrace();
                                 }
                                 break;
+                            case "PUT":
+                                try {
+                                    response = httpClient.put(route, body);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
                         }
 
                         result.putExtra("response", response);
