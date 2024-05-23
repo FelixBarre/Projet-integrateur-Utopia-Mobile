@@ -1,5 +1,7 @@
 package com.example.projetintgrateur_utopiamobile;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -34,6 +36,8 @@ public class detailsProfil extends AppCompatActivity {
 
         UserManager userManager = new UserManager();
         User userAuth = userManager.getAuthUser();
+
+        AlertDialog.Builder builderConfirm = new AlertDialog.Builder(this);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -104,8 +108,23 @@ public class detailsProfil extends AppCompatActivity {
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(detailsProfil.this, modifierProfil.class);
-                startActivity(intent);
+                ConnectionManager connectionManager = new ConnectionManager(detailsProfil.this);
+                if (connectionManager.isConnected()) {
+                    Intent intent = new Intent(detailsProfil.this, modifierProfil.class);
+                    startActivity(intent);
+                } else {
+                    builderConfirm.setMessage(getString(R.string.connexionFailedMessage));
+                    builderConfirm.setPositiveButton(getString(R.string.retour), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+
+                    AlertDialog alertConfirm = builderConfirm.create();
+                    alertConfirm.setTitle(getString(R.string.attentionAlert));
+                    alertConfirm.show();
+                }
             }
         });
     }

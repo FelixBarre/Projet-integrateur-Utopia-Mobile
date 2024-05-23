@@ -22,6 +22,9 @@ import java.util.ArrayList;
 public class accueil  extends AppCompatActivity implements View.OnClickListener{
     CompteBancaireManager compteManager = new CompteBancaireManager();
     private Button btnVoirPlus;
+    private Button btnPayer;
+    private Button btnDemande;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +39,12 @@ public class accueil  extends AppCompatActivity implements View.OnClickListener{
 
         compteManager.initComptes(accueil.this);
         btnVoirPlus = (Button) findViewById(R.id.buttonCompte);
+        btnPayer = (Button) findViewById(R.id.btnPaiement);
+        btnDemande = (Button) findViewById(R.id.btnDemande);
+
         btnVoirPlus.setOnClickListener(this);
+        btnPayer.setOnClickListener(this);
+        btnDemande.setOnClickListener(this);
     }
 
     public void onClick(View v){
@@ -44,6 +52,13 @@ public class accueil  extends AppCompatActivity implements View.OnClickListener{
 
         if (v.getId()==R.id.buttonCompte) {
             Intent intent = new Intent(accueil.this, ComptesBancairesActivity.class);
+            startActivity(intent);
+        } else if (v.getId()==R.id.btnPaiement) {
+            Intent intent = new Intent(accueil.this, transaction.class);
+            startActivity(intent);
+
+        } else if (v.getId()==R.id.btnDemande) {
+            Intent intent = new Intent(accueil.this, DemandePretActivity.class);
             startActivity(intent);
         }
 

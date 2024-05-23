@@ -2,16 +2,24 @@ package com.example.projetintgrateur_utopiamobile;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -20,6 +28,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -29,9 +38,12 @@ import java.util.Locale;
 public class ConversationActivity extends AppCompatActivity implements View.OnClickListener {
     private Context context;
     private HttpClient httpClient;
+    private HttpClient httpClientEnvoi;
     private TextView titreConversation;
     private EditText editTextMessage;
     private Button buttonEnvoyerMessage;
+    private ImageButton imageButtonCamera;
+    private Bitmap imagePieceJointe;
     private ListView messagesListView;
     private MessageAdapter messageAdapter;
     private Conversation conversation;
@@ -75,11 +87,14 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
 
     private void initWidgets() {
         httpClient = HttpClient.instanceOfClient();
+        httpClientEnvoi = new HttpClient();
         titreConversation = (TextView) findViewById(R.id.titreConversation);
         editTextMessage = (EditText) findViewById(R.id.editTextMessage);
         buttonEnvoyerMessage = (Button) findViewById(R.id.buttonEnvoyerMessage);
+        imageButtonCamera = (ImageButton) findViewById(R.id.imageButtonCamera);
 
         buttonEnvoyerMessage.setOnClickListener(this);
+        imageButtonCamera.setOnClickListener(this);
 
         if (conversation != null) {
             titreConversation.setText(interlocuteur.getPrenom() + " " + interlocuteur.getNom());
@@ -112,12 +127,14 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
                 modifierMessage();
             }
         }
+        else if (v.getId() == R.id.imageButtonCamera) {
+            askCameraPermissions();
+        }
     }
 
     private void setDateDerniereUpdate() {
         try {
-            DateFormat dateDerniereUpdateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CANADA_FRENCH);
-            this.dateDerniereUpdate = dateDerniereUpdateFormat.format(new Date());
+            this.dateDerniereUpdate = anneeMoisJour.format(new Date());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -184,11 +201,14 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
     }
 
     private void getUpdatedMessages() throws Exception {
+        String requestTime = anneeMoisJour.format(new Date());
         String response = httpClient.get("messages/updated/" + conversation.getId() + "/" + dateDerniereUpdate);
 
         JSONObject responseJSON = new JSONObject(response);
 
         if (responseJSON.has("data")) {
+            setDateDerniereUpdate(requestTime);
+
             try {
                 JSONArray data = responseJSON.getJSONArray("data");
 
@@ -218,17 +238,12 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
                         }
                     }
 
-                    setDateDerniereUpdate(anneeMoisJour.format(dateLastMessageUpdate));
-
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             messageAdapter.notifyDataSetChanged();
                         }
                     });
-                }
-                else {
-                    setDateDerniereUpdate();
                 }
             }
             catch (JSONException e) {
@@ -253,7 +268,12 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
                         String body = "{ \"texte\" : \"" + messageString + "\", \"id_conversation\" : " + conversation.getId() + " }";
                         String response = "";
 
-                        response = httpClient.post("messages", body);
+                        if (imagePieceJointe == null) {
+                            response = httpClientEnvoi.post("messages", body);
+                        }
+                        else {
+                            response = httpClientEnvoi.postMessageWithImage(body, imagePieceJointe);
+                        }
 
                         JSONObject responseJSON = new JSONObject(response);
 
@@ -278,6 +298,8 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
     private void modifierMessage() {
         if (idMessageUpdating != 0) {
             String messageString = editTextMessage.getText().toString();
+            editTextMessage.setText("");
+            buttonEnvoyerMessage.setText(getResources().getString(R.string.envoyer));
 
             if (messageString.length() > 255) {
                 Toast.makeText(this, getResources().getString(R.string.erreur255), Toast.LENGTH_LONG).show();
@@ -295,13 +317,6 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
 
                             if (responseJSON.has("SUCCÈS")) {
                                 idMessageUpdating = 0;
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        editTextMessage.setText("");
-                                        buttonEnvoyerMessage.setText(getResources().getString(R.string.envoyer));
-                                    }
-                                });
                             } else if (responseJSON.has("ERREUR")) {
                                 Toast.makeText(context, responseJSON.getString("ERREUR"), Toast.LENGTH_LONG).show();
                             }
@@ -310,6 +325,39 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
                         }
                     }
                 }).start();
+            }
+        }
+    }
+
+    private void askCameraPermissions() {
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{ android.Manifest.permission.CAMERA}, RequestCodes.CAMERA_PERM_CODE);
+        }
+        else {
+            openCamera();
+        }
+    }
+
+    private void openCamera() {
+        Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(camera, RequestCodes.CAMERA_REQUEST_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == RequestCodes.CAMERA_REQUEST_CODE) {
+            imagePieceJointe = (Bitmap) data.getExtras().get("data");
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == RequestCodes.CAMERA_PERM_CODE) {
+            if (grantResults.length < 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                openCamera();
+            }
+            else {
+                Toast.makeText(this, getResources().getString(R.string.permissionCameraRequise), Toast.LENGTH_SHORT).show();
             }
         }
     }

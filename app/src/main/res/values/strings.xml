@@ -7,11 +7,12 @@
     <string name="confirmer">Confirmer</string>
     <string name="annuler">Annuler</string>
     <string name="continuer">Continuer</string>
-    <string name="cancel">Annuler</string>
+    <string name="retour">Retour</string>
     <string name="attentionAlert">Attention - action requise pour continuer</string>
     <string name="raison">Raison</string>
-    <string name="description">Description</string>
+    <string name="precision">Précision</string>
     <string name="compte">Compte</string>
+    <string name="connexionFailedMessage">Vous n\u2019êtes pas connecté à internet. Veuillez vous connecter à internet pour effectuer cette action.</string>
 
     <!-- Profil général -->
     <string name="courrielLabel">Courriel</string>
@@ -111,6 +112,8 @@
     <string name="checkVerificationTransaction">Les informations sont exactes </string>
     <string name="valideTransaction">Terminer </string>
     <string name="stopTransaction">Annuler </string>
+    <string name="confirmCancel">Confirmer </string>
+    <string name="textErrorTransaction">Désolé, il y a aucune transaction pour ce compte.</string>
 
     <string-array name="transactionType">
         <item>Dépôt</item>
@@ -120,6 +123,18 @@
 
     <!-- Virements -->
     <string name="VirementTitle">Virement</string>
+
+    <!-- facture-->
+    <string name="factureTitle">Facture</string>
+    <string name="factureCreateTitle">Payer une facture</string>
+    <string name="fournisseur">Fournisseur</string>
+    <string name="nomFacture">Nom de la facture : </string>
+    <string name="descriptionFacture">Description : </string>
+    <string name="montantFacture">Montant : </string>
+    <string name="jourFacture">Jours du mois : </string>
+    <string name="btnPayerFacture">Payer</string>
+    <string name="btnAnnulerFacture">Annuler</string>
+
 
     <!-- demandes de prêt -->
     <string name="titleDemandePret">Mes demandes de prêt</string>
@@ -133,19 +148,26 @@
     <string name="montantDemande">Entrer le montant à emprunter:</string>
     <string name="raison_par_defaut">raison_par_defaut</string>
 
-    
+
     <!-- Désactivation de comnptes -->
     <string name="titleDesactivationCompte">Désactivation de compte</string>
+    <string-array name="raisonsDesactivation">
+        <item>Compte inutile / non utilisé</item>
+        <item>Changement vers un autre compte</item>
+        <item>Changement de banque</item>
+        <item>Autre - Veuillez préciser</item>
+    </string-array>
 
 
     <!-- Messagerie -->
     <string name="titreConversations">Vos conversations</string>
     <string name="vous">Vous</string>
     <string name="envoyer">Envoyer</string>
-    <string name="entrezMessage">Entrez votre message ici</string>
+    <string name="entrezMessage">Votre message</string>
     <string name="erreur255">Votre message ne peut pas dépasser 255 caractères.</string>
     <string name="erreurEnvoi">Erreur à l\'envoi du message.</string>
     <string name="erreurModif">Erreur à la modification du message.</string>
+    <string name="permissionCameraRequise">La permission de la caméra est requise pour utiliser la caméra.</string>
 
     <!-- Plus -->
     <string name="plus">Plus</string>
