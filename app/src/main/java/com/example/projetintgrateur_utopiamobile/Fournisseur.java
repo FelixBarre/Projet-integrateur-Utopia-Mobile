@@ -21,7 +21,7 @@ public class Fournisseur {
     public void setNom(String id){this.nom = nom;}
     public String getNom(){ return nom;}
 
-    public void setDescription(String description{this.description = description;}
+    public void setDescription(String description){this.description = description;}
     public String getDescription(){ return description;}
 
 }
