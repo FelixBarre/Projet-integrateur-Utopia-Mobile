@@ -1,3 +1,6 @@
+/*
+ * Auteur(s): Mathis Leduc
+ */
 package com.example.projetintgrateur_utopiamobile;
 
 import static androidx.core.content.ContextCompat.startActivity;
