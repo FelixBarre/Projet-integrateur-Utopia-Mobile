@@ -108,7 +108,7 @@ public class cancel_transaction extends AppCompatActivity implements View.OnClic
                                 "\"id_compte_envoyeur\":\""+expediteurTransaction + "\","+
                                 "\"id_compte_receveur\":\""+destinataireTransaction +"\"," +
                                 "\"id_type_transaction\":\""+transactionType+"\"," +
-                                "\"id_etat_transaction\":\""+transactionEtat+"\"" +
+                                "\"id_etat_transaction\":\""+transactionEtat+"\"," +
                                 "\"id_facture\":\""+idFacture+"\"" +
                                 " }");
 
