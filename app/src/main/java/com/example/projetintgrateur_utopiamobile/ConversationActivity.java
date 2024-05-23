@@ -1,6 +1,15 @@
-/*
- * Auteur(s): Félix Barré
- */
+/****************************************
+ Fichier : ConversationActivity.java
+ Auteur : Félix Barré
+ Fonctionnalité : Page qui affiche les messages d'une conversation
+ Date : 13 mai 2024
+ Vérification :
+
+ =========================================================
+ Historique de modifications :
+
+ =========================================================
+ ****************************************/
 package com.example.projetintgrateur_utopiamobile;
 
 import android.Manifest;

@@ -1,3 +1,15 @@
+/****************************************
+ Fichier : UtopiaNotificationManager.java
+ Auteur : Félix Barré
+ Fonctionnalité : Gestionnaire qui permet d'envoyer des notifications au téléphone
+ Date : 13 mai 2024
+ Vérification :
+
+ =========================================================
+ Historique de modifications :
+
+ =========================================================
+ ****************************************/
 package com.example.projetintgrateur_utopiamobile;
 
 import android.app.Notification;

@@ -1,6 +1,15 @@
-/*
- * Auteur(s): Félix Barré
- */
+/****************************************
+ Fichier : Conversation.java
+ Auteur : Félix Barré
+ Fonctionnalité : Classe pour l'objet conversation
+ Date : 13 mai 2024
+ Vérification :
+
+ =========================================================
+ Historique de modifications :
+
+ =========================================================
+ ****************************************/
 package com.example.projetintgrateur_utopiamobile;
 
 import org.json.JSONArray;

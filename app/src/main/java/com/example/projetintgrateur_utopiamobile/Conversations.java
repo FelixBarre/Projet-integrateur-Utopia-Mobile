@@ -1,6 +1,15 @@
-/*
- * Auteur(s): Félix Barré
- */
+/****************************************
+ Fichier : Conversations.java
+ Auteur : Félix Barré
+ Fonctionnalité : Page qui affiche les conversations d'un uilisateur
+ Date : 13 mai 2024
+ Vérification :
+
+ =========================================================
+ Historique de modifications :
+
+ =========================================================
+ ****************************************/
 package com.example.projetintgrateur_utopiamobile;
 
 import android.app.Activity;

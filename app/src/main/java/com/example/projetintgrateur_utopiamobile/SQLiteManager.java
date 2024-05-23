@@ -1,6 +1,15 @@
-/*
- * Auteur: , Mathis Leduc
- */
+/****************************************
+ Fichier : SQLiteManager.java
+ Auteur : Mathis Leduc, Félix Barré
+ Fonctionnalité : Gestionnaire pour la base de données locale
+ Date : 13 mai 2024
+ Vérification :
+
+ =========================================================
+ Historique de modifications :
+
+ =========================================================
+ ****************************************/
 package com.example.projetintgrateur_utopiamobile;
 
 import android.content.ContentValues;

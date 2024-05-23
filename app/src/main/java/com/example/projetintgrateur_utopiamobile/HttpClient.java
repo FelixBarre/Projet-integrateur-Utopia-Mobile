@@ -1,6 +1,15 @@
-/*
- * Auteur(s): Félix Barré
- */
+/****************************************
+ Fichier : HttpClient.java
+ Auteur : Félix Barré
+ Fonctionnalité : Classe qui gère les requêtes Http vers notre api web
+ Date : 13 mai 2024
+ Vérification :
+
+ =========================================================
+ Historique de modifications :
+
+ =========================================================
+ ****************************************/
 package com.example.projetintgrateur_utopiamobile;
 
 import android.graphics.Bitmap;

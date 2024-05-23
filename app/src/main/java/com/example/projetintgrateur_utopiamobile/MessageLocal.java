@@ -1,6 +1,15 @@
-/*
- * Auteur(s): Félix Barré
- */
+/****************************************
+ Fichier : MessageLocal.java
+ Auteur : Félix Barré
+ Fonctionnalité : Classe pour un message qui n'a pas encore été envoyé à la BD
+ Date : 13 mai 2024
+ Vérification :
+
+ =========================================================
+ Historique de modifications :
+
+ =========================================================
+ ****************************************/
 package com.example.projetintgrateur_utopiamobile;
 
 import android.graphics.Bitmap;
