@@ -3,10 +3,16 @@
  */
 package com.example.projetintgrateur_utopiamobile;
 
+import android.Manifest;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
@@ -22,6 +28,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -69,6 +77,8 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
         });
 
         context = this;
+
+        askNotificationPermissions();
 
         setDateDerniereUpdate();
         getConversation();
@@ -232,7 +242,12 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
                     ArrayList<Message> newMessages = new ArrayList<>();
 
                     for (int i = 0; i < data.length(); i++) {
-                        newMessages.add(new Message(data.getJSONObject(i)));
+                        Message newMessage = new Message(data.getJSONObject(i));
+                        newMessages.add(newMessage);
+
+                        if (newMessage.getEnvoyeur().getId() != UserManager.getAuthUser().getId()) {
+                            UtopiaNotificationManager.postNotification(getApplicationContext(), newMessage.getEnvoyeur().getPrenom(), newMessage.getTexte(), conversation.getId());
+                        }
                     }
 
                     runOnUiThread(new Runnable() {
@@ -391,6 +406,14 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
         }
     }
 
+    private void askNotificationPermissions() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{ android.Manifest.permission.POST_NOTIFICATIONS }, RequestCodes.NOTIFICATION_PERM_CODE);
+        }
+    }
+
+
+
     private void openCamera() {
         Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(camera, RequestCodes.CAMERA_REQUEST_CODE);
@@ -413,6 +436,15 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
                 openCamera();
             } else {
                 Toast.makeText(this, getResources().getString(R.string.permissionCameraRequise), Toast.LENGTH_SHORT).show();
+            }
+        }
+        else if (requestCode == RequestCodes.NOTIFICATION_PERM_CODE) {
+            if (grantResults.length < 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                //Permission accordée
+            }
+            else {
+                Toast.makeText(this, getResources().getString(R.string.permissionNotifRequise), Toast.LENGTH_SHORT).show();
+                finish();
             }
         }
     }
