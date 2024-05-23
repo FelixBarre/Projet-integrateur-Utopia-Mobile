@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FactureActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/header_layout" />
+
+
+
+        <TextView
+            android:id="@+id/titleFacture"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/factureTitle"
+            android:textSize="30sp"
+            android:layout_marginBottom="10dp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_marginTop="15dp"
+            android:gravity="left"/>
+
+        <TextView
+            android:id="@+id/titleCreateTransaction"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="25dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="1dp"
+            android:text="@string/factureCreateTitle" />
+
+        <TextView
+            android:id="@+id/titleFournisseur"
+            android:layout_marginLeft="30dp"
+            android:textSize="20dp"
+            android:textColor="@color/black"
+            android:layout_marginBottom="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/fournisseur" />
+
+        <Spinner
+            android:id="@+id/fournisseurFacture"
+            android:layout_width="250dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginBottom="30px" />
+
+        <TextView
+            android:id="@+id/titlenomfacture"
+            android:layout_marginLeft="30dp"
+            android:textSize="20dp"
+            android:textColor="@color/black"
+            android:layout_marginBottom="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/nomFacture" />
+
+
+        <EditText
+            android:id="@+id/nomfacture"
+            android:layout_height="wrap_content"
+            android:layout_width="250dp"
+            android:layout_marginLeft="30dp"
+            android:ems="10"
+            android:inputType="text"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/descriptionFature"
+            android:layout_marginLeft="30dp"
+            android:textSize="20dp"
+            android:textColor="@color/black"
+            android:layout_marginBottom="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/descriptionFacture" />
+
+        <EditText
+            android:id="@+id/descriptionfacture"
+            android:layout_height="wrap_content"
+            android:layout_width="250dp"
+            android:layout_marginLeft="30dp"
+            android:ems="10"
+            android:inputType="text"
+            android:text="" />
+
+
+        <TextView
+            android:id="@+id/titleMontantFature"
+            android:layout_marginLeft="30dp"
+            android:textSize="20dp"
+            android:textColor="@color/black"
+            android:layout_marginBottom="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/montantFacture" />
+
+        <EditText
+            android:id="@+id/montantFacture"
+            android:layout_width="250dp"
+            android:layout_marginLeft="30dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="10dp"
+            android:ems="10"
+            android:inputType="numberDecimal" />
+
+        <Button
+            android:id="@+id/payerFacture"
+            android:layout_width="170dp"
+            android:layout_marginTop="1dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:backgroundTint="#178CA4"
+            android:text="@string/btnPayerFacture" />
+
+        <Button
+            android:id="@+id/annulerFacture"
+            android:layout_width="170dp"
+            android:layout_marginTop="10dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:backgroundTint="#FF0000"
+            android:text="@string/btnAnnulerFacture" />
+
+
+
+
+    </LinearLayout>
+
+    <com.example.projetintgrateur_utopiamobile.FooterView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
