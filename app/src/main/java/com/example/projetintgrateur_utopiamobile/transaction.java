@@ -1,3 +1,6 @@
+/*
+ * Auteur(s):
+ */
 package com.example.projetintgrateur_utopiamobile;
 
 import android.content.Intent;
@@ -26,11 +29,13 @@ public class transaction extends AppCompatActivity implements View.OnClickListen
     private Button btnTermine;
     private Button btnAnnule;
 
-    Integer transactionType;
-    Integer transactionEtat;
+    private Integer transactionType;
+    private Integer transactionEtat;
 
-    Integer destinataireTransaction;
-    Integer expediteurTransaction;
+    private Integer destinataireTransaction;
+    private Integer expediteurTransaction;
+
+    private Integer idFacture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,19 +91,22 @@ public class transaction extends AppCompatActivity implements View.OnClickListen
             transactionEtat = 3;
             destinataireTransaction = UserManager.getAuthUser().getId();
             expediteurTransaction = 0;
+            idFacture = 0;
         } else if (typeTransaction.equals("Rétrait")) {
             transactionType = 2;
             transactionEtat = 3;
             destinataireTransaction = 0;
             expediteurTransaction = UserManager.getAuthUser().getId();
+            idFacture = 0;
 
         } else if (typeTransaction.equals("Virement")) {
             transactionType = 3;
             transactionEtat = 1;
             destinataireTransaction = 2;
             expediteurTransaction = UserManager.getAuthUser().getId();
-
+            idFacture = 0;
         }
+
 
         String montantTransaction = montant.getText().toString();
         double transactionMontant = Double.parseDouble(montantTransaction);
@@ -116,7 +124,8 @@ public class transaction extends AppCompatActivity implements View.OnClickListen
                                 "\"id_compte_envoyeur\":\""+expediteurTransaction + "\","+
                                 "\"id_compte_receveur\":\""+destinataireTransaction +"\"," +
                                 "\"id_type_transaction\":\""+transactionType+"\"," +
-                                "\"id_etat_transaction\":\""+transactionEtat+"\"" +
+                                "\"id_etat_transaction\":\""+transactionEtat+"\"," +
+                                "\"id_facture\":\""+idFacture+"\"" +
                                 " }");
 
                         JSONObject Json = new JSONObject(responsePOST);
@@ -142,7 +151,6 @@ public class transaction extends AppCompatActivity implements View.OnClickListen
             bundle.putString("montantTransaction", montant.getText().toString());
             bundle.putString("expediteurTransaction", destinataire.getSelectedItem().toString());
             bundle.putString("destinataireTransaction", destinataire.getSelectedItem().toString());
-
             intent.putExtras(bundle);
             startActivity(intent);
 

@@ -1,3 +1,6 @@
+/*
+ * Auteur(s):
+ */
 package com.example.projetintgrateur_utopiamobile;
 
 import android.app.AlertDialog;

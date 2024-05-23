@@ -72,6 +72,7 @@
     <string name="titlePret">Mes prêts</string>
     <string name="taux_text">Taux d\'intérêt:</string>
     <string name="taux_par_defaut">taux_par_defaut</string>
+    <string name="titleCredit">Mes crédits</string>
 
     <!-- Acceuil -->
     <string name="acceuilTitle">Bonjour</string>
@@ -126,6 +127,7 @@
     <string name="VirementTitle">Virement</string>
 
     <!-- facture-->
+    <string name="ongletfactureTitle">Paiement de facture</string>
     <string name="factureTitle">Facture</string>
     <string name="factureCreateTitle">Payer une facture</string>
     <string name="fournisseur">Fournisseur</string>
@@ -166,6 +168,7 @@
     <string name="envoyer">Envoyer</string>
     <string name="entrezMessage">Votre message</string>
     <string name="erreur255">Votre message ne peut pas dépasser 255 caractères.</string>
+    <string name="erreurVide">Veuillez entrer un message.</string>
     <string name="erreurEnvoi">Erreur à l\'envoi du message.</string>
     <string name="erreurModif">Erreur à la modification du message.</string>
     <string name="permissionCameraRequise">La permission de la caméra est requise pour utiliser la caméra.</string>

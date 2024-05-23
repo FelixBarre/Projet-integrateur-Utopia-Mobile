@@ -1,3 +1,6 @@
+/*
+ * Auteur(s):
+ */
 package com.example.projetintgrateur_utopiamobile;
 
 import android.content.Intent;
@@ -22,16 +25,18 @@ import java.util.Locale;
 
 public class cancel_transaction extends AppCompatActivity implements View.OnClickListener{
 
-    Integer transactionType;
-    Integer transactionEtat;
+    private Integer transactionType;
+    private Integer transactionEtat;
 
-    Integer destinataireTransaction;
-    Integer expediteurTransaction;
+    private Integer destinataireTransaction;
+    private Integer expediteurTransaction;
 
-    double transactionMontant;
+    private double transactionMontant;
 
-    Button btnConfirm;
-    Button btnAnnuler;
+    private Button btnConfirm;
+    private Button btnAnnuler;
+
+    private Integer idFacture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,20 +81,22 @@ public class cancel_transaction extends AppCompatActivity implements View.OnClic
             transactionMontant = Double.parseDouble(montant);
             transactionEtat = 2;
 
+
             if(type.equals("Dépôt")){
                 transactionType = 1;
                 destinataireTransaction = UserManager.getAuthUser().getId();
                 expediteurTransaction = 0;
+                idFacture = 0;
             } else if (type.equals("Rétrait")) {
                 transactionType = 2;
                 destinataireTransaction = 0;
                 expediteurTransaction = UserManager.getAuthUser().getId();
-
+                idFacture = 0;
             } else if (type.equals("Virement")) {
                 transactionType = 3;
                 destinataireTransaction = 2;
                 expediteurTransaction = UserManager.getAuthUser().getId();
-
+                idFacture = 0;
             }
 
             new Thread(new Runnable() {
@@ -101,7 +108,8 @@ public class cancel_transaction extends AppCompatActivity implements View.OnClic
                                 "\"id_compte_envoyeur\":\""+expediteurTransaction + "\","+
                                 "\"id_compte_receveur\":\""+destinataireTransaction +"\"," +
                                 "\"id_type_transaction\":\""+transactionType+"\"," +
-                                "\"id_etat_transaction\":\""+transactionEtat+"\"" +
+                                "\"id_etat_transaction\":\""+transactionEtat+"\"," +
+                                "\"id_facture\":\""+idFacture+"\"" +
                                 " }");
 
                         JSONObject Json = new JSONObject(responsePOST);

@@ -37,7 +37,7 @@
             android:gravity="center"
             android:textColor="@color/black"
             android:textSize="25dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="20dp"
             android:layout_marginTop="1dp"
             android:text="@string/factureCreateTitle" />
 
@@ -59,82 +59,54 @@
             android:layout_marginBottom="30px" />
 
         <TextView
-            android:id="@+id/titlenomfacture"
-            android:layout_marginLeft="30dp"
-            android:textSize="20dp"
-            android:textColor="@color/black"
-            android:layout_marginBottom="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/nomFacture" />
-
-
-        <EditText
-            android:id="@+id/nomfacture"
-            android:layout_height="wrap_content"
-            android:layout_width="250dp"
-            android:layout_marginLeft="30dp"
-            android:ems="10"
-            android:inputType="text"
-            android:text="" />
-
-        <TextView
-            android:id="@+id/descriptionFature"
+            android:id="@+id/titleMontantTransaction"
             android:layout_marginLeft="30dp"
             android:textSize="20dp"
             android:textColor="@color/black"
             android:layout_marginBottom="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/descriptionFacture" />
+            android:text="@string/titleMontantTransaction" />
+
 
         <EditText
-            android:id="@+id/descriptionfacture"
-            android:layout_height="wrap_content"
+            android:id="@+id/montantTransaction"
             android:layout_width="250dp"
             android:layout_marginLeft="30dp"
-            android:ems="10"
-            android:inputType="text"
-            android:text="" />
-
-
-        <TextView
-            android:id="@+id/titleMontantFature"
-            android:layout_marginLeft="30dp"
-            android:textSize="20dp"
-            android:textColor="@color/black"
-            android:layout_marginBottom="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/montantFacture" />
-
-        <EditText
-            android:id="@+id/montantFacture"
-            android:layout_width="250dp"
-            android:layout_marginLeft="30dp"
-            android:layout_height="50dp"
-            android:layout_marginBottom="10dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="20dp"
             android:ems="10"
             android:inputType="numberDecimal" />
 
+
+
+
+        <CheckBox
+            android:id="@+id/verifInfosTransaction"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="15dp"
+            android:text="@string/checkVerificationTransaction" />
+
         <Button
-            android:id="@+id/payerFacture"
+            android:id="@+id/valideTransaction"
             android:layout_width="170dp"
-            android:layout_marginTop="1dp"
+            android:layout_marginTop="10dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:backgroundTint="#178CA4"
-            android:text="@string/btnPayerFacture" />
+            android:text="@string/valideTransaction" />
 
         <Button
-            android:id="@+id/annulerFacture"
+            android:id="@+id/annulerTransaction"
             android:layout_width="170dp"
             android:layout_marginTop="10dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:backgroundTint="#FF0000"
-            android:text="@string/btnAnnulerFacture" />
-
+            android:text="@string/stopTransaction" />
 
 
 
