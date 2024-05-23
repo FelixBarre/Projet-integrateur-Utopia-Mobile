@@ -256,7 +256,12 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
     }
 
     private void envoyerMessage() {
-        String messageString = editTextMessage.getText().toString();
+        String messageString = editTextMessage.getText().toString().trim();
+
+        if (messageString.isEmpty()) {
+            Toast.makeText(context, getResources().getString(R.string.erreurVide), Toast.LENGTH_LONG).show();
+            return;
+        }
 
         if (messageString.length() > 255) {
             Toast.makeText(this, getResources().getString(R.string.erreur255), Toast.LENGTH_LONG).show();
@@ -273,6 +278,7 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
                         }
                         else {
                             response = httpClientEnvoi.postMessageWithImage(body, imagePieceJointe);
+                            imageButtonCamera.setBackgroundColor(getResources().getColor(R.color.utopia_turquoise_moyen));
                         }
 
                         JSONObject responseJSON = new JSONObject(response);
@@ -345,18 +351,20 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RequestCodes.CAMERA_REQUEST_CODE) {
             imagePieceJointe = (Bitmap) data.getExtras().get("data");
+            imageButtonCamera.setBackgroundColor(getResources().getColor(R.color.utopia_turquoise_fonce));
         }
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == RequestCodes.CAMERA_PERM_CODE) {
             if (grantResults.length < 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 openCamera();
-            }
-            else {
+            } else {
                 Toast.makeText(this, getResources().getString(R.string.permissionCameraRequise), Toast.LENGTH_SHORT).show();
             }
         }
