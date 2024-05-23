@@ -39,6 +39,7 @@
 
     <!-- Détails de profil -->
     <string name="detailsProfileTitle">Mon profil</string>
+    <string name="resourceNotLoaded">Les ressources pour le profil sont en cours de chargement. Veuillez réessayer plus tard.</string>
 
     <!-- Modification de profil -->
     <string name="modificationProfileTitle">Modifier mon profil</string>
