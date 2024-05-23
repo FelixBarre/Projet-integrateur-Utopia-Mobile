@@ -16,11 +16,13 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SQLiteManager extends SQLiteOpenHelper {
     private static SQLiteManager sqLiteManager;
+    private static int numberOfVilles;
     private static final String DATABASE_NAME = "BanqueUtopia";
     private static final int DATABASE_VERSION = 1;
     private static final String COMPTE_BANCAIRES_TABLE_NAME = "compte_bancaires";
@@ -370,6 +372,17 @@ public class SQLiteManager extends SQLiteOpenHelper {
                 .append(" TINYINT)");
 
         db.execSQL(sql.toString());
+
+        sql = new StringBuilder()
+                .append("CREATE TABLE ")
+                .append(VILLES_TABLE_NAME)
+                .append("(")
+                .append(ID_FIELD)
+                .append(" INTEGER PRIMARY KEY, ")
+                .append(NOM_FIELD)
+                .append(" TEXT)");
+
+        db.execSQL(sql.toString());
     }
 
     @Override
@@ -394,7 +407,7 @@ public class SQLiteManager extends SQLiteOpenHelper {
             contentValues.put("code_postal", user.getCodePostal());
             contentValues.put("email", user.getEmail());
 
-            sqLiteDatabase.insert("users", null, contentValues);
+            sqLiteDatabase.insert(USERS_TABLE_NAME, null, contentValues);
 
             return true;
         }
@@ -417,7 +430,7 @@ public class SQLiteManager extends SQLiteOpenHelper {
             contentValues.put("code_postal", userUpdated.getCodePostal());
             contentValues.put("email", userUpdated.getEmail());
 
-            sqLiteDatabase.update("users", contentValues, "id = ?", new String[]{String.valueOf(UserManager.getAuthUser().getId())});
+            sqLiteDatabase.update(USERS_TABLE_NAME, contentValues, "id = ?", new String[]{String.valueOf(UserManager.getAuthUser().getId())});
         }
     }
 
@@ -433,7 +446,7 @@ public class SQLiteManager extends SQLiteOpenHelper {
             contentValues.put("taux_interet", compte.getTaux_interet());
             contentValues.put("id_user", compte.getId_user());
 
-            sqLiteDatabase.insert("compte_bancaires", null, contentValues);
+            sqLiteDatabase.insert(COMPTE_BANCAIRES_TABLE_NAME, null, contentValues);
 
             return true;
         }
@@ -447,7 +460,79 @@ public class SQLiteManager extends SQLiteOpenHelper {
 
             contentValues.put("nom", nom);
 
-            sqLiteDatabase.update("compte_bancaires", contentValues, "id = ?", new String[]{String.valueOf(id_compte)});
+            sqLiteDatabase.update(COMPTE_BANCAIRES_TABLE_NAME, contentValues, "id = ?", new String[]{String.valueOf(id_compte)});
+    }
+
+<<<<<<< HEAD
+    public void loadVillesInDB(ArrayList<String> villesId, ArrayList<String> villesNom) {
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+
+        StringBuilder sql = new StringBuilder()
+                .append("DELETE FROM ")
+                .append(VILLES_TABLE_NAME)
+                .append(";");
+
+        sqLiteDatabase.execSQL(sql.toString());
+
+        ContentValues contentValues = new ContentValues();
+        for (int i = 0; i < villesId.size(); i++) {
+            contentValues.put("id", villesId.get(i));
+            contentValues.put("nom", villesNom.get(i));
+            sqLiteDatabase.insert(VILLES_TABLE_NAME, null, contentValues);
+        }
+    }
+
+    public void setNumberOfVilles (int number) {
+        numberOfVilles = number;
+    }
+
+    public String getVilleById(int id) {
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT " + NOM_FIELD + " FROM " + VILLES_TABLE_NAME + " WHERE " + ID_FIELD + " = ?", new String[]{Integer.toString(id)});
+        if (cursor.moveToFirst()) {
+            return cursor.getString(0);
+        }
+        cursor.close();
+        return null;
+    }
+
+    public ArrayList<String> getNomsVilles () {
+        ArrayList<String> villes = new ArrayList<>();
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT " + NOM_FIELD + " FROM " + VILLES_TABLE_NAME, null);
+        if (cursor.moveToFirst()) {
+            do {
+                villes.add(cursor.getString(0));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return villes;
+    }
+
+    public boolean isVilleLoaded() {
+        int count = 0;
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT " + ID_FIELD + " FROM " + VILLES_TABLE_NAME, null);
+        if (cursor.moveToFirst()) {
+            do {
+                count++;
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return count == numberOfVilles;
+    }
+
+
+    public String getIdVille(String nom) {
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT " + ID_FIELD + " FROM " + VILLES_TABLE_NAME + " WHERE " + NOM_FIELD + " = ?", new String[]{nom});
+        if (cursor.moveToFirst()) {
+            return cursor.getString(0);
+        }
+        cursor.close();
+        return null;
     }
 
     public long addMessageLocalDB(MessageLocal messageLocal) {
