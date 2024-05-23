@@ -71,6 +71,7 @@
     <string name="titlePret">Mes prêts</string>
     <string name="taux_text">Taux d\'intérêt:</string>
     <string name="taux_par_defaut">taux_par_defaut</string>
+    <string name="titleCredit">Mes crédits</string>
 
     <!-- Acceuil -->
     <string name="acceuilTitle">Bonjour</string>
@@ -119,12 +120,14 @@
         <item>Dépôt</item>
         <item>Rétrait</item>
         <item>Virement</item>
+        <item>Facture</item>
     </string-array>
 
     <!-- Virements -->
     <string name="VirementTitle">Virement</string>
 
     <!-- facture-->
+    <string name="ongletfactureTitle">Paiement de facture</string>
     <string name="factureTitle">Facture</string>
     <string name="factureCreateTitle">Payer une facture</string>
     <string name="fournisseur">Fournisseur</string>
