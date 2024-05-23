@@ -1,5 +1,5 @@
 /*
- * Auteur(s):
+ * Auteur(s): Félix Barré
  */
 package com.example.projetintgrateur_utopiamobile;
 
@@ -11,4 +11,5 @@ public class RequestCodes {
     public static final int CHANGEMENT_MDP_REQUEST_CODE = 105;
     public static final int VILLES_REQUEST_CODE = 106;
     public static final int MODIFIER_PROFILE_REQUEST_CODE = 107;
+    public static final int NOTIFICATION_PERM_CODE = 108;
 }

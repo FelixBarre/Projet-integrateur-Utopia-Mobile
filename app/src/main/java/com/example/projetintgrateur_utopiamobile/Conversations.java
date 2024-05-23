@@ -1,5 +1,5 @@
 /*
- * Auteur(s):
+ * Auteur(s): Félix Barré
  */
 package com.example.projetintgrateur_utopiamobile;
 
@@ -59,6 +59,7 @@ public class Conversations extends AppCompatActivity {
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case RequestCodes.CONVERSATIONS_REQUEST_CODE:
                 if (resultCode == Activity.RESULT_OK) {
@@ -79,8 +80,7 @@ public class Conversations extends AppCompatActivity {
                             conversationAdapter.notifyDataSetChanged();
                             setConversationAdapter();
                         }
-                    }
-                    catch (Exception e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
