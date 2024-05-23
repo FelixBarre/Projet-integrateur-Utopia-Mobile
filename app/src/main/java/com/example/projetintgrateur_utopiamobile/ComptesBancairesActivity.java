@@ -31,8 +31,10 @@ public class ComptesBancairesActivity extends AppCompatActivity {
     CompteBancaireManager compteManager = new CompteBancaireManager();
     public ArrayList<CompteBancaire> comptes = CompteBancaireManager.comptes;
     public ArrayList<CompteBancaire> prets = CompteBancaireManager.prets;
+    public ArrayList<CompteBancaire> credits = CompteBancaireManager.credits;
     RecyclerView recyclerViewCompte;
     RecyclerView recyclerViewPret;
+    RecyclerView recyclerViewCredit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +48,7 @@ public class ComptesBancairesActivity extends AppCompatActivity {
         });
         recyclerViewCompte = (RecyclerView) findViewById(R.id.recyclerViewCompte);
         recyclerViewPret = (RecyclerView) findViewById(R.id.recyclerViewPret);
+        recyclerViewCredit = (RecyclerView) findViewById(R.id.recyclerViewCredit);
         ImageView addCompte = (ImageView) findViewById(R.id.addCompte);
         addCompte.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,9 +73,16 @@ public class ComptesBancairesActivity extends AppCompatActivity {
             TextView titlePret = (TextView) findViewById(R.id.titlePret);
             titlePret.setVisibility(View.GONE);
         }
+        if (credits.isEmpty()) {
+            TextView titleCredit = (TextView) findViewById(R.id.titleCredit);
+            titleCredit.setVisibility(View.GONE);
+        }
         Adapter_compte adapterCompte = new Adapter_compte(ComptesBancairesActivity.this, comptes);
         recyclerViewCompte.setAdapter(adapterCompte);
         recyclerViewCompte.setLayoutManager(new LinearLayoutManager(ComptesBancairesActivity.this));
+        Adapter_compte adapterCredit = new Adapter_compte(ComptesBancairesActivity.this, credits);
+        recyclerViewCredit.setAdapter(adapterCredit);
+        recyclerViewCredit.setLayoutManager(new LinearLayoutManager(ComptesBancairesActivity.this));
         Adapter_compte adapterPret = new Adapter_compte(ComptesBancairesActivity.this, prets);
         recyclerViewPret.setAdapter(adapterPret);
         recyclerViewPret.setLayoutManager(new LinearLayoutManager(ComptesBancairesActivity.this));
