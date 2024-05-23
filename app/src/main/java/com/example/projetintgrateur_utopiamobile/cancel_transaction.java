@@ -77,23 +77,23 @@ public class cancel_transaction extends AppCompatActivity implements View.OnClic
 
             transactionMontant = Double.parseDouble(montant);
             transactionEtat = 2;
-            idFacture = null;
+
 
             if(type.equals("Dépôt")){
                 transactionType = 1;
                 destinataireTransaction = UserManager.getAuthUser().getId();
                 expediteurTransaction = 0;
-                idFacture = null;
+                idFacture = 0;
             } else if (type.equals("Rétrait")) {
                 transactionType = 2;
                 destinataireTransaction = 0;
                 expediteurTransaction = UserManager.getAuthUser().getId();
-                idFacture = null;
+                idFacture = 0;
             } else if (type.equals("Virement")) {
                 transactionType = 3;
                 destinataireTransaction = 2;
                 expediteurTransaction = UserManager.getAuthUser().getId();
-                idFacture = null;
+                idFacture = 0;
             }
 
             new Thread(new Runnable() {

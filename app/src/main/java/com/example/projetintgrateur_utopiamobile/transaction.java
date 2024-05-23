@@ -88,20 +88,20 @@ public class transaction extends AppCompatActivity implements View.OnClickListen
             transactionEtat = 3;
             destinataireTransaction = UserManager.getAuthUser().getId();
             expediteurTransaction = 0;
-            idFacture = null;
+            idFacture = 0;
         } else if (typeTransaction.equals("Rétrait")) {
             transactionType = 2;
             transactionEtat = 3;
             destinataireTransaction = 0;
             expediteurTransaction = UserManager.getAuthUser().getId();
-            idFacture = null;
+            idFacture = 0;
 
         } else if (typeTransaction.equals("Virement")) {
             transactionType = 3;
             transactionEtat = 1;
             destinataireTransaction = 2;
             expediteurTransaction = UserManager.getAuthUser().getId();
-            idFacture = null;
+            idFacture = 0;
         }
 
 
