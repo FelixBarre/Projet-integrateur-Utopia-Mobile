@@ -463,7 +463,6 @@ public class SQLiteManager extends SQLiteOpenHelper {
             sqLiteDatabase.update(COMPTE_BANCAIRES_TABLE_NAME, contentValues, "id = ?", new String[]{String.valueOf(id_compte)});
     }
 
-<<<<<<< HEAD
     public void loadVillesInDB(ArrayList<String> villesId, ArrayList<String> villesNom) {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
 
