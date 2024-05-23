@@ -125,6 +125,7 @@
     <string name="VirementTitle">Virement</string>
 
     <!-- facture-->
+    <string name="ongletfactureTitle">Paiement de facture</string>
     <string name="factureTitle">Facture</string>
     <string name="factureCreateTitle">Payer une facture</string>
     <string name="fournisseur">Fournisseur</string>

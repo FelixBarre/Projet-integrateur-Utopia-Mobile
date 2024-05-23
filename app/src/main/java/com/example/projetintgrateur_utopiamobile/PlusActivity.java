@@ -30,6 +30,9 @@ public class PlusActivity extends AppCompatActivity implements View.OnClickListe
 
         tableRow = (TableRow) findViewById(R.id.ongletDemandeDesactivation);
         tableRow.setOnClickListener(this);
+
+        tableRow = (TableRow) findViewById(R.id.ongletPaiementfacture);
+        tableRow.setOnClickListener(this);
     }
 
     @Override
@@ -41,6 +44,10 @@ public class PlusActivity extends AppCompatActivity implements View.OnClickListe
         } else if (v.getId() == R.id.ongletDemandeDesactivation) {
             finish();
             Intent intent = new Intent(PlusActivity.this, DesactivationCompte.class);
+            startActivity(intent);
+        } else if (v.getId() == R.id.ongletPaiementfacture) {
+            finish();
+            Intent intent = new Intent(PlusActivity.this, FactureActivity.class);
             startActivity(intent);
         }
     }

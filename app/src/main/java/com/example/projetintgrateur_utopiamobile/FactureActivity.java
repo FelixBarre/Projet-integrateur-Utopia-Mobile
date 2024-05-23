@@ -74,7 +74,7 @@ public class FactureActivity extends AppCompatActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                
+
                                 TextView textViewMessage = findViewById(R.id.textViewMessage);
                                 textViewMessage.setText("Aucun fournisseur disponible.");
                                 textViewMessage.setVisibility(View.VISIBLE);
