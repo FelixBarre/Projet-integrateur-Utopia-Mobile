@@ -58,10 +58,10 @@
             android:name=".changementMotDePasse"
             android:exported="false" />
         <activity
-            android:name=".modifierProfil"
+            android:name=".ModifierProfil"
             android:exported="false" />
         <activity
-            android:name=".detailsProfil"
+            android:name=".DetailsProfil"
             android:exported="false" />
         <activity
             android:name=".Conversations"
@@ -73,7 +73,7 @@
             android:name=".ComptesBancairesActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Connexion"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

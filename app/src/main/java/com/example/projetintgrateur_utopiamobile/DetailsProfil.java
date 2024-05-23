@@ -17,12 +17,8 @@ import androidx.core.view.WindowInsetsCompat;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
-import java.io.IOException;
-
-public class detailsProfil extends AppCompatActivity {
-
+public class DetailsProfil extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +32,7 @@ public class detailsProfil extends AppCompatActivity {
 
         UserManager userManager = new UserManager();
         User userAuth = userManager.getAuthUser();
+        SQLiteManager sqLiteManager = SQLiteManager.instanceOfDatabase(this);
 
         AlertDialog.Builder builderConfirm = new AlertDialog.Builder(this);
 
@@ -77,29 +74,8 @@ public class detailsProfil extends AppCompatActivity {
         output.setText(userAuth.getRue());
 
         output = (TextView) findViewById(R.id.villeOutput);
-
-        TextView finalOutput = output;
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    HttpClient httpClient = HttpClient.instanceOfClient();
-                    String idVille = String.valueOf(userAuth.getIdVille());
-                    String responseGET = httpClient.get("villeApi/" + idVille);
-                    JSONObject response = new JSONObject(responseGET);
-
-                    JSONArray data = new JSONArray(response.get("data").toString());
-                    JSONObject dataSpecific = new JSONObject(data.get(0).toString());
-
-                    finalOutput.setText(dataSpecific.get("nom").toString());
-                }
-                catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-
-        output.setText(finalOutput.getText());
+        String ville = sqLiteManager.getVilleById(userAuth.getIdVille());
+        output.setText(ville);
 
         output = (TextView) findViewById(R.id.codePostalOutput);
         output.setText(userAuth.getCodePostal());
@@ -108,9 +84,9 @@ public class detailsProfil extends AppCompatActivity {
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ConnectionManager connectionManager = new ConnectionManager(detailsProfil.this);
+                ConnectionManager connectionManager = new ConnectionManager(DetailsProfil.this);
                 if (connectionManager.isConnected()) {
-                    Intent intent = new Intent(detailsProfil.this, modifierProfil.class);
+                    Intent intent = new Intent(DetailsProfil.this, ModifierProfil.class);
                     startActivity(intent);
                 } else {
                     builderConfirm.setMessage(getString(R.string.connexionFailedMessage));

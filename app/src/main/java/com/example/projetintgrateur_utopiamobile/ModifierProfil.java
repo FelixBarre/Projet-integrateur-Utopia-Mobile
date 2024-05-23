@@ -1,6 +1,5 @@
 package com.example.projetintgrateur_utopiamobile;
 
-import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -8,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -15,9 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -26,22 +24,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * Note: Code pour la boite de dialogue inspiré de: https://www.geeksforgeeks.org/how-to-implement-custom-searchable-spinner-in-android/
  */
 
-public class modifierProfil extends AppCompatActivity implements View.OnClickListener{
+public class ModifierProfil extends AppCompatActivity implements View.OnClickListener{
     TextView errorsOuput;
     Dialog searchVilleWindow;
     ArrayList<String> villesNom;
-    ArrayList<String> villesId;
     TextView inputVille;
     EditText inputEmail;
     EditText inputTelephone;
@@ -51,6 +49,8 @@ public class modifierProfil extends AppCompatActivity implements View.OnClickLis
     EditText inputCodePostal;
     AlertDialog.Builder builderConfirm;
     User userAuth;
+    SQLiteManager sqLiteManager;
+    ArrayAdapter<String> adapterVilles;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,10 +62,11 @@ public class modifierProfil extends AppCompatActivity implements View.OnClickLis
             return insets;
         });
 
+        sqLiteManager = SQLiteManager.instanceOfDatabase(ModifierProfil.this);
+
         inputVille = (TextView) findViewById(R.id.inputVille);
-        searchVilleWindow = new Dialog(modifierProfil.this);
-        villesNom = new ArrayList<>();
-        villesId = new ArrayList<>();
+        searchVilleWindow = new Dialog(ModifierProfil.this);
+        villesNom = sqLiteManager.getNomsVilles();
         builderConfirm = new AlertDialog.Builder(this);
 
         Button btnConfirmation = (Button) findViewById(R.id.confirmerButton);
@@ -106,11 +107,16 @@ public class modifierProfil extends AppCompatActivity implements View.OnClickLis
         inputRue = findViewById(R.id.rueInput);
         inputRue.setText(userAuth.getRue());
 
-        if (villesNom.isEmpty()) {
-            Intent loadingHttp = new Intent(modifierProfil.this, LoadingHttp.class);
-            loadingHttp.putExtra("method", "GET");
-            loadingHttp.putExtra("route", "villesApi");
-            startActivityForResult(loadingHttp, RequestCodes.VILLES_MODIFIER_PROFILE_REQUEST_CODE);
+        if (Objects.equals(villesNom.get(0), "unloaded")) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    performPostDelayTask();
+                }
+            }, 800);
+        } else {
+            inputVille.setText(sqLiteManager.getVilleById(userAuth.getIdVille()));
+            inputVille.setTag(userAuth.getIdVille());
         }
 
         inputVille.setOnClickListener(this);
@@ -122,28 +128,8 @@ public class modifierProfil extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         switch (requestCode) {
-            case RequestCodes.VILLES_MODIFIER_PROFILE_REQUEST_CODE:
-                try {
-                    String responseGET = data.getStringExtra("response");
-                    JSONObject response = new JSONObject(responseGET);
-
-                    JSONArray dataResponse = new JSONArray(response.get("data").toString());
-                    for (int i = 0; i < dataResponse.length(); i++) {
-                        JSONObject dataSpecific = new JSONObject(dataResponse.get(i).toString());
-                        villesId.add(dataSpecific.get("id").toString());
-                        villesNom.add(dataSpecific.get("nom").toString());
-                        if (dataSpecific.get("id").equals(userAuth.getIdVille())) {
-                            inputVille.setText(dataSpecific.get("nom").toString());
-                            inputVille.setTag(dataSpecific.get("id").toString());
-                        }
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                break;
-
                 case RequestCodes.MODIFIER_PROFILE_REQUEST_CODE:
-                    SQLiteManager sqLiteManager = SQLiteManager.instanceOfDatabase(modifierProfil.this);
+                    SQLiteManager sqLiteManager = SQLiteManager.instanceOfDatabase(ModifierProfil.this);
                     try {
                         String responsePUT = data.getStringExtra("response");
                         JSONObject response = new JSONObject(responsePUT);
@@ -176,7 +162,7 @@ public class modifierProfil extends AppCompatActivity implements View.OnClickLis
                             sqLiteManager.updateUserDB(UserManager.getAuthUser());
 
                             finish();
-                            Intent intent = new Intent(modifierProfil.this, detailsProfil.class);
+                            Intent intent = new Intent(ModifierProfil.this, DetailsProfil.class);
                             intent.putExtra("status", "profile-updated");
                             startActivity(intent);
                         }
@@ -190,9 +176,9 @@ public class modifierProfil extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.confirmerButton) {
-            ConnectionManager connectionManager = new ConnectionManager(modifierProfil.this);
+            ConnectionManager connectionManager = new ConnectionManager(ModifierProfil.this);
             if (connectionManager.isConnected()) {
-                Intent loadingHttp = new Intent(modifierProfil.this, LoadingHttp.class);
+                Intent loadingHttp = new Intent(ModifierProfil.this, LoadingHttp.class);
                 loadingHttp.putExtra("method", "PUT");
                 loadingHttp.putExtra("route", "modification/profileApi");
 
@@ -233,7 +219,7 @@ public class modifierProfil extends AppCompatActivity implements View.OnClickLis
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     finish();
-                    Intent intent = new Intent(modifierProfil.this, changementMotDePasse.class);
+                    Intent intent = new Intent(ModifierProfil.this, changementMotDePasse.class);
                     startActivity(intent);
                 }
             });
@@ -257,15 +243,16 @@ public class modifierProfil extends AppCompatActivity implements View.OnClickLis
             EditText searchBarVilles = searchVilleWindow.findViewById(R.id.searchVille);
             ListView listeVilles = searchVilleWindow.findViewById(R.id.listeVilles);
 
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(modifierProfil.this, android.R.layout.simple_list_item_1, villesNom);
-
-            if (!villesNom.isEmpty()) {
-                listeVilles.setAdapter(adapter);
+            if (!Objects.equals(villesNom.get(0), "unloaded")) {
+                adapterVilles = new ArrayAdapter<>(ModifierProfil.this, android.R.layout.simple_list_item_1, villesNom);
+                listeVilles.setAdapter(adapterVilles);
             } else {
-                Intent loadingHttp = new Intent(modifierProfil.this, LoadingHttp.class);
-                loadingHttp.putExtra("method", "GET");
-                loadingHttp.putExtra("route", "villesApi");
-                startActivityForResult(loadingHttp, RequestCodes.VILLES_MODIFIER_PROFILE_REQUEST_CODE);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        performPostDelayTask();
+                    }
+                }, 800);
             }
 
 
@@ -275,7 +262,7 @@ public class modifierProfil extends AppCompatActivity implements View.OnClickLis
 
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    adapter.getFilter().filter(s);
+                    adapterVilles.getFilter().filter(s);
                 }
 
                 @Override
@@ -285,11 +272,16 @@ public class modifierProfil extends AppCompatActivity implements View.OnClickLis
             listeVilles.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    inputVille.setText(adapter.getItem(position));
-                    inputVille.setTag(villesId.get(position));
+                    inputVille.setText(adapterVilles.getItem(position));
+                    inputVille.setTag(sqLiteManager.getIdVille(adapterVilles.getItem(position)));
                     searchVilleWindow.dismiss();
                 }
             });
         }
+    }
+
+    private void performPostDelayTask() {
+        villesNom = sqLiteManager.getNomsVilles();
+        adapterVilles = new ArrayAdapter<>(ModifierProfil.this, android.R.layout.simple_list_item_1, villesNom);
     }
 }
