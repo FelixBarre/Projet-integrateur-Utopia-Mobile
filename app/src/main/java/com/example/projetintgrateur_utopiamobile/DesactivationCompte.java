@@ -71,12 +71,12 @@ public class DesactivationCompte extends AppCompatActivity {
                     outputError.setText("");
                     Intent loadingHttp = new Intent(DesactivationCompte.this, LoadingHttp.class);
                     String raison = spinnerRaison.getSelectedItem().toString();
-                    String idCompte = spinnerCompte.getSelectedItem().getClass()
+                    String idCompte = sqLiteManager.getIdCompteBancaire(spinnerCompte.getSelectedItem().toString());
 
                     loadingHttp.putExtra("method", "POST");
                     loadingHttp.putExtra("route", "creation/demande_de_desactivation_bancaire");
-                    loadingHttp.putExtra("body", "{ \"raison\" : \"" + inputOldPassword.getText() + "\", \"password\" : \"" + inputNewPassword.getText() + "\", \"password_confirmation\" : \"" + inputConfirmPassword.getText() + "\" }");
-                    startActivityForResult(loadingHttp, RequestCodes.DESACTIVATION_COMPTE_REQUEST_CODE);*/
+                    loadingHttp.putExtra("body", "{ \"raison\" : \"" + raison + "\", \"id_compte\" : \"" + idCompte + "\" }");
+                    startActivityForResult(loadingHttp, RequestCodes.DESACTIVATION_COMPTE_REQUEST_CODE);
                 } else {
                     builderConfirm.setMessage(getString(R.string.connexionFailedMessage));
                     builderConfirm.setPositiveButton(getString(R.string.retour), new DialogInterface.OnClickListener() {
@@ -116,9 +116,9 @@ public class DesactivationCompte extends AppCompatActivity {
                             } else {
                                 outputError.setText(response.get("ERREUR").toString());
                             }
-                        } else if (response.has("SUCCÈS")) {
+                        } else if (response.has("SUCCES")) {
                             outputError.setTextColor(getColor(R.color.green));
-                            outputError.setText(getString(R.string.succèsConfirmationMDP));
+                            outputError.setText(getString(R.string.succèsEnvoiDesactivation));
                         }
                     } catch (Exception e) {
                         e.printStackTrace();

@@ -633,4 +633,15 @@ public class SQLiteManager extends SQLiteOpenHelper {
             }
         }
     }
+
+    public String getIdCompteBancaire (String nomCompte) {
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT " + ID_FIELD + " FROM " + COMPTE_BANCAIRES_TABLE_NAME + " WHERE " + NOM_FIELD + " = ?", new String[]{nomCompte});
+        if (cursor.moveToFirst()) {
+            return cursor.getString(0);
+        }
+        cursor.close();
+        return null;
+    }
 }
