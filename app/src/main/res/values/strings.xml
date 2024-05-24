@@ -39,6 +39,7 @@
 
     <!-- Détails de profil -->
     <string name="detailsProfileTitle">Mon profil</string>
+    <string name="resourceNotLoaded">Les ressources pour le profil sont en cours de chargement. Veuillez réessayer plus tard.</string>
 
     <!-- Modification de profil -->
     <string name="modificationProfileTitle">Modifier mon profil</string>
@@ -153,6 +154,7 @@
 
     <!-- Désactivation de comnptes -->
     <string name="titleDesactivationCompte">Désactivation de compte</string>
+    <string name="succèsEnvoiDesactivation">Votre demande de désactivation de compte a été envoyée</string>
     <string-array name="raisonsDesactivation">
         <item>Compte inutile / non utilisé</item>
         <item>Changement vers un autre compte</item>
@@ -171,6 +173,8 @@
     <string name="erreurEnvoi">Erreur à l\'envoi du message.</string>
     <string name="erreurModif">Erreur à la modification du message.</string>
     <string name="permissionCameraRequise">La permission de la caméra est requise pour utiliser la caméra.</string>
+    <string name="permissionNotifRequise">La permission des notifications est requise pour utiliser la messagerie.</string>
+    <string name="conversationAvec">Conversation avec</string>
 
     <!-- Plus -->
     <string name="plus">Plus</string>

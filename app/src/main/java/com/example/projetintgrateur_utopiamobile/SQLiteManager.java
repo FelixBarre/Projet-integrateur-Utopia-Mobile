@@ -1,6 +1,15 @@
-/*
- * Auteur: , Mathis Leduc
- */
+/****************************************
+ Fichier : SQLiteManager.java
+ @author Félix Barré, Mathis Leduc
+ Fonctionnalité : Gestionnaire pour la base de données locale
+ Date : 13 mai 2024
+ Vérification :
+
+ =========================================================
+ Historique de modifications :
+
+ =========================================================
+ ****************************************/
 package com.example.projetintgrateur_utopiamobile;
 
 import android.content.ContentValues;
@@ -16,11 +25,13 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SQLiteManager extends SQLiteOpenHelper {
     private static SQLiteManager sqLiteManager;
+    private static int numberOfVilles;
     private static final String DATABASE_NAME = "BanqueUtopia";
     private static final int DATABASE_VERSION = 1;
     private static final String COMPTE_BANCAIRES_TABLE_NAME = "compte_bancaires";
@@ -87,10 +98,23 @@ public class SQLiteManager extends SQLiteOpenHelper {
     private static final String DATE_DEBUT_FIELD = "date_debut";
     private static final String DATE_ECHEANCE_FIELD = "date_echeance";
 
+    /**
+     *
+     * @param context Le contexte d'où le manager est initialisé
+     *
+     * Constructeur pour l'objet SQLiteManager
+     */
     public SQLiteManager(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+    /**
+     *
+     * @param context Le contexte d'où le manager est initialisé
+     * @return L'instance unique statique de SQLiteManager
+     *
+     * Permet d'obtenir l'insance unique de SQLiteManager
+     */
     public static SQLiteManager instanceOfDatabase(Context context) {
         if (sqLiteManager == null) {
             sqLiteManager = new SQLiteManager(context);
@@ -99,7 +123,12 @@ public class SQLiteManager extends SQLiteOpenHelper {
         return sqLiteManager;
     }
 
-
+    /**
+     *
+     * @param db La base de données.
+     *
+     * Création de la base de données (tables)
+     */
     @Override
     public void onCreate(SQLiteDatabase db) {
         StringBuilder sql = new StringBuilder()
@@ -370,8 +399,27 @@ public class SQLiteManager extends SQLiteOpenHelper {
                 .append(" TINYINT)");
 
         db.execSQL(sql.toString());
+
+        sql = new StringBuilder()
+                .append("CREATE TABLE ")
+                .append(VILLES_TABLE_NAME)
+                .append("(")
+                .append(ID_FIELD)
+                .append(" INTEGER PRIMARY KEY, ")
+                .append(NOM_FIELD)
+                .append(" TEXT)");
+
+        db.execSQL(sql.toString());
     }
 
+    /**
+     *
+     * @param db La base de données.
+     * @param oldVersion L'ancienne version de la base de données.
+     * @param newVersion La nouvelle version de la base de données.
+     *
+     * Permet de faire les ajustements lorsqu'on met à jour la base de données
+     */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
@@ -394,7 +442,7 @@ public class SQLiteManager extends SQLiteOpenHelper {
             contentValues.put("code_postal", user.getCodePostal());
             contentValues.put("email", user.getEmail());
 
-            sqLiteDatabase.insert("users", null, contentValues);
+            sqLiteDatabase.insert(USERS_TABLE_NAME, null, contentValues);
 
             return true;
         }
@@ -417,7 +465,7 @@ public class SQLiteManager extends SQLiteOpenHelper {
             contentValues.put("code_postal", userUpdated.getCodePostal());
             contentValues.put("email", userUpdated.getEmail());
 
-            sqLiteDatabase.update("users", contentValues, "id = ?", new String[]{String.valueOf(UserManager.getAuthUser().getId())});
+            sqLiteDatabase.update(USERS_TABLE_NAME, contentValues, "id = ?", new String[]{String.valueOf(UserManager.getAuthUser().getId())});
         }
     }
 
@@ -433,7 +481,7 @@ public class SQLiteManager extends SQLiteOpenHelper {
             contentValues.put("taux_interet", compte.getTaux_interet());
             contentValues.put("id_user", compte.getId_user());
 
-            sqLiteDatabase.insert("compte_bancaires", null, contentValues);
+            sqLiteDatabase.insert(COMPTE_BANCAIRES_TABLE_NAME, null, contentValues);
 
             return true;
         }
@@ -447,9 +495,87 @@ public class SQLiteManager extends SQLiteOpenHelper {
 
             contentValues.put("nom", nom);
 
-            sqLiteDatabase.update("compte_bancaires", contentValues, "id = ?", new String[]{String.valueOf(id_compte)});
+            sqLiteDatabase.update(COMPTE_BANCAIRES_TABLE_NAME, contentValues, "id = ?", new String[]{String.valueOf(id_compte)});
     }
 
+    public void loadVillesInDB(ArrayList<String> villesId, ArrayList<String> villesNom) {
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+
+        StringBuilder sql = new StringBuilder()
+                .append("DELETE FROM ")
+                .append(VILLES_TABLE_NAME)
+                .append(";");
+
+        sqLiteDatabase.execSQL(sql.toString());
+
+        ContentValues contentValues = new ContentValues();
+        for (int i = 0; i < villesId.size(); i++) {
+            contentValues.put("id", villesId.get(i));
+            contentValues.put("nom", villesNom.get(i));
+            sqLiteDatabase.insert(VILLES_TABLE_NAME, null, contentValues);
+        }
+    }
+
+    public void setNumberOfVilles (int number) {
+        numberOfVilles = number;
+    }
+
+    public String getVilleById(int id) {
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT " + NOM_FIELD + " FROM " + VILLES_TABLE_NAME + " WHERE " + ID_FIELD + " = ?", new String[]{Integer.toString(id)});
+        if (cursor.moveToFirst()) {
+            return cursor.getString(0);
+        }
+        cursor.close();
+        return null;
+    }
+
+    public ArrayList<String> getNomsVilles () {
+        ArrayList<String> villes = new ArrayList<>();
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT " + NOM_FIELD + " FROM " + VILLES_TABLE_NAME, null);
+        if (cursor.moveToFirst()) {
+            do {
+                villes.add(cursor.getString(0));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return villes;
+    }
+
+    public boolean isVilleLoaded() {
+        int count = 0;
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT " + ID_FIELD + " FROM " + VILLES_TABLE_NAME, null);
+        if (cursor.moveToFirst()) {
+            do {
+                count++;
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return count == numberOfVilles;
+    }
+
+
+    public String getIdVille(String nom) {
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT " + ID_FIELD + " FROM " + VILLES_TABLE_NAME + " WHERE " + NOM_FIELD + " = ?", new String[]{nom});
+        if (cursor.moveToFirst()) {
+            return cursor.getString(0);
+        }
+        cursor.close();
+        return null;
+    }
+
+    /**
+     *
+     * @param messageLocal Le message à ajouter
+     * @return L'id du message dans la base de données
+     *
+     * Insère un message local dans la base de données
+     */
     public long addMessageLocalDB(MessageLocal messageLocal) {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
 
@@ -466,11 +592,21 @@ public class SQLiteManager extends SQLiteOpenHelper {
         return sqLiteDatabase.insert(MESSAGES_LOCAUX_TABLE_NAME, null, contentValues);
     }
 
+    /**
+     *
+     * @param id_message_local L'id du message local
+     * @return Le nombre de lignes affectées par la suppression
+     *
+     * Supprime un message local de la base de données
+     */
     public int deleteMessageLocal(long id_message_local) {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         return sqLiteDatabase.delete(MESSAGES_LOCAUX_TABLE_NAME, "id = ?", new String[]{String.valueOf(id_message_local)});
     }
 
+    /**
+     * Rempli l'arraylist static des messages locaux à partir de la base de données
+     */
     public void populateMessagesLocauxArrayList() {
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
 
@@ -496,5 +632,16 @@ public class SQLiteManager extends SQLiteOpenHelper {
                 }
             }
         }
+    }
+
+    public String getIdCompteBancaire (String nomCompte) {
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT " + ID_FIELD + " FROM " + COMPTE_BANCAIRES_TABLE_NAME + " WHERE " + NOM_FIELD + " = ?", new String[]{nomCompte});
+        if (cursor.moveToFirst()) {
+            return cursor.getString(0);
+        }
+        cursor.close();
+        return null;
     }
 }

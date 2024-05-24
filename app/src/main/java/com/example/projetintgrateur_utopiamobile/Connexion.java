@@ -8,14 +8,13 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
@@ -23,37 +22,32 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class Connexion extends AppCompatActivity {
     AlertDialog.Builder builderConfirm;
     TextView outputError;
     EditText inputCourriel;
     EditText inputPassword;
+    SQLiteManager sqLiteManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.connexion), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-        Context context = MainActivity.this;
-        SQLiteManager sqLiteManager = SQLiteManager.instanceOfDatabase(MainActivity.this);
+        Context context = Connexion.this;
+        sqLiteManager = SQLiteManager.instanceOfDatabase(Connexion.this);
         sqLiteManager.close();
         context.deleteDatabase("BanqueUtopia");
 
@@ -71,9 +65,9 @@ public class MainActivity extends AppCompatActivity {
         btnConnexion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ConnectionManager connectionManager = new ConnectionManager(MainActivity.this);
+                ConnectionManager connectionManager = new ConnectionManager(Connexion.this);
                 if (connectionManager.isConnected()) {
-                    Intent loadingHttp = new Intent(MainActivity.this, LoadingHttp.class);
+                    Intent loadingHttp = new Intent(Connexion.this, LoadingHttp.class);
                     loadingHttp.putExtra("method", "POST");
                     loadingHttp.putExtra("route", "token");
                     loadingHttp.putExtra("body", "{ \"email\": \"" + inputCourriel.getText() + "\", \"password\": \"" + inputPassword.getText() + "\", \"token_name\": \"tokenAPI\" }");
@@ -131,14 +125,16 @@ public class MainActivity extends AppCompatActivity {
 
                                         JSONObject response = new JSONObject(responseGET);
                                         if (response.toString().contains("Utilisateur")) {
-                                            SQLiteManager sqLiteManager = SQLiteManager.instanceOfDatabase(MainActivity.this);
+                                            SQLiteManager sqLiteManager = SQLiteManager.instanceOfDatabase(Connexion.this);
 
                                             User user = userManager.getUser(inputCourriel.getText().toString());
                                             UserManager.setAuthUser(user);
 
                                             if (sqLiteManager.loadUserIntoDatabase(user)) {
-                                                Intent intent = new Intent(MainActivity.this, accueil.class);
-                                                startActivity(intent);
+                                                Intent loadingHttp = new Intent(Connexion.this, LoadingHttp.class);
+                                                loadingHttp.putExtra("method", "GET");
+                                                loadingHttp.putExtra("route", "villesApi");
+                                                startActivityForResult(loadingHttp, RequestCodes.VILLES_REQUEST_CODE);
                                             } else {
                                                 outputError.setText(getString(R.string.erreurChargementUser));
                                             }
@@ -151,12 +147,40 @@ public class MainActivity extends AppCompatActivity {
                                 }
                             }).start();
                         }
-
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
                 break;
+            case RequestCodes.VILLES_REQUEST_CODE:
+                ArrayList<String> villesId = new ArrayList<>();
+                ArrayList<String> villesNom = new ArrayList<>();
+                try {
+                    String responseGET = data.getStringExtra("response");
+                    JSONObject response = new JSONObject(responseGET);
+
+                    JSONArray dataResponse = new JSONArray(response.get("data").toString());
+
+                    sqLiteManager.setNumberOfVilles(dataResponse.length());
+
+                    for (int i = 0; i < dataResponse.length(); i++) {
+                        JSONObject dataSpecific = new JSONObject(dataResponse.get(i).toString());
+                        villesId.add(dataSpecific.get("id").toString());
+                        villesNom.add(dataSpecific.get("nom").toString());
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        sqLiteManager.loadVillesInDB(villesId, villesNom);
+                    }
+                }).start();
+
+                Intent intent = new Intent(Connexion.this, accueil.class);
+                startActivity(intent);
         }
     }
 }

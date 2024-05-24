@@ -1,6 +1,9 @@
-/*
- * Auteur(s): Mathis Leduc
- */
+/****************************************
+ Fichier : Adapter_compte
+ Auteur : Mathis Leduc
+ Fonctionnalité : M-CTE-8 consulter les comptes bancaires
+ Date : 2024-05-23
+ ****************************************/
 package com.example.projetintgrateur_utopiamobile;
 
 import static androidx.core.content.ContextCompat.startActivity;
