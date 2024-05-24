@@ -3,9 +3,12 @@
  */
 package com.example.projetintgrateur_utopiamobile;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -23,11 +26,22 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class FactureActivity extends AppCompatActivity {
+public class FactureActivity extends AppCompatActivity implements View.OnClickListener{
 
-    public static ArrayList<Fournisseur> fournisseurs= new ArrayList<>();
+    public ArrayList<Fournisseur> fournisseurs= new ArrayList<>();
 
     Spinner spinnerFournisseur;
+
+    private Button btnTermine;
+    private Button btnAnnule;
+
+    private Integer transactionType;
+    private Integer transactionEtat;
+
+    private Integer destinataireTransaction;
+    private Integer expediteurTransaction;
+
+    private Integer idFacture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +55,12 @@ public class FactureActivity extends AppCompatActivity {
         });
 
         spinnerFournisseur = (Spinner) findViewById(R.id.fournisseurFacture);
+
+        btnTermine = (Button) findViewById(R.id.valideTransaction);
+        btnAnnule = (Button) findViewById(R.id.annulerTransaction);
+
+        btnTermine.setOnClickListener(this);
+        btnAnnule.setOnClickListener(this);
 
         new Thread(new Runnable() {
             @Override
@@ -94,4 +114,62 @@ public class FactureActivity extends AppCompatActivity {
         }).start();
 
     }
+
+    public void onClick(View v){
+
+        Spinner fournisseurSpinner = (Spinner) findViewById(R.id.destinationTansaction);
+        EditText montant = (EditText) findViewById(R.id.montantTransaction);
+
+        String fournisseurTransaction = fournisseurSpinner.getSelectedItem().toString();
+        String montantTransaction = montant.getText().toString();
+        double transactionMontant = Double.parseDouble(montantTransaction);
+
+
+        transactionType = 4;
+        transactionEtat = 3;
+        destinataireTransaction = 0;
+        expediteurTransaction = UserManager.getAuthUser().getId();
+        idFacture = 0;
+
+
+
+        if (v.getId()==R.id.valideTransaction) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+
+                    try {
+
+                        HttpClient httpClient = HttpClient.instanceOfClient();
+                        String responsePOST = httpClient.post("transactionApi/new", "{ \"montant\": \""+ transactionMontant +"\", " +
+                                "\"id_compte_envoyeur\":\""+expediteurTransaction + "\","+
+                                "\"id_compte_receveur\":\""+destinataireTransaction +"\"," +
+                                "\"id_type_transaction\":\""+transactionType+"\"," +
+                                "\"id_etat_transaction\":\""+transactionEtat+"\"," +
+                                "\"id_facture\":\""+idFacture+"\"" +
+                                " }");
+
+                        JSONObject Json = new JSONObject(responsePOST);
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }).start();
+
+            Intent intent = new Intent(FactureActivity.this, accueil.class);
+            startActivity(intent);
+
+
+        } else if (v.getId()==R.id.annulerTransaction) {
+
+            Intent intent = new Intent(FactureActivity.this, cancel_transaction.class);
+            startActivity(intent);
+
+        }
+
+    }
+
 }
