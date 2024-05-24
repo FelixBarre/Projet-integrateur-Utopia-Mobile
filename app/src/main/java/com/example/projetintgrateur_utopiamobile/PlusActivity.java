@@ -31,10 +31,13 @@ public class PlusActivity extends AppCompatActivity implements View.OnClickListe
         TableRow tableRow = (TableRow) findViewById(R.id.ongletDemandePret);
         tableRow.setOnClickListener(this);
 
+        tableRow = (TableRow) findViewById(R.id.ongletPaiementfacture);
+        tableRow.setOnClickListener(this);
+
         tableRow = (TableRow) findViewById(R.id.ongletDemandeDesactivation);
         tableRow.setOnClickListener(this);
 
-        tableRow = (TableRow) findViewById(R.id.ongletPaiementfacture);
+        tableRow = (TableRow) findViewById(R.id.ongletDemandeDesactivationProfile);
         tableRow.setOnClickListener(this);
     }
 
@@ -44,13 +47,17 @@ public class PlusActivity extends AppCompatActivity implements View.OnClickListe
             finish();
             Intent intent = new Intent(PlusActivity.this, DemandePretActivity.class);
             startActivity(intent);
+        } else if (v.getId() == R.id.ongletPaiementfacture) {
+            finish();
+            Intent intent = new Intent(PlusActivity.this, FactureActivity.class);
+            startActivity(intent);
         } else if (v.getId() == R.id.ongletDemandeDesactivation) {
             finish();
             Intent intent = new Intent(PlusActivity.this, DesactivationCompte.class);
             startActivity(intent);
-        } else if (v.getId() == R.id.ongletPaiementfacture) {
+        } else if (v.getId() == R.id.ongletDemandeDesactivationProfile) {
             finish();
-            Intent intent = new Intent(PlusActivity.this, FactureActivity.class);
+            Intent intent = new Intent(PlusActivity.this, DesactivationProfile.class);
             startActivity(intent);
         }
     }

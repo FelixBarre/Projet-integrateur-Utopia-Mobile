@@ -118,9 +118,13 @@ public class Conversation {
      * Permet d'obtenir le dernier message de la conversation
      */
     public Message getDernierMessage() {
-        Collections.sort(messages, Comparator.comparingLong(Message::getId));
+        if (!messages.isEmpty()) {
+            Collections.sort(messages, Comparator.comparingLong(Message::getId));
 
-        return messages.get(messages.size() - 1);
+            return messages.get(messages.size() - 1);
+        }
+
+        return null;
     }
 
     /**
@@ -131,13 +135,16 @@ public class Conversation {
      */
     public User getInterlocuteur() {
         Message dernierMessage = this.getDernierMessage();
+        if (dernierMessage != null) {
+            if (dernierMessage.getEnvoyeur().getId() == UserManager.getAuthUser().getId()) {
+                return dernierMessage.getReceveur();
+            }
+            else {
+                return dernierMessage.getEnvoyeur();
+            }
+        }
 
-        if (dernierMessage.getEnvoyeur().getId() == UserManager.getAuthUser().getId()) {
-            return dernierMessage.getReceveur();
-        }
-        else {
-            return dernierMessage.getEnvoyeur();
-        }
+        return null;
     }
 
     /**
