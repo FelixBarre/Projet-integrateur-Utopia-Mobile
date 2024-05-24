@@ -56,7 +56,8 @@ import java.util.Locale;
 
 public class ConversationActivity extends AppCompatActivity implements View.OnClickListener {
     private Context context;
-    private HttpClient httpClient;
+    private HttpClient httpClientNew;
+    private HttpClient httpClientUpdated;
     private HttpClient httpClientEnvoi;
     private TextView titreConversation;
     private EditText editTextMessage;
@@ -125,7 +126,8 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
      * Initialise les widgets de l'activité
      */
     private void initWidgets() {
-        httpClient = HttpClient.instanceOfClient();
+        httpClientNew = new HttpClient();
+        httpClientUpdated = new HttpClient();
         httpClientEnvoi = new HttpClient();
         titreConversation = (TextView) findViewById(R.id.titreConversation);
         editTextMessage = (EditText) findViewById(R.id.editTextMessage);
@@ -247,12 +249,22 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
         for (int i = 0; i < MessageLocal.messagesLocauxArrayList.size(); i++) {
             MessageLocal messageLocal = MessageLocal.messagesLocauxArrayList.get(i);
 
+            sqLiteManager.deleteMessageLocal(messageLocal.getId());
+
+            String response;
+
             try {
-                String response = postMessage(messageLocal.getTexte(), messageLocal.getIdConversation(), messageLocal.getImage());
+                response = postMessage(messageLocal.getTexte(), messageLocal.getIdConversation(), messageLocal.getImage());
+            }
+            catch (Exception e) {
+                sqLiteManager.addMessageLocalDB(messageLocal);
+                continue;
+            }
 
-                JSONObject responseJSON = new JSONObject(response);
+            JSONObject responseJSON;
 
-                sqLiteManager.deleteMessageLocal(messageLocal.getId());
+            try {
+                responseJSON = new JSONObject(response);
 
                 if (responseJSON.has("SUCCÈS")) {
                     imagePieceJointe = null;
@@ -260,7 +272,8 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
                 } else if (responseJSON.has("ERREUR")) {
                     Toast.makeText(context, responseJSON.getString("ERREUR"), Toast.LENGTH_LONG).show();
                 }
-            } catch (Exception e) {
+            }
+            catch (JSONException e) {
                 e.printStackTrace();
             }
         }
@@ -299,7 +312,7 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
     private void getNewMessages() throws Exception {
         String response = "";
 
-        response = httpClient.get("messages/" + conversation.getId() + "/" + messageAdapter.getItem(messageAdapter.getCount() - 1).getId());
+        response = httpClientNew.get("messages/" + conversation.getId() + "/" + messageAdapter.getItem(messageAdapter.getCount() - 1).getId());
 
         JSONObject responseJSON = new JSONObject(response);
 
@@ -344,7 +357,7 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
      */
     private void getUpdatedMessages() throws Exception {
         String requestTime = anneeMoisJour.format(new Date());
-        String response = httpClient.get("messages/updated/" + conversation.getId() + "/" + dateDerniereUpdate);
+        String response = httpClientUpdated.get("messages/updated/" + conversation.getId() + "/" + dateDerniereUpdate);
 
         JSONObject responseJSON = new JSONObject(response);
 
@@ -413,31 +426,7 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
         } else {
             editTextMessage.setText("");
 
-            long id_message_local = sqLiteManager.addMessageLocalDB(new MessageLocal(0, conversation.getId(), imagePieceJointe, messageString));
-
-            if (connectionManager.isConnected()) {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            String response = postMessage(messageString, conversation.getId(), imagePieceJointe);
-
-                            JSONObject responseJSON = new JSONObject(response);
-
-                            sqLiteManager.deleteMessageLocal(id_message_local);
-
-                            if (responseJSON.has("SUCCÈS")) {
-                                imagePieceJointe = null;
-                                imageButtonCamera.setBackgroundColor(getResources().getColor(R.color.utopia_turquoise_moyen));
-                            } else if (responseJSON.has("ERREUR")) {
-                                Toast.makeText(context, responseJSON.getString("ERREUR"), Toast.LENGTH_LONG).show();
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }).start();
-            }
+            sqLiteManager.addMessageLocalDB(new MessageLocal(0, conversation.getId(), imagePieceJointe, messageString));
         }
     }
 
@@ -460,7 +449,7 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
                             String body = "{ \"texte\" : \"" + messageString + "\" }";
                             String response = "";
 
-                            response = httpClient.put("messages/" + idMessageUpdating, body);
+                            response = httpClientEnvoi.put("messages/" + idMessageUpdating, body);
 
                             JSONObject responseJSON = new JSONObject(response);
 
@@ -530,8 +519,7 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
 
     /**
      *
-     * @param requestCode The request code passed in {@link #requestPermissions(
-     * android.app.Activity, String[], int)}
+     * @param requestCode The request code passed in requestPermissions
      * @param permissions The requested permissions. Never null.
      * @param grantResults The grant results for the corresponding permissions
      *     which is either {@link android.content.pm.PackageManager#PERMISSION_GRANTED}

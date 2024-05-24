@@ -50,7 +50,7 @@ public class LoadingHttp extends AppCompatActivity {
                 try {
                     Intent intentData = getIntent();
 
-                    HttpClient httpClient = HttpClient.instanceOfClient();
+                    HttpClient httpClient = new HttpClient();
 
                     String response = "";
 
