@@ -1,6 +1,10 @@
-/*
- * Auteur(s): Mathis Leduc
- */
+/****************************************
+ Fichier : CompteBancaireManager
+ Auteur : Mathis Leduc
+ Fonctionnalité : M-CTE-8 consulter les comptes bancaires
+ Date : 2024-05-23
+ ****************************************/
+
 package com.example.projetintgrateur_utopiamobile;
 
 import android.content.Context;
@@ -31,30 +35,38 @@ public class CompteBancaireManager {
             @Override
             public void run() {
                 try {
+                    VerifyComptes();
                     HttpClient httpClient = HttpClient.instanceOfClient();
+                    //GET de tous les types de comptes
                     String responseGET = httpClient.get("comptesBancaires");
                     JSONObject Json = new JSONObject(responseGET);
                     JSONArray arrayJson = Json.getJSONArray("data");
+                    //GET des prêts
                     String responsePret = httpClient.get("prets");
                     JSONObject JsonPret = new JSONObject(responsePret);
                     JSONArray arrayPret = JsonPret.getJSONArray("data");
-                    String responseCredit = httpClient.get("prets");
+                    //Get des crédits
+                    String responseCredit = httpClient.get("credits");
                     JSONObject JsonCredit = new JSONObject(responseCredit);
                     JSONArray arrayCredit = JsonCredit.getJSONArray("data");
 
+                    //place tous les id des comptes bancaires prêts dans une liste
                     for (int i = 0; i < arrayPret.length(); i++) {
                         JSONObject objPretJson = arrayPret.getJSONObject(i);
                         listPret.add(objPretJson.getInt("id_compte"));
                     }
 
+                    //place tous les id des comptes bancaires crédits dans une liste
                     for (int i = 0; i < arrayCredit.length(); i++) {
-                        JSONObject objPretJson = arrayPret.getJSONObject(i);
-                        listCredit.add(objPretJson.getInt("id_compte"));
+                        JSONObject objCreditJson = arrayCredit.getJSONObject(i);
+                        listCredit.add(objCreditJson.getInt("id_compte"));
                     }
+
 
                     for (int i = 0; i < arrayJson.length(); i++) {
                         isIn = false;
                         estPret = false;
+                        estCredit = false;
                         JSONObject objJson = arrayJson.getJSONObject(i);
                         CompteBancaire compte = new CompteBancaire();
                         compte.setId_compte(objJson.getInt("id"));
@@ -67,24 +79,28 @@ public class CompteBancaireManager {
                         } else {
                             compte.setEst_valide(false);
                         }
+                        //si un compte est déjà dans l'array comptes l'update
                         for (int j = 0; j < comptes.size(); j++) {
                             if (comptes.get(j).equals(compte)) {
                                 isIn = true;
                                 comptes.set(j, compte);
                             }
                         }
+                        //si un compte est déjà dans l'array prêts l'update
                         for (int j = 0; j < prets.size(); j++) {
                             if (prets.get(j).equals(compte)) {
                                 isIn = true;
                                 prets.set(j, compte);
                             }
                         }
+                        //si un compte est déjà dans l'array credits l'update
                         for (int j = 0; j < credits.size(); j++) {
                             if (credits.get(j).equals(compte)) {
                                 isIn = true;
                                 credits.set(j, compte);
                             }
                         }
+                        //si le compte est aucun des array l'ajoute à son array correspondant
                         if (isIn == false) {
                             sqLiteManager.addComptetoDB(compte);
                             for (int p = 0; p < listPret.size(); p++) {
@@ -112,5 +128,29 @@ public class CompteBancaireManager {
                 }
             }
         }).start();
+    }
+
+    public void VerifyComptes() {
+        if (!comptes.isEmpty()) {
+            for (int i = comptes.size() - 1; i >= 0 ; i--) {
+                if (!comptes.get(i).isEst_valide()) {
+                    comptes.remove(i);
+                }
+            }
+        }
+        if (!prets.isEmpty()) {
+            for (int i = prets.size() - 1; i >= 0 ; i--) {
+                if (!prets.get(i).isEst_valide()) {
+                    prets.remove(i);
+                }
+            }
+        }
+        if (!credits.isEmpty()) {
+            for (int i = credits.size() - 1; i >= 0 ; i--) {
+                if (!credits.get(i).isEst_valide()) {
+                    credits.remove(i);
+                }
+            }
+        }
     }
 }
