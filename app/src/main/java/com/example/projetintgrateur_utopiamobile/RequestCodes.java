@@ -1,6 +1,6 @@
 /****************************************
  Fichier : RequestCodes.java
- Auteur : Félix Barré
+ @author Félix Barré
  Fonctionnalité : Classe pour contenir tous les RequestCodes qu'on utilise à travers l'application
  Date : 13 mai 2024
  Vérification :

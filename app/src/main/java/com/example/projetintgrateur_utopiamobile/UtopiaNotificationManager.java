@@ -1,6 +1,6 @@
 /****************************************
  Fichier : UtopiaNotificationManager.java
- Auteur : Félix Barré
+ @author Félix Barré
  Fonctionnalité : Gestionnaire qui permet d'envoyer des notifications au téléphone
  Date : 13 mai 2024
  Vérification :
@@ -23,6 +23,15 @@ import android.os.Build;
 import java.util.Date;
 
 public class UtopiaNotificationManager {
+    /**
+     *
+     * @param context Le contexte d'où la notification est créée
+     * @param title Le titre de la notification
+     * @param text Le texte de la notification
+     * @param group Le groupe de notifications
+     *
+     * Envoie une notification au téléphone
+     */
     public static void postNotification(Context context, String title, String text, int group) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             String CHANNEL_ID = "Utopia";

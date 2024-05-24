@@ -1,6 +1,6 @@
 /****************************************
  Fichier : SQLiteManager.java
- Auteur : Mathis Leduc, Félix Barré
+ @author Félix Barré, Mathis Leduc
  Fonctionnalité : Gestionnaire pour la base de données locale
  Date : 13 mai 2024
  Vérification :
@@ -98,10 +98,23 @@ public class SQLiteManager extends SQLiteOpenHelper {
     private static final String DATE_DEBUT_FIELD = "date_debut";
     private static final String DATE_ECHEANCE_FIELD = "date_echeance";
 
+    /**
+     *
+     * @param context Le contexte d'où le manager est initialisé
+     *
+     * Constructeur pour l'objet SQLiteManager
+     */
     public SQLiteManager(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+    /**
+     *
+     * @param context Le contexte d'où le manager est initialisé
+     * @return L'instance unique statique de SQLiteManager
+     *
+     * Permet d'obtenir l'insance unique de SQLiteManager
+     */
     public static SQLiteManager instanceOfDatabase(Context context) {
         if (sqLiteManager == null) {
             sqLiteManager = new SQLiteManager(context);
@@ -110,7 +123,12 @@ public class SQLiteManager extends SQLiteOpenHelper {
         return sqLiteManager;
     }
 
-
+    /**
+     *
+     * @param db La base de données.
+     *
+     * Création de la base de données (tables)
+     */
     @Override
     public void onCreate(SQLiteDatabase db) {
         StringBuilder sql = new StringBuilder()
@@ -394,6 +412,14 @@ public class SQLiteManager extends SQLiteOpenHelper {
         db.execSQL(sql.toString());
     }
 
+    /**
+     *
+     * @param db La base de données.
+     * @param oldVersion L'ancienne version de la base de données.
+     * @param newVersion La nouvelle version de la base de données.
+     *
+     * Permet de faire les ajustements lorsqu'on met à jour la base de données
+     */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
@@ -543,6 +569,13 @@ public class SQLiteManager extends SQLiteOpenHelper {
         return null;
     }
 
+    /**
+     *
+     * @param messageLocal Le message à ajouter
+     * @return L'id du message dans la base de données
+     *
+     * Insère un message local dans la base de données
+     */
     public long addMessageLocalDB(MessageLocal messageLocal) {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
 
@@ -559,11 +592,21 @@ public class SQLiteManager extends SQLiteOpenHelper {
         return sqLiteDatabase.insert(MESSAGES_LOCAUX_TABLE_NAME, null, contentValues);
     }
 
+    /**
+     *
+     * @param id_message_local L'id du message local
+     * @return Le nombre de lignes affectées par la suppression
+     *
+     * Supprime un message local de la base de données
+     */
     public int deleteMessageLocal(long id_message_local) {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         return sqLiteDatabase.delete(MESSAGES_LOCAUX_TABLE_NAME, "id = ?", new String[]{String.valueOf(id_message_local)});
     }
 
+    /**
+     * Rempli l'arraylist static des messages locaux à partir de la base de données
+     */
     public void populateMessagesLocauxArrayList() {
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
 

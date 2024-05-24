@@ -1,6 +1,6 @@
 /****************************************
  Fichier : LoadingHttp.java
- Auteur : Félix Barré
+ @author Félix Barré
  Fonctionnalité : Page d'écran de chargement pour réaliser une requête Http
  Date : 13 mai 2024
  Vérification :
@@ -25,7 +25,14 @@ import androidx.core.view.WindowInsetsCompat;
 import java.io.IOException;
 
 public class LoadingHttp extends AppCompatActivity {
-
+    /**
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     * Fonction principale lancée au départ de l'activité
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
