@@ -1,6 +1,15 @@
-/*
- * Auteur(s):
- */
+/****************************************
+ Fichier : HttpClient.java
+ @author Félix Barré
+ Fonctionnalité : Classe qui gère les requêtes Http vers notre api web
+ Date : 13 mai 2024
+ Vérification :
+
+ =========================================================
+ Historique de modifications :
+
+ =========================================================
+ ****************************************/
 package com.example.projetintgrateur_utopiamobile;
 
 import android.graphics.Bitmap;
@@ -46,6 +55,12 @@ public class HttpClient {
         }
     }
 
+    /**
+     *
+     * @return L'instance unique statique de HttpClient
+     *
+     * Permet d'obtenir l'insance unique de httpClient
+     */
     public static HttpClient instanceOfClient() {
         if (httpClient == null) {
             httpClient = new HttpClient();
@@ -54,10 +69,24 @@ public class HttpClient {
         return httpClient;
     }
 
+    /**
+     *
+     * @param token Le token obtenu
+     *
+     * Set le token obtenu à la connexion
+     */
     public void setTokenApi(String token) {
         tokenApi = token;
     }
 
+    /**
+     *
+     * @param route La route à ouvrir
+     * @param method La méthode à utilser
+     * @throws IOException Exception lors de l'ouverture de la connexion
+     *
+     * Ouvre la connexion Http à l'api
+     */
     private void openConnection(String route, Methods method) throws IOException {
         URL url = new URL(apiUrl + route);
         connection = (HttpURLConnection) url.openConnection();
@@ -77,17 +106,35 @@ public class HttpClient {
         }
     }
 
+    /**
+     * Ferme la connexion Http
+     */
     private void closeConnection() {
         connection.disconnect();
         connection = null;
     }
 
+    /**
+     *
+     * @param bodyJSON String qui contient les paramètres (body) en JSON
+     * @throws IOException Exception lors de l'ajout du body au stream
+     *
+     * Ajoute les paramètres JSON (body) à la requête
+     */
     private void ajouterBodyJSON(String bodyJSON) throws IOException {
         OutputStream os = connection.getOutputStream();
         byte[] input = bodyJSON.getBytes("utf-8");
         os.write(input, 0, input.length);
     }
 
+    /**
+     *
+     * @param body String qui contient les paramètres (body) en JSON
+     * @param image L'image bitmap capturée avec la caméra
+     * @throws Exception
+     *
+     * Ajoute les paramètres JSON (body) à la requête en plus de l'image capturée avec la caméra
+     */
     private void ajouterBodyWithImage(String body, Bitmap image) throws Exception {
         String lineEnd = "\r\n";
         String twoHyphens = "--";
@@ -129,6 +176,13 @@ public class HttpClient {
         request.close();
     }
 
+    /**
+     *
+     * @return La réponse de la requête
+     * @throws IOException Exception levée lors de la lecture de la réponse
+     *
+     * Permet d'obtenir la réponse de la requête Http
+     */
     private String getResponse() throws IOException {
         InputStream inputStream;
         if (connection.getResponseCode() >= 400) {
@@ -149,6 +203,12 @@ public class HttpClient {
         return response.toString();
     }
 
+    /**
+     *
+     * @return Vrai si on a le token, sinon faux
+     *
+     * Valide si le token d'authentification est présent
+     */
     private boolean validateToken() {
         if (tokenApi.isEmpty()) {
             return false;
@@ -157,6 +217,14 @@ public class HttpClient {
         return true;
     }
 
+    /**
+     *
+     * @param route La route de la requête get
+     * @return La réponse de la requête get
+     * @throws IOException Exception lors de la requête get
+     *
+     * Exécute une requête get
+     */
     public String get(String route) throws IOException {
         if (!this.validateToken()) {
             return "";
@@ -171,6 +239,15 @@ public class HttpClient {
         return response;
     }
 
+    /**
+     *
+     * @param route La route de la requête get
+     * @param body Le body de la requête get
+     * @return La réponse de la requête get
+     * @throws IOException Exception lors de la requête get
+     *
+     * Exécute une requête get avec body
+     */
     public String get(String route, String body) throws IOException {
         if (!this.validateToken()) {
             return "";
@@ -186,7 +263,15 @@ public class HttpClient {
         return response;
     }
 
-
+    /**
+     *
+     * @param route La route de la requête post
+     * @param body Le body de la requête post
+     * @return La réponse de la requête post
+     * @throws IOException Exception lors de la requête post
+     *
+     * Exécute une requête post
+     */
     public String post(String route, String body) throws IOException {
         if (!route.equals(ROUTETOKEN)) {
             if (!this.validateToken()) {
@@ -204,6 +289,15 @@ public class HttpClient {
         return response;
     }
 
+    /**
+     *
+     * @param body Le body de la requête post
+     * @param image L'image Bitmap à inclure avec le message
+     * @return La réponse de la requête post
+     * @throws Exception Exception lors de la requête post
+     *
+     * Exécute une requête post qui envoie un message avec image
+     */
     public String postMessageWithImage(String body, Bitmap image) throws Exception {
         if (!this.validateToken()) {
             return "";
@@ -224,6 +318,15 @@ public class HttpClient {
         return response;
     }
 
+    /**
+     *
+     * @param route La route de la requête put
+     * @param body Le body de la requête put
+     * @return La réponse de la requête put
+     * @throws IOException Exception lors de la requête put
+     *
+     * Exécute une requête put
+     */
     public String put(String route, String body) throws IOException {
         if (!this.validateToken()) {
             return "";
@@ -239,6 +342,14 @@ public class HttpClient {
         return response;
     }
 
+    /**
+     *
+     * @param route La route de la requête delete
+     * @return La réponse de la requête delete
+     * @throws IOException Exception lors de la requête delete
+     *
+     * Exécute une requête delete
+     */
     public String delete(String route) throws IOException {
         if (!this.validateToken()) {
             return "";
