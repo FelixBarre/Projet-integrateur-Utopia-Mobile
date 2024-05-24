@@ -152,16 +152,26 @@
     <string name="raison_par_defaut">raison_par_defaut</string>
 
 
-    <!-- Désactivation de comnptes -->
-    <string name="titleDesactivationCompte">Désactivation de compte</string>
+    <!-- Désactivation de compte bancaire -->
+    <string name="titleDesactivationCompte">Désactivation de compte bancaire</string>
     <string name="succèsEnvoiDesactivation">Votre demande de désactivation de compte a été envoyée</string>
     <string-array name="raisonsDesactivation">
         <item>Compte inutile / non utilisé</item>
         <item>Changement vers un autre compte</item>
         <item>Changement de banque</item>
-        <item>Autre - Veuillez préciser</item>
+        <item>Autre</item>
     </string-array>
 
+    <!-- Désactivation de compte utilisateur -->
+    <string name="titleDesactivationProfil">Désactivation de son profil</string>
+    <string name="succèsEnvoiDesactivationProfil">Votre demande de désactivation de compte utilisateur a été envoyée</string>
+    <string-array name="raisonsDesactivationProfil">
+        <item>Profil inutile / non utilisé</item>
+        <item>Changement vers une autre banque</item>
+        <item>Changement de pays</item>
+        <item>Ouverture de nouveau profil</item>
+        <item>Autre</item>
+    </string-array>
 
     <!-- Messagerie -->
     <string name="titreConversations">Vos conversations</string>
@@ -179,6 +189,5 @@
     <!-- Plus -->
     <string name="plus">Plus</string>
     <string name="onglet_demande_pret">Demandes de prêt</string>
-    <string name="onglet_demande_desactivation">Désactivation de compte bancaire</string>
 
 </resources>
