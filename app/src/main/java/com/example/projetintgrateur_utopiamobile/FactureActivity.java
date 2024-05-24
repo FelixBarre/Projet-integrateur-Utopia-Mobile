@@ -78,7 +78,7 @@ public class FactureActivity extends AppCompatActivity implements View.OnClickLi
                             Fournisseur fournisseur = new Fournisseur();
                             fournisseur.setId(objJson.getInt("id"));
                             fournisseur.setNom(objJson.getString("nom"));
-                            fournisseur.setNom(objJson.getString("description"));
+                            fournisseur.setDescription(objJson.getString("description"));
                             fournisseurs.add(fournisseur);
                         }
 

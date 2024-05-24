@@ -21,10 +21,15 @@ public class Fournisseur {
     public void setId(int id){this.id = id;}
     public int getId(){ return id;}
 
-    public void setNom(String id){this.nom = nom;}
+    public void setNom(String nom){this.nom = nom;}
     public String getNom(){ return nom;}
 
     public void setDescription(String description){this.description = description;}
     public String getDescription(){ return description;}
+
+    @Override
+    public String toString() {
+        return nom;
+    }
 
 }
