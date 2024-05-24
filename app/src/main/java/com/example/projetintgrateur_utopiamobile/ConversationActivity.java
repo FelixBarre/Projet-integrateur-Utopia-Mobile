@@ -119,6 +119,9 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
             if (conversation != null) {
                 interlocuteur = conversation.getInterlocuteur();
             }
+            else {
+                finish();
+            }
         }
     }
 
@@ -138,10 +141,19 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
         imageButtonCamera.setOnClickListener(this);
 
         if (conversation != null) {
-            titreConversation.setText(interlocuteur.getPrenom() + " " + interlocuteur.getNom());
+            if (interlocuteur != null) {
+                titreConversation.setText(interlocuteur.getPrenom() + " " + interlocuteur.getNom());
+            }
+            else {
+                titreConversation.setText(getString(R.string.conversationVide));
+            }
+
             messagesListView = (ListView) findViewById(R.id.messagesListView);
             setMessageAdapter();
-            messagesListView.setSelection(messageAdapter.getCount() - 1);
+
+            if (messageAdapter.getCount() > 0) {
+                messagesListView.setSelection(messageAdapter.getCount() - 1);
+            }
         } else {
             finish();
         }
@@ -312,7 +324,13 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
     private void getNewMessages() throws Exception {
         String response = "";
 
-        response = httpClientNew.get("messages/" + conversation.getId() + "/" + messageAdapter.getItem(messageAdapter.getCount() - 1).getId());
+        int idDernierMessage = 0;
+
+        if (!messageAdapter.isEmpty()) {
+            idDernierMessage = messageAdapter.getItem(messageAdapter.getCount() - 1).getId();
+        }
+
+        response = httpClientNew.get("messages/" + conversation.getId() + "/" + idDernierMessage);
 
         JSONObject responseJSON = new JSONObject(response);
 
