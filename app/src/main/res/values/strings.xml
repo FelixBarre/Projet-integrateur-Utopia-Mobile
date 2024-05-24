@@ -154,6 +154,7 @@
 
     <!-- Désactivation de comnptes -->
     <string name="titleDesactivationCompte">Désactivation de compte</string>
+    <string name="succèsEnvoiDesactivation">Votre demande de désactivation de compte a été envoyée</string>
     <string-array name="raisonsDesactivation">
         <item>Compte inutile / non utilisé</item>
         <item>Changement vers un autre compte</item>
