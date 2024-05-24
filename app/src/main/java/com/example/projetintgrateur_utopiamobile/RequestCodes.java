@@ -1,6 +1,15 @@
-/*
- * Auteur(s): Félix Barré
- */
+/****************************************
+ Fichier : RequestCodes.java
+ @author Félix Barré
+ Fonctionnalité : Classe pour contenir tous les RequestCodes qu'on utilise à travers l'application
+ Date : 13 mai 2024
+ Vérification :
+
+ =========================================================
+ Historique de modifications :
+
+ =========================================================
+ ****************************************/
 package com.example.projetintgrateur_utopiamobile;
 
 public class RequestCodes {
