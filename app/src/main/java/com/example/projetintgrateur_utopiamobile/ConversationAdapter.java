@@ -70,21 +70,24 @@ public class ConversationAdapter extends ArrayAdapter<Conversation> {
 
         Message dernierMessage = conversation.getDernierMessage();
 
-        User interlocuteur;
+        if (dernierMessage != null) {
+            User interlocuteur = conversation.getInterlocuteur();
 
-        if (dernierMessage.getEnvoyeur().getId() == UserManager.getAuthUser().getId()) {
-            interlocuteur = dernierMessage.getReceveur();
-            textViewMessager.setText(getContext().getResources().getString(R.string.vous) + " : ");
+            if (dernierMessage.getEnvoyeur().getId() == UserManager.getAuthUser().getId()) {
+                textViewMessager.setText(getContext().getResources().getString(R.string.vous) + " : ");
+            }
+            else {
+                textViewMessager.setText(interlocuteur.getPrenom() + " : ");
+            }
+
+            textViewInterlocuteur.setText(interlocuteur.getPrenom() + " " + interlocuteur.getNom());
+            textViewMessage.setText(dernierMessage.getTexte());
+
+            textViewHeureMessage.setText(dernierMessage.getCreatedAtFormatted());
         }
         else {
-            interlocuteur = dernierMessage.getEnvoyeur();
-            textViewMessager.setText(interlocuteur.getPrenom() + " : ");
+            textViewInterlocuteur.setText(context.getString(R.string.conversationVide));
         }
-
-        textViewInterlocuteur.setText(interlocuteur.getPrenom() + " " + interlocuteur.getNom());
-        textViewMessage.setText(dernierMessage.getTexte());
-
-        textViewHeureMessage.setText(dernierMessage.getCreatedAtFormatted());
 
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
