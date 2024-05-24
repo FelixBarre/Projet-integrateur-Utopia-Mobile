@@ -118,9 +118,15 @@ public class FactureActivity extends AppCompatActivity implements View.OnClickLi
     public void onClick(View v){
 
         Spinner fournisseurSpinner = (Spinner) findViewById(R.id.destinationTansaction);
+
         EditText montant = (EditText) findViewById(R.id.montantTransaction);
 
-        String fournisseurTransaction = fournisseurSpinner.getSelectedItem().toString();
+
+        Fournisseur selectedFournisseur = (Fournisseur) spinnerFournisseur.getSelectedItem();
+        if (selectedFournisseur == null) {
+            return;
+        }
+
         String montantTransaction = montant.getText().toString();
         double transactionMontant = Double.parseDouble(montantTransaction);
 
@@ -129,7 +135,7 @@ public class FactureActivity extends AppCompatActivity implements View.OnClickLi
         transactionEtat = 3;
         destinataireTransaction = 0;
         expediteurTransaction = UserManager.getAuthUser().getId();
-        idFacture = 0;
+        idFacture = selectedFournisseur.getId();
 
 
 
