@@ -4,6 +4,8 @@
 package com.example.projetintgrateur_utopiamobile;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -25,6 +27,7 @@ public class changementMotDePasse extends AppCompatActivity {
     EditText inputNewPassword;
     EditText inputConfirmPassword;
     TextView outputError;
+    AlertDialog.Builder builderConfirm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,17 +44,33 @@ public class changementMotDePasse extends AppCompatActivity {
         inputOldPassword = (EditText) findViewById(R.id.oldPasswordInput);
         inputConfirmPassword = (EditText) findViewById(R.id.confirmNewPasswordInput);
         outputError = (TextView) findViewById(R.id.erreursOutput);
+        builderConfirm = new AlertDialog.Builder(this);
         Button btnSubmit = (Button) findViewById(R.id.soumettreButton);
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                outputError.setText("");
-                Intent loadingHttp = new Intent(changementMotDePasse.this, LoadingHttp.class);
-                loadingHttp.putExtra("method", "PUT");
-                loadingHttp.putExtra("route", "passwordApi");
-                loadingHttp.putExtra("body", "{ \"current_password:api\" : \"" + inputOldPassword.getText() + "\", \"password\" : \"" + inputNewPassword.getText() + "\", \"password_confirmation\" : \"" + inputConfirmPassword.getText() + "\" }");
-                startActivityForResult(loadingHttp, RequestCodes.CHANGEMENT_MDP_REQUEST_CODE);
+                ConnectionManager connectionManager = new ConnectionManager(changementMotDePasse.this);
+                if (connectionManager.isConnected()) {
+                    outputError.setText("");
+                    Intent loadingHttp = new Intent(changementMotDePasse.this, LoadingHttp.class);
+                    loadingHttp.putExtra("method", "PUT");
+                    loadingHttp.putExtra("route", "passwordApi");
+                    loadingHttp.putExtra("body", "{ \"current_password:api\" : \"" + inputOldPassword.getText() + "\", \"password\" : \"" + inputNewPassword.getText() + "\", \"password_confirmation\" : \"" + inputConfirmPassword.getText() + "\" }");
+                    startActivityForResult(loadingHttp, RequestCodes.CHANGEMENT_MDP_REQUEST_CODE);
+                } else {
+                    builderConfirm.setMessage(getString(R.string.connexionFailedMessage));
+                    builderConfirm.setPositiveButton(getString(R.string.retour), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+
+                    AlertDialog alertConfirm = builderConfirm.create();
+                    alertConfirm.setTitle(getString(R.string.attentionAlert));
+                    alertConfirm.show();
+                }
             }
         });
     }
