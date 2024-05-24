@@ -36,6 +36,7 @@ import java.util.List;
 public class Conversations extends AppCompatActivity {
     private ListView conversationsListView;
     private ConversationAdapter conversationAdapter;
+    private boolean isActivityResult = false;
 
     /**
      *
@@ -58,7 +59,6 @@ public class Conversations extends AppCompatActivity {
 
         initWidgets();
         setConversationAdapter();
-        loadConversations();
     }
 
     /**
@@ -101,6 +101,9 @@ public class Conversations extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+        isActivityResult = true;
+
         switch (requestCode) {
             case RequestCodes.CONVERSATIONS_REQUEST_CODE:
                 if (resultCode == Activity.RESULT_OK) {
@@ -128,5 +131,18 @@ public class Conversations extends AppCompatActivity {
 
                 break;
         }
+    }
+
+    /**
+     * Override de la méthode onResume pour recharger les conversations
+     */
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!isActivityResult) {
+            loadConversations();
+        }
+
+        isActivityResult = false;
     }
 }
