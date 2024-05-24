@@ -1,6 +1,15 @@
-/*
- * Auteur(s):
- */
+/****************************************
+ Fichier : MessageAdapter.java
+ @author Félix Barré
+ Fonctionnalité : Adapter pour le ListView des messages d'une conversation
+ Date : 13 mai 2024
+ Vérification :
+
+ =========================================================
+ Historique de modifications :
+
+ =========================================================
+ ****************************************/
 package com.example.projetintgrateur_utopiamobile;
 
 import android.app.Activity;
@@ -32,11 +41,33 @@ import java.util.List;
 public class MessageAdapter extends ArrayAdapter<Message> {
     private Context context;
 
+    /**
+     *
+     * @param context Contexte de l'adapter
+     * @param messages Liste des messages à afficher
+     *
+     * Constructeur du MessageAdapter
+     */
     public MessageAdapter(Context context, List<Message> messages) {
         super(context, 0, messages);
         this.context = context;
     }
 
+    /**
+     *
+     * @param position The position of the item within the adapter's data set of the item whose view
+     *        we want.
+     * @param convertView The old view to reuse, if possible. Note: You should check that this view
+     *        is non-null and of an appropriate type before using. If it is not possible to convert
+     *        this view to display the correct data, this method can create a new view.
+     *        Heterogeneous lists can specify their number of view types, so that this View is
+     *        always of the right type (see {@link #getViewTypeCount()} and
+     *        {@link #getItemViewType(int)}).
+     * @param parent The parent that this view will eventually be attached to
+     * @return La vue qui corresponde à la row
+     *
+     * Gère l'initialisation de chaque row de l'adapter de messages
+     */
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
