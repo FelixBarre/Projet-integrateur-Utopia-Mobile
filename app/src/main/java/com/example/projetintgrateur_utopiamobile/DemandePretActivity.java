@@ -1,6 +1,9 @@
-/*
- * Auteur(s): Mathis Leduc
- */
+/****************************************
+ Fichier : DemandePretActivity
+ @author : Mathis Leduc
+ Fonctionnalité : M-CTE-13 consulter les demandes de prêt
+ Date : 2024-05-23
+ ****************************************/
 package com.example.projetintgrateur_utopiamobile;
 
 import android.content.Intent;

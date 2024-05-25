@@ -1,6 +1,9 @@
-/*
- * Auteur(s): Mathis Leduc
- */
+/****************************************
+ Fichier : FormDemandePretActivity
+ @author : Mathis Leduc
+ Fonctionnalité : M-CTE-11 Ajouter une demande de prêt
+ Date : 2024-05-23
+ ****************************************/
 package com.example.projetintgrateur_utopiamobile;
 
 import android.content.Intent;

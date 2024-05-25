@@ -1,6 +1,8 @@
-/*
- * Auteur(s): Mathis Leduc
- */
+/****************************************
+ Fichier : PlusActivity
+ @author : Mathis Leduc,
+ Date : 2024-05-23
+ ****************************************/
 package com.example.projetintgrateur_utopiamobile;
 
 import android.content.Intent;

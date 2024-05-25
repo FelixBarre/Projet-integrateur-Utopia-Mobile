@@ -1,6 +1,9 @@
-/*
- * Auteur(s): Mathis Leduc
- */
+/****************************************
+ Fichier : EditCompteActivity
+ @author : Mathis Leduc
+ Fonctionnalité : M-CTE-10 Modifier un compte bancaire
+ Date : 2024-05-23
+ ****************************************/
 package com.example.projetintgrateur_utopiamobile;
 
 import android.content.Intent;

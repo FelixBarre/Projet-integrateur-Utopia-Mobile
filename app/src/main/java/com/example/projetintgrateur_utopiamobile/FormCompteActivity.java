@@ -1,6 +1,9 @@
-/*
- * Auteur(s): Mathis Leduc
- */
+/****************************************
+ Fichier : FormCompteActivity
+ @author : Mathis Leduc
+ Fonctionnalité : M-CTE-9 Ajouter un compte bancaire
+ Date : 2024-05-23
+ ****************************************/
 package com.example.projetintgrateur_utopiamobile;
 
 import android.content.Intent;
