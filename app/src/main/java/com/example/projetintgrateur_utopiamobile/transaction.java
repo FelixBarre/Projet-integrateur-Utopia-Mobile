@@ -94,7 +94,7 @@ public class transaction extends AppCompatActivity implements View.OnClickListen
             transactionEtat = 3;
             destinataireTransaction = UserManager.getAuthUser().getId();
             expediteurTransaction = 0;
-            idFacture = 0;
+            idFacture = 1;
         } else if (typeTransaction.equals("Rétrait")) {
             transactionType = 2;
             transactionEtat = 3;
@@ -132,7 +132,6 @@ public class transaction extends AppCompatActivity implements View.OnClickListen
                                 " }");
 
                         JSONObject Json = new JSONObject(responsePOST);
-                        message = Json.getString("message");
 
 
                         runOnUiThread(new Runnable() {
