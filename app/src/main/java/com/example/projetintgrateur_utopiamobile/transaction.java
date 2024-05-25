@@ -6,6 +6,7 @@ package com.example.projetintgrateur_utopiamobile;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -39,6 +40,10 @@ public class transaction extends AppCompatActivity implements View.OnClickListen
     private String message;
     private TextView messageJson;
 
+    private Spinner spinnerDestinataire;
+
+    private ArrayList<CompteBancaire> comptesBancaires;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,16 +61,18 @@ public class transaction extends AppCompatActivity implements View.OnClickListen
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
-        Spinner destinataire = (Spinner) findViewById(R.id.destinationTansaction);
+        spinnerDestinataire = (Spinner) findViewById(R.id.destinationTansaction);
 
+        comptesBancaires = new ArrayList<>(CompteBancaireManager.comptes);
         ArrayList<String> nomComptes = new ArrayList<>();
-        for (CompteBancaire compte : CompteBancaireManager.comptes) {
+        for (CompteBancaire compte : comptesBancaires) {
             nomComptes.add(compte.getNom());
         }
 
+
         ArrayAdapter<String> destinataireAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, nomComptes);
         destinataireAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        destinataire.setAdapter(destinataireAdapter);
+        spinnerDestinataire.setAdapter(destinataireAdapter);
 
         messageJson = (TextView) findViewById(R.id.titleCreateTransaction);
 
@@ -74,6 +81,23 @@ public class transaction extends AppCompatActivity implements View.OnClickListen
 
         btnTermine.setOnClickListener(this);
         btnAnnule.setOnClickListener(this);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedType = (String) parent.getItemAtPosition(position);
+                if ("Virement".equals(selectedType)) {
+                    spinnerDestinataire.setVisibility(View.VISIBLE);
+                } else {
+                    spinnerDestinataire.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
 
 
@@ -86,6 +110,14 @@ public class transaction extends AppCompatActivity implements View.OnClickListen
         Spinner destinataire = (Spinner) findViewById(R.id.destinationTansaction);
 
 
+        String selectedCompteNom = (String) destinataire.getSelectedItem();
+        CompteBancaire selectedCompteBancaire = null;
+        for (CompteBancaire compte : comptesBancaires) {
+            if (compte.getNom().equals(selectedCompteNom)) {
+                selectedCompteBancaire = compte;
+                break;
+            }
+        }
 
         String typeTransaction = type.getSelectedItem().toString();
 
@@ -94,7 +126,7 @@ public class transaction extends AppCompatActivity implements View.OnClickListen
             transactionEtat = 3;
             destinataireTransaction = UserManager.getAuthUser().getId();
             expediteurTransaction = 0;
-            idFacture = 1;
+            idFacture = 0;
         } else if (typeTransaction.equals("Rétrait")) {
             transactionType = 2;
             transactionEtat = 3;
@@ -105,7 +137,12 @@ public class transaction extends AppCompatActivity implements View.OnClickListen
         } else if (typeTransaction.equals("Virement")) {
             transactionType = 3;
             transactionEtat = 1;
-            destinataireTransaction = 2;
+            if (selectedCompteBancaire != null) {
+                destinataireTransaction = selectedCompteBancaire.getId_compte();
+            } else {
+
+                destinataireTransaction = 0;
+            }
             expediteurTransaction = UserManager.getAuthUser().getId();
             idFacture = 0;
         }
