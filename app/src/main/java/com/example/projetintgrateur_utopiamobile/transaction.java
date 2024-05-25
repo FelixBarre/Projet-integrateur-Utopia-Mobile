@@ -3,6 +3,7 @@
  */
 package com.example.projetintgrateur_utopiamobile;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,6 +28,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class transaction extends AppCompatActivity implements View.OnClickListener{
+
 
     private Button btnTermine;
     private Button btnAnnule;
@@ -44,6 +47,7 @@ public class transaction extends AppCompatActivity implements View.OnClickListen
 
     private ArrayList<CompteBancaire> comptesBancaires;
 
+    private int currentUserId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +69,8 @@ public class transaction extends AppCompatActivity implements View.OnClickListen
 
         comptesBancaires = new ArrayList<>(CompteBancaireManager.comptes);
         ArrayList<String> nomComptes = new ArrayList<>();
-        int currentUserId = UserManager.getAuthUser().getId();
+        User currentUser = UserManager.getAuthUser();
+        currentUserId =  (currentUser != null) ? currentUser.getId() : 0;
 
         for (CompteBancaire compte : comptesBancaires) {
             if (compte.getId_compte() != currentUserId) {
@@ -127,14 +132,14 @@ public class transaction extends AppCompatActivity implements View.OnClickListen
         if(typeTransaction.equals("Dépôt")){
             transactionType = 1;
             transactionEtat = 3;
-            destinataireTransaction = UserManager.getAuthUser().getId();
+            destinataireTransaction = currentUserId;
             expediteurTransaction = 0;
             idFacture = 0;
         } else if (typeTransaction.equals("Rétrait")) {
             transactionType = 2;
             transactionEtat = 3;
             destinataireTransaction = 0;
-            expediteurTransaction = UserManager.getAuthUser().getId();
+            expediteurTransaction = currentUserId;
             idFacture = 0;
 
         } else if (typeTransaction.equals("Virement")) {
@@ -146,7 +151,7 @@ public class transaction extends AppCompatActivity implements View.OnClickListen
 
                 destinataireTransaction = 0;
             }
-            expediteurTransaction = UserManager.getAuthUser().getId();
+            expediteurTransaction = currentUserId;
             idFacture = 0;
         }
 
@@ -179,17 +184,20 @@ public class transaction extends AppCompatActivity implements View.OnClickListen
                                 "\"id_etat_transaction\":\""+transactionEtat+"\"," +
                                 "\"id_facture\":\""+idFacture+"\"" +
                                 " }");
+                        if (!responsePOST.isEmpty()) {
+                            JSONObject Json = new JSONObject(responsePOST);
+                            Toast.makeText(transaction.this, "Aucune donnée n'a été trouvée", Toast.LENGTH_SHORT).show();
+                        }else{
 
-                        JSONObject Json = new JSONObject(responsePOST);
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    messageJson.setText(message);
+                                    messageJson.setVisibility(View.VISIBLE);
+                                }
+                            });
 
-
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                messageJson.setText(message);
-                                messageJson.setVisibility(View.VISIBLE);
-                            }
-                        });
+                        }
 
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -201,15 +209,15 @@ public class transaction extends AppCompatActivity implements View.OnClickListen
 
             Intent intent = new Intent(transaction.this, accueil.class);
             startActivity(intent);
-
+            finish();
 
         } else if (v.getId()==R.id.annulerTransaction) {
 
             if (montantTransaction.isEmpty()) {
+                Intent intent = new Intent(transaction.this, accueil.class);
+                startActivity(intent);
                 finish();
             }else{
-
-
 
             Intent intent = new Intent(transaction.this, cancel_transaction.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -220,6 +228,7 @@ public class transaction extends AppCompatActivity implements View.OnClickListen
             bundle.putString("destinataireTransaction", destinataire.getSelectedItem().toString());
             intent.putExtras(bundle);
             startActivity(intent);
+            finish();
 
             }
 
