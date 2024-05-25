@@ -1,6 +1,9 @@
-/*
- * Auteur(s):
- */
+/****************************************
+ Fichier : Connexion.java
+ @author : Max Belval-Michaud
+ Fonctionnalité : M-CTE-1 Connexion
+ Date de création: 2024-04-17
+ ****************************************/
 package com.example.projetintgrateur_utopiamobile;
 
 import android.app.Activity;
@@ -29,12 +32,24 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+/**
+ * Classe pour l'activité de Connexion
+ */
 public class Connexion extends AppCompatActivity {
     AlertDialog.Builder builderConfirm;
     TextView outputError;
     EditText inputCourriel;
     EditText inputPassword;
     SQLiteManager sqLiteManager;
+
+    /**
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     * Fonction de création de l'activité
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +78,12 @@ public class Connexion extends AppCompatActivity {
         linkForgotPassword.setLinkTextColor(getResources().getColor(R.color.white));
 
         btnConnexion.setOnClickListener(new View.OnClickListener() {
+            /**
+             *
+             * @param v The view that was clicked.
+             *
+             * Fonction qui s'exécute lorsque le bouton de connexion est appuyé (Envoi des requêtes à l'API)
+             */
             @Override
             public void onClick(View v) {
                 ConnectionManager connectionManager = new ConnectionManager(Connexion.this);
@@ -75,6 +96,15 @@ public class Connexion extends AppCompatActivity {
                 } else {
                     builderConfirm.setMessage(getString(R.string.connexionFailedMessage));
                     builderConfirm.setPositiveButton(getString(R.string.retour), new DialogInterface.OnClickListener() {
+                        /**
+                         *
+                         * @param dialog the dialog that received the click
+                         * @param which the button that was clicked (ex.
+                         *              {@link DialogInterface#BUTTON_POSITIVE}) or the position
+                         *              of the item clicked
+                         *
+                         * Fonction qui s'exécute lorsqu'une action dans la fenêtre de dialogue est appuyée
+                         */
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.cancel();
@@ -89,6 +119,18 @@ public class Connexion extends AppCompatActivity {
         });
     }
 
+    /**
+     *
+     * @param requestCode The integer request code originally supplied to
+     *                    startActivityForResult(), allowing you to identify who this
+     *                    result came from.
+     * @param resultCode The integer result code returned by the child activity
+     *                   through its setResult().
+     * @param data An Intent, which can return result data to the caller
+     *               (various data can be attached to Intent "extras").
+     *
+     * Fonction qui gère la réception des résultats des startActivityForResult
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         switch (requestCode) {

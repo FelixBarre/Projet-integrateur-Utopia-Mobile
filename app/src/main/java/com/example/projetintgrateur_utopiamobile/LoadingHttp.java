@@ -24,6 +24,9 @@ import androidx.core.view.WindowInsetsCompat;
 
 import java.io.IOException;
 
+/**
+ * Classe pour envoyer des requêtes à l'API avec HttpClient.java avec un écran de chargement
+ */
 public class LoadingHttp extends AppCompatActivity {
     /**
      *
