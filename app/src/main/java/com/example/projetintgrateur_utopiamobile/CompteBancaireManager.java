@@ -1,6 +1,6 @@
 /****************************************
  Fichier : CompteBancaireManager
- Auteur : Mathis Leduc
+ @author : Mathis Leduc
  Fonctionnalité : M-CTE-8 consulter les comptes bancaires
  Date : 2024-05-23
  ****************************************/

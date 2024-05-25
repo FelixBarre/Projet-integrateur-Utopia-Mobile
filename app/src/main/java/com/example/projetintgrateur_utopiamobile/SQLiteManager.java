@@ -29,6 +29,9 @@ import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Classe pour faire la relation avec la BD locale
+ */
 public class SQLiteManager extends SQLiteOpenHelper {
     private static SQLiteManager sqLiteManager;
     private static int numberOfVilles;
@@ -425,6 +428,13 @@ public class SQLiteManager extends SQLiteOpenHelper {
 
     }
 
+    /**
+     *
+     * @param user l'utilisateur a entrer dans la BD
+     * @return Vrai ou faux selon si l'User est précisé (non null) et si l'insertion s'est faite
+     *
+     * Fonction qui ajoute l'utilisateur spécifié dans la BD locale
+     */
     public boolean loadUserIntoDatabase(User user) {
         if (user != null) {
             SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
@@ -449,6 +459,12 @@ public class SQLiteManager extends SQLiteOpenHelper {
         return false;
     }
 
+    /**
+     *
+     * @param userUpdated L'utilisateur mis à jour
+     *
+     * Fonction qui modifie l'utilisateur en BD locale
+     */
     public void updateUserDB(User userUpdated) {
         if (userUpdated != null) {
             SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
@@ -469,6 +485,13 @@ public class SQLiteManager extends SQLiteOpenHelper {
         }
     }
 
+    /**
+     *
+     * @param compte Compte bancaire à ajouter dans la BD
+     * @return Vrai ou faux selon si le compte bancaire est précisé (non null) et si l'insertion s'est faite
+     *
+     * Fonction qui ajoute le compte bancaire spécifié dans la BD locale
+     */
     public boolean addComptetoDB(CompteBancaire compte) {
         if (compte != null) {
             SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
@@ -488,6 +511,13 @@ public class SQLiteManager extends SQLiteOpenHelper {
         return false;
     }
 
+    /**
+     *
+     * @param id_compte id du compte à modifier
+     * @param nom nouveau nom
+     *
+     * Fonction pour changer le nom d'un compte dans la BD locale
+     */
     public void updateNomCompteDB(int id_compte, String nom) {
             SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
 
@@ -498,6 +528,13 @@ public class SQLiteManager extends SQLiteOpenHelper {
             sqLiteDatabase.update(COMPTE_BANCAIRES_TABLE_NAME, contentValues, "id = ?", new String[]{String.valueOf(id_compte)});
     }
 
+    /**
+     *
+     * @param villesId Liste des IDs des villes
+     * @param villesNom Liste de nom des villes
+     *
+     * Fonction qui permet de loader les villes dans la BD locale
+     */
     public void loadVillesInDB(ArrayList<String> villesId, ArrayList<String> villesNom) {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
 
@@ -516,10 +553,23 @@ public class SQLiteManager extends SQLiteOpenHelper {
         }
     }
 
+    /**
+     *
+     * @param number le nombre de villes
+     *
+     * Fonction qui set le nombre de villes dans le compteur de la classe
+     */
     public void setNumberOfVilles (int number) {
         numberOfVilles = number;
     }
 
+    /**
+     *
+     * @param id id de la ville
+     * @return le nom de la ville
+     *
+     * Fonction qui retourne le nom de la ville désirée selon son id
+     */
     public String getVilleById(int id) {
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
 
@@ -531,6 +581,12 @@ public class SQLiteManager extends SQLiteOpenHelper {
         return null;
     }
 
+    /**
+     *
+     * @return les noms de villes
+     *
+     * Fonction qui retourne dans un ArrayList les noms des villes dans la BD locale
+     */
     public ArrayList<String> getNomsVilles () {
         ArrayList<String> villes = new ArrayList<>();
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
@@ -544,6 +600,12 @@ public class SQLiteManager extends SQLiteOpenHelper {
         return villes;
     }
 
+    /**
+     *
+     * @return Vrai ou faux selon si les villes sont loader ou non
+     *
+     * Fonction qui vérifie que le nombre de villes en BD local est le même que le compteur pour déterminer si les villes sont chargées
+     */
     public boolean isVilleLoaded() {
         int count = 0;
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
@@ -557,7 +619,13 @@ public class SQLiteManager extends SQLiteOpenHelper {
         return count == numberOfVilles;
     }
 
-
+    /**
+     *
+     * @param nom le nom de la ville
+     * @return L'ID de la ville
+     *
+     * Fonction qui retourne l'ID de la ville selon son nom
+     */
     public String getIdVille(String nom) {
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
 
@@ -634,6 +702,13 @@ public class SQLiteManager extends SQLiteOpenHelper {
         }
     }
 
+    /**
+     *
+     * @param nomCompte nom du compte bancaire
+     * @return l'ID du compte bancaire
+     *
+     * Fonction qui retourne l'ID du compte bancaire selon son nom
+     */
     public String getIdCompteBancaire (String nomCompte) {
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
 
