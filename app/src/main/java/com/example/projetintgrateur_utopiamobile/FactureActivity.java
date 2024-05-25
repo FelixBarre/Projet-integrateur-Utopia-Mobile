@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -42,6 +43,8 @@ public class FactureActivity extends AppCompatActivity implements View.OnClickLi
     private Integer expediteurTransaction;
     private Integer idFacture;
 
+    private CheckBox verifInfos;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +57,8 @@ public class FactureActivity extends AppCompatActivity implements View.OnClickLi
         });
 
         spinnerFournisseur = (Spinner) findViewById(R.id.fournisseurFacture);
+
+        verifInfos= (CheckBox) findViewById(R.id.verifInfosTransaction);
 
         btnTermine = (Button) findViewById(R.id.valideTransaction);
         btnAnnule = (Button) findViewById(R.id.annulerTransaction);
@@ -145,7 +150,14 @@ public class FactureActivity extends AppCompatActivity implements View.OnClickLi
 
         if (v.getId()==R.id.valideTransaction) {
 
+            if (!verifInfos.isChecked()) {
+                verifInfos.setError("Veuillez cocher la case.");
+                return;
+            }
+
             montantTransaction = Double.parseDouble(transactionMontant);
+
+
 
             new Thread(new Runnable() {
                 @Override
@@ -179,7 +191,7 @@ public class FactureActivity extends AppCompatActivity implements View.OnClickLi
 
         } else if (v.getId()==R.id.annulerTransaction) {
 
-            Intent intent = new Intent(FactureActivity.this, cancel_transaction.class);
+            Intent intent = new Intent(FactureActivity.this, accueil.class);
             startActivity(intent);
 
         }

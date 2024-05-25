@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -44,6 +45,8 @@ public class transaction extends AppCompatActivity implements View.OnClickListen
     private TextView messageJson;
     private TextView titleDestinationTransaction;
     private Spinner spinnerDestinataire;
+    
+    private CheckBox verifInfos;
 
     private ArrayList<CompteBancaire> comptesBancaires;
 
@@ -85,6 +88,8 @@ public class transaction extends AppCompatActivity implements View.OnClickListen
         spinnerDestinataire.setAdapter(destinataireAdapter);
 
         messageJson = (TextView) findViewById(R.id.titleCreateTransaction);
+        
+        verifInfos = (CheckBox) findViewById(R.id.verifInfosTransaction);
 
         btnTermine = (Button) findViewById(R.id.valideTransaction);
         btnAnnule = (Button) findViewById(R.id.annulerTransaction);
@@ -166,11 +171,15 @@ public class transaction extends AppCompatActivity implements View.OnClickListen
 
 
         if (v.getId()==R.id.valideTransaction) {
-            double transactionMontant = Double.parseDouble(montantTransaction);
+
             if (montantTransaction.isEmpty()) {
                 montant.setError("Le montant est requis");
                 return;
+            } else if (!verifInfos.isChecked()) {
+                verifInfos.setError("Veuillez cocher la case.");
+                return;
             }
+            double transactionMontant = Double.parseDouble(montantTransaction);
             new Thread(new Runnable() {
                 @Override
                 public void run() {
