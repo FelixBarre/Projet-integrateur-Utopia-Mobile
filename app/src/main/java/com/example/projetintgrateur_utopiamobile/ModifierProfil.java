@@ -1,6 +1,9 @@
-/*
- * Auteur(s):
- */
+/****************************************
+ Fichier : ModifierProfil.java
+ @author : Max Belval-Michaud
+ Fonctionnalité : M-CTE-4 Modification de son profil
+ Date de création: 2024-05-15
+ ****************************************/
 package com.example.projetintgrateur_utopiamobile;
 
 import android.app.AlertDialog;
@@ -36,9 +39,12 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 /**
- * Note: Code pour la boite de dialogue inspiré de: https://www.geeksforgeeks.org/how-to-implement-custom-searchable-spinner-in-android/
+ * Note: Code pour la boite de recherche de ville inspiré de: https://www.geeksforgeeks.org/how-to-implement-custom-searchable-spinner-in-android/
  */
 
+/**
+ * Classe pour l'activité de modification de profil
+ */
 public class ModifierProfil extends AppCompatActivity implements View.OnClickListener{
     TextView errorsOuput;
     Dialog searchVilleWindow;
@@ -54,6 +60,15 @@ public class ModifierProfil extends AppCompatActivity implements View.OnClickLis
     User userAuth;
     SQLiteManager sqLiteManager;
     ArrayAdapter<String> adapterVilles;
+
+    /**
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     * Fonction de création de l'activité
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,17 +125,8 @@ public class ModifierProfil extends AppCompatActivity implements View.OnClickLis
         inputRue = findViewById(R.id.rueInput);
         inputRue.setText(userAuth.getRue());
 
-        if (Objects.equals(villesNom.get(0), "unloaded")) {
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    performPostDelayTask();
-                }
-            }, 800);
-        } else {
-            inputVille.setText(sqLiteManager.getVilleById(userAuth.getIdVille()));
-            inputVille.setTag(userAuth.getIdVille());
-        }
+        inputVille.setText(sqLiteManager.getVilleById(userAuth.getIdVille()));
+        inputVille.setTag(userAuth.getIdVille());
 
         inputVille.setOnClickListener(this);
 
@@ -128,6 +134,18 @@ public class ModifierProfil extends AppCompatActivity implements View.OnClickLis
         inputCodePostal.setText(userAuth.getCodePostal());
     }
 
+    /**
+     *
+     * @param requestCode The integer request code originally supplied to
+     *                    startActivityForResult(), allowing you to identify who this
+     *                    result came from.
+     * @param resultCode The integer result code returned by the child activity
+     *                   through its setResult().
+     * @param data An Intent, which can return result data to the caller
+     *               (various data can be attached to Intent "extras").
+     *
+     * Fonction qui gère la réception des résultats des startActivityForResult
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         switch (requestCode) {
@@ -176,6 +194,12 @@ public class ModifierProfil extends AppCompatActivity implements View.OnClickLis
         }
     }
 
+    /**
+     *
+     * @param v The view that was clicked.
+     *
+     * Fonction qui gère les différentes tâches lorsqu'un bouton est appuyé
+     */
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.confirmerButton) {
@@ -204,6 +228,15 @@ public class ModifierProfil extends AppCompatActivity implements View.OnClickLis
             } else {
                 builderConfirm.setMessage(getString(R.string.connexionFailedMessage));
                 builderConfirm.setPositiveButton(getString(R.string.retour), new DialogInterface.OnClickListener() {
+                    /**
+                     *
+                     * @param dialog the dialog that received the click
+                     * @param which the button that was clicked (ex.
+                     *              {@link DialogInterface#BUTTON_POSITIVE}) or the position
+                     *              of the item clicked
+                     *
+                     * Fonction qui s'exécute lorsqu'une action dans la fenêtre de dialogue est appuyée
+                     */
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
@@ -219,6 +252,15 @@ public class ModifierProfil extends AppCompatActivity implements View.OnClickLis
         } else if (v.getId() == R.id.changeMotDePasseButton){
             builderConfirm.setMessage(R.string.confirmationContinuationVersMDPLabel);
             builderConfirm.setPositiveButton(R.string.confirmer, new DialogInterface.OnClickListener() {
+                /**
+                 *
+                 * @param dialog the dialog that received the click
+                 * @param which the button that was clicked (ex.
+                 *              {@link DialogInterface#BUTTON_POSITIVE}) or the position
+                 *              of the item clicked
+                 *
+                 * Fonction qui s'exécute lorsqu'une action dans la fenêtre de dialogue est appuyée
+                 */
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     finish();
@@ -228,6 +270,15 @@ public class ModifierProfil extends AppCompatActivity implements View.OnClickLis
             });
 
             builderConfirm.setNegativeButton(R.string.annuler, new DialogInterface.OnClickListener() {
+                /**
+                 *
+                 * @param dialog the dialog that received the click
+                 * @param which the button that was clicked (ex.
+                 *              {@link DialogInterface#BUTTON_POSITIVE}) or the position
+                 *              of the item clicked
+                 *
+                 * Fonction qui s'exécute lorsqu'une action dans la fenêtre de dialogue est appuyée
+                 */
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.cancel();
@@ -246,33 +297,52 @@ public class ModifierProfil extends AppCompatActivity implements View.OnClickLis
             EditText searchBarVilles = searchVilleWindow.findViewById(R.id.searchVille);
             ListView listeVilles = searchVilleWindow.findViewById(R.id.listeVilles);
 
-            if (!Objects.equals(villesNom.get(0), "unloaded")) {
-                adapterVilles = new ArrayAdapter<>(ModifierProfil.this, android.R.layout.simple_list_item_1, villesNom);
-                listeVilles.setAdapter(adapterVilles);
-            } else {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        performPostDelayTask();
-                    }
-                }, 800);
-            }
-
+            adapterVilles = new ArrayAdapter<>(ModifierProfil.this, android.R.layout.simple_list_item_1, villesNom);
+            listeVilles.setAdapter(adapterVilles);
 
             searchBarVilles.addTextChangedListener(new TextWatcher() {
+                /**
+                 *
+                 * @param s Texte dans la barre de recherche de ville
+                 * @param start À partir de ce charactère que le texte est changé dans la barre de recherche
+                 * @param count Le nombre de charactères du texte dans la barre de recherche
+                 * @param after Le nombre de charactères du nouveau texte
+                 *
+                 */
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
+                /**
+                 *
+                 * @param s Texte dans la barre de recherche de ville
+                 * @param start À partir de ce charactère que le texte est changé dans la barre de recherche
+                 * @param count Le nombre de charactères du texte dans la barre de recherche
+                 * @param before Le nombre de charactères du texte avant le changement
+                 */
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     adapterVilles.getFilter().filter(s);
                 }
 
+                /**
+                 *
+                 * @param s Texte dans la barre de recherche
+                 */
                 @Override
                 public void afterTextChanged(Editable s) {}
             });
 
             listeVilles.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                /**
+                 *
+                 * @param parent The AdapterView where the click happened.
+                 * @param view The view within the AdapterView that was clicked (this
+                 *            will be a view provided by the adapter)
+                 * @param position The position of the view in the adapter.
+                 * @param id The row id of the item that was clicked.
+                 *
+                 * Fonction appelée lorsqu'un élément est appuyé dans la liste de ville
+                 */
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     inputVille.setText(adapterVilles.getItem(position));
@@ -281,10 +351,5 @@ public class ModifierProfil extends AppCompatActivity implements View.OnClickLis
                 }
             });
         }
-    }
-
-    private void performPostDelayTask() {
-        villesNom = sqLiteManager.getNomsVilles();
-        adapterVilles = new ArrayAdapter<>(ModifierProfil.this, android.R.layout.simple_list_item_1, villesNom);
     }
 }

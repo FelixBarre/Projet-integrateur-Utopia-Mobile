@@ -12,6 +12,10 @@
  ****************************************/
 package com.example.projetintgrateur_utopiamobile;
 
+/**
+ * Classe contenant les RequestCodes pour s'assurer que les requêtes reçues correspondent
+ * avec ce qu'on a envoyé et pour gérer si il y a plusieurs requêtes dans une activité
+ */
 public class RequestCodes {
     public static final int CONVERSATIONS_REQUEST_CODE = 101;
     public static final int MAIN_ACTIVITY_REQUEST_CODE = 102;
