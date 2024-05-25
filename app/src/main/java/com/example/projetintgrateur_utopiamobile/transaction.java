@@ -151,11 +151,20 @@ public class transaction extends AppCompatActivity implements View.OnClickListen
         }
 
 
+
         String montantTransaction = montant.getText().toString();
+
+
+
         double transactionMontant = Double.parseDouble(montantTransaction);
 
 
         if (v.getId()==R.id.valideTransaction) {
+
+            if (montantTransaction.isEmpty()) {
+                montant.setError("Le montant est requis");
+                return;
+            }
             new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -196,15 +205,23 @@ public class transaction extends AppCompatActivity implements View.OnClickListen
 
         } else if (v.getId()==R.id.annulerTransaction) {
 
+            if (montantTransaction.isEmpty()) {
+                finish();
+            }else{
+
+
+
             Intent intent = new Intent(transaction.this, cancel_transaction.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
             Bundle bundle = new Bundle();
             bundle.putString("typeTransaction", type.getSelectedItem().toString());
-            bundle.putString("montantTransaction", montant.getText().toString());
+            bundle.putString("montantTransaction", montantTransaction);
             bundle.putString("expediteurTransaction", destinataire.getSelectedItem().toString());
             bundle.putString("destinataireTransaction", destinataire.getSelectedItem().toString());
             intent.putExtras(bundle);
             startActivity(intent);
+
+            }
 
         }
 

@@ -66,7 +66,7 @@ public class cancel_transaction extends AppCompatActivity implements View.OnClic
         TextView descriptionTransaction = (TextView) findViewById(R.id.descriptionTransaction);
 
         date.setText(currentDate);
-        descriptionTransaction.setText(typeTransaction+ " de "+ montantTransaction + " vers "+ destinataireTransaction);
+        descriptionTransaction.setText(typeTransaction+ " de "+ montantTransaction + "$"+ "vers"+ destinataireTransaction);
     }
 
     public void onClick(View v){
