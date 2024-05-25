@@ -1,6 +1,9 @@
-/*
- * Auteur(s):
- */
+/****************************************
+ Fichier : DetailsProfil.java
+ @author : Max Belval-Michaud
+ Fonctionnalité : M-CTE-3 Consultation de son profil
+ Date de création: 2024-05-15
+ ****************************************/
 package com.example.projetintgrateur_utopiamobile;
 
 import android.app.AlertDialog;
@@ -21,7 +24,18 @@ import androidx.core.view.WindowInsetsCompat;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+/**
+ * Classe pour l'activité pour consulter son profile
+ */
 public class DetailsProfil extends AppCompatActivity {
+    /**
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     * Fonction de création de l'activité
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,6 +99,12 @@ public class DetailsProfil extends AppCompatActivity {
 
         ImageButton edit = (ImageButton) findViewById(R.id.editIcon);
         edit.setOnClickListener(new View.OnClickListener() {
+            /**
+             *
+             * @param v The view that was clicked.
+             *
+             * Fonction qui s'exécute lorsque le bouton de modification est appuyé
+             */
             @Override
             public void onClick(View v) {
                 ConnectionManager connectionManager = new ConnectionManager(DetailsProfil.this);
@@ -94,6 +114,15 @@ public class DetailsProfil extends AppCompatActivity {
                 } else {
                     builderConfirm.setMessage(getString(R.string.connexionFailedMessage));
                     builderConfirm.setPositiveButton(getString(R.string.retour), new DialogInterface.OnClickListener() {
+                        /**
+                         *
+                         * @param dialog the dialog that received the click
+                         * @param which the button that was clicked (ex.
+                         *              {@link DialogInterface#BUTTON_POSITIVE}) or the position
+                         *              of the item clicked
+                         *
+                         * Fonction qui s'exécute lorsqu'une action dans la fenêtre de dialogue est appuyée
+                         */
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.cancel();

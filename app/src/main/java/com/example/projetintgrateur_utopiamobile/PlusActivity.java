@@ -1,8 +1,9 @@
 /****************************************
  Fichier : PlusActivity
- @author : Mathis Leduc,
+ @author : Mathis Leduc, Max Belval-Michaud, Joel Tidjane
  Date : 2024-05-23
  ****************************************/
+
 package com.example.projetintgrateur_utopiamobile;
 
 import android.content.Intent;
@@ -17,8 +18,18 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+/**
+ * Classe pour l'activité du menu Plus
+ */
 public class PlusActivity extends AppCompatActivity implements View.OnClickListener{
-
+    /**
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     * Fonction de création de l'activité
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +54,12 @@ public class PlusActivity extends AppCompatActivity implements View.OnClickListe
         tableRow.setOnClickListener(this);
     }
 
+    /**
+     *
+     * @param v The view that was clicked.
+     *
+     * Fonction qui gère l'envoi vers une activité lorsqu'une option du menu est appuyée
+     */
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.ongletDemandePret) {

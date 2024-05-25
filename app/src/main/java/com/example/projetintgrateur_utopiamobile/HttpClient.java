@@ -30,6 +30,9 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.Locale;
 
+/**
+ * Classe pour la gestion d'envoi de requêtes HTTP vers notre API
+ */
 public class HttpClient {
     private static HttpClient httpClient;
     public static final String urlSite = "http://10.0.2.2:8000";

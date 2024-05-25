@@ -1,19 +1,27 @@
-/*
- * Auteur(s):
- */
+/****************************************
+ Fichier : UserManager.java
+ @author : Max Belval-Michaud
+ Fonctionnalité : M-CTE-1 -> M-CTE-6 Profil utilisateur
+ Date de création: 2024-05-15
+ ****************************************/
 package com.example.projetintgrateur_utopiamobile;
-
-import android.content.Context;
-import android.content.Intent;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.IOException;
-
+/**
+ * Classe qui gère l'objet utilisateur
+ */
 public class UserManager {
     private static User authUser;
 
+    /**
+     *
+     * @param email Le courriel de l'utilisateur
+     * @return Un objet utilisateur
+     *
+     * Fonction qui retourne un objet utilisateur selon son Email avec une requête à l'API
+     */
     public User getUser(String email) {
         try {
             HttpClient httpClient = HttpClient.instanceOfClient();
@@ -46,10 +54,22 @@ public class UserManager {
         return null;
     }
 
+    /**
+     *
+     * @param user L'utilisateur authentifié
+     *
+     * Fonction qui initialise l'utilisateur authentifié
+     */
     public static void setAuthUser(User user) {
         authUser = user;
     }
 
+    /**
+     *
+     * @return L'utilisateur authentifié
+     *
+     * Fonction qui retourne l'utilisateur authentifié
+     */
     public static User getAuthUser() {
         return authUser;
     }
