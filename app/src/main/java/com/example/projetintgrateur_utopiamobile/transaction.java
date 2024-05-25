@@ -65,10 +65,13 @@ public class transaction extends AppCompatActivity implements View.OnClickListen
 
         comptesBancaires = new ArrayList<>(CompteBancaireManager.comptes);
         ArrayList<String> nomComptes = new ArrayList<>();
-        for (CompteBancaire compte : comptesBancaires) {
-            nomComptes.add(compte.getNom());
-        }
+        int currentUserId = UserManager.getAuthUser().getId();
 
+        for (CompteBancaire compte : comptesBancaires) {
+            if (compte.getId_compte() != currentUserId) {
+                nomComptes.add(compte.getNom());
+            }
+        }
 
         ArrayAdapter<String> destinataireAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, nomComptes);
         destinataireAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
