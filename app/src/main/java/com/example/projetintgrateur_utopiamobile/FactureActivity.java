@@ -133,9 +133,9 @@ public class FactureActivity extends AppCompatActivity implements View.OnClickLi
 
 
         EditText montant = (EditText) findViewById(R.id.montantTransaction);
-        String transactionMontant = montant.getText().toString();
+        String transactionMontant = montant.getText().toString().trim();
 
-        montantTransaction = Double.parseDouble(transactionMontant);
+
         transactionType = 4;
         transactionEtat = 3;
         destinataireTransaction = 0;
@@ -144,6 +144,9 @@ public class FactureActivity extends AppCompatActivity implements View.OnClickLi
 
 
         if (v.getId()==R.id.valideTransaction) {
+
+            montantTransaction = Double.parseDouble(transactionMontant);
+
             new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -160,6 +163,9 @@ public class FactureActivity extends AppCompatActivity implements View.OnClickLi
                                 " }");
 
                         JSONObject Json = new JSONObject(responsePOST);
+                        Intent intent = new Intent(FactureActivity.this, accueil.class);
+                        startActivity(intent);
+
 
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -169,8 +175,6 @@ public class FactureActivity extends AppCompatActivity implements View.OnClickLi
                 }
             }).start();
 
-            Intent intent = new Intent(FactureActivity.this, accueil.class);
-            startActivity(intent);
 
 
         } else if (v.getId()==R.id.annulerTransaction) {

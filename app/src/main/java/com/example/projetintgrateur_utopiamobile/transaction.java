@@ -42,7 +42,7 @@ public class transaction extends AppCompatActivity implements View.OnClickListen
     private Integer idFacture;
     private String message;
     private TextView messageJson;
-
+    private TextView titleDestinationTransaction;
     private Spinner spinnerDestinataire;
 
     private ArrayList<CompteBancaire> comptesBancaires;
@@ -66,6 +66,8 @@ public class transaction extends AppCompatActivity implements View.OnClickListen
         spinner.setAdapter(adapter);
 
         spinnerDestinataire = (Spinner) findViewById(R.id.destinationTansaction);
+        titleDestinationTransaction = (TextView) findViewById(R.id.titleDestinationTransaction);
+        titleDestinationTransaction.setVisibility(View.INVISIBLE);
 
         comptesBancaires = new ArrayList<>(CompteBancaireManager.comptes);
         ArrayList<String> nomComptes = new ArrayList<>();
@@ -96,8 +98,10 @@ public class transaction extends AppCompatActivity implements View.OnClickListen
                 String selectedType = (String) parent.getItemAtPosition(position);
                 if ("Virement".equals(selectedType)) {
                     spinnerDestinataire.setVisibility(View.VISIBLE);
+                    titleDestinationTransaction.setVisibility(View.VISIBLE);
                 } else {
                     spinnerDestinataire.setVisibility(View.GONE);
+                    titleDestinationTransaction.setVisibility(View.GONE);
                 }
             }
 
@@ -156,16 +160,13 @@ public class transaction extends AppCompatActivity implements View.OnClickListen
         }
 
 
-
-        String montantTransaction = montant.getText().toString();
-
+        String montantTransaction = montant.getText().toString().trim();
 
 
-        double transactionMontant = Double.parseDouble(montantTransaction);
 
 
         if (v.getId()==R.id.valideTransaction) {
-
+            double transactionMontant = Double.parseDouble(montantTransaction);
             if (montantTransaction.isEmpty()) {
                 montant.setError("Le montant est requis");
                 return;
@@ -194,6 +195,7 @@ public class transaction extends AppCompatActivity implements View.OnClickListen
                                 public void run() {
                                     messageJson.setText(message);
                                     messageJson.setVisibility(View.VISIBLE);
+                                    Toast.makeText(transaction.this, "Transaction effectuée avec succès.", Toast.LENGTH_SHORT).show();
                                 }
                             });
 
