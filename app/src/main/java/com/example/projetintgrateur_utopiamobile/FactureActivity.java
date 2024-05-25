@@ -28,7 +28,7 @@ import java.util.ArrayList;
 
 public class FactureActivity extends AppCompatActivity implements View.OnClickListener{
 
-    public ArrayList<Fournisseur> fournisseurs= new ArrayList<>();
+    public ArrayList<Fournisseur> fournisseurs = new ArrayList<>();
 
     Spinner spinnerFournisseur;
 
@@ -37,10 +37,9 @@ public class FactureActivity extends AppCompatActivity implements View.OnClickLi
 
     private Integer transactionType;
     private Integer transactionEtat;
-
+    private double montantTransaction;
     private Integer destinataireTransaction;
     private Integer expediteurTransaction;
-
     private Integer idFacture;
 
     @Override
@@ -89,6 +88,7 @@ public class FactureActivity extends AppCompatActivity implements View.OnClickLi
                                 ArrayAdapter<Fournisseur> adapter = new ArrayAdapter<>(FactureActivity.this, android.R.layout.simple_spinner_item, fournisseurs);
                                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                                 spinnerFournisseur.setAdapter(adapter);
+
                             }
                         });
 
@@ -117,26 +117,24 @@ public class FactureActivity extends AppCompatActivity implements View.OnClickLi
 
     public void onClick(View v){
 
-        Spinner fournisseurSpinner = (Spinner) findViewById(R.id.destinationTansaction);
-
-        EditText montant = (EditText) findViewById(R.id.montantTransaction);
 
 
         Fournisseur selectedFournisseur = (Fournisseur) spinnerFournisseur.getSelectedItem();
+
         if (selectedFournisseur == null) {
             return;
         }
 
-        String montantTransaction = montant.getText().toString();
-        double transactionMontant = Double.parseDouble(montantTransaction);
 
+        EditText montant = (EditText) findViewById(R.id.montantTransaction);
+        String transactionMontant = montant.getText().toString();
 
+        montantTransaction = Double.parseDouble(transactionMontant);
         transactionType = 4;
         transactionEtat = 3;
         destinataireTransaction = 0;
         expediteurTransaction = UserManager.getAuthUser().getId();
         idFacture = selectedFournisseur.getId();
-
 
 
         if (v.getId()==R.id.valideTransaction) {
