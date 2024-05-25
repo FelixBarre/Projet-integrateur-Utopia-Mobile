@@ -36,6 +36,8 @@ public class transaction extends AppCompatActivity implements View.OnClickListen
     private Integer expediteurTransaction;
 
     private Integer idFacture;
+    private String message;
+    private TextView messageJson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +67,7 @@ public class transaction extends AppCompatActivity implements View.OnClickListen
         destinataireAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         destinataire.setAdapter(destinataireAdapter);
 
+        messageJson = (TextView) findViewById(R.id.titleCreateTransaction);
 
         btnTermine = (Button) findViewById(R.id.valideTransaction);
         btnAnnule = (Button) findViewById(R.id.annulerTransaction);
@@ -129,6 +132,16 @@ public class transaction extends AppCompatActivity implements View.OnClickListen
                                 " }");
 
                         JSONObject Json = new JSONObject(responsePOST);
+                        message = Json.getString("message");
+
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                messageJson.setText(message);
+                                messageJson.setVisibility(View.VISIBLE);
+                            }
+                        });
 
                     } catch (IOException e) {
                         e.printStackTrace();

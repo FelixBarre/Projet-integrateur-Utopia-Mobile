@@ -63,6 +63,31 @@
             </TableRow>
 
             <TableRow
+                android:id="@+id/ongletPaiementfacture"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp">
+
+                <ImageView
+                    android:id="@+id/iconePaiementFacture"
+                    android:layout_gravity="center"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/credit_card" />
+
+                <TextView
+                    android:id="@+id/textPaiementFacture"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4"
+                    android:text="@string/ongletfactureTitle"
+                    android:textSize="22sp"
+                    android:layout_marginStart="10dp" />
+            </TableRow>
+
+            <TableRow
                 android:id="@+id/ongletDemandeDesactivation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -82,13 +107,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="4"
-                    android:text="@string/onglet_demande_desactivation"
+                    android:text="@string/titleDesactivationCompte"
                     android:textSize="22sp"
                     android:layout_marginStart="10dp" />
             </TableRow>
 
             <TableRow
-                android:id="@+id/ongletPaiementfacture"
+                android:id="@+id/ongletDemandeDesactivationProfile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -96,22 +121,21 @@
                 android:layout_marginTop="10dp">
 
                 <ImageView
-                    android:id="@+id/iconePaiementFacture"
+                    android:id="@+id/iconeDemandeDesactivationProfile"
                     android:layout_gravity="center"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:src="@drawable/supp" />
+                    android:src="@drawable/user" />
 
                 <TextView
-                    android:id="@+id/textPaiementFacture"
+                    android:id="@+id/textDemandeDesactivationProfile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="4"
-                    android:text="@string/ongletfactureTitle"
+                    android:text="@string/titleDesactivationProfil"
                     android:textSize="22sp"
                     android:layout_marginStart="10dp" />
             </TableRow>
-
         </TableLayout>
     </LinearLayout>
 

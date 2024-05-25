@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DesactivationCompte">
+    tools:context=".DesactivationProfile">
 
     <com.example.projetintgrateur_utopiamobile.HeaderView
         android:id="@+id/header"
@@ -30,7 +30,7 @@
             android:id="@+id/desactivationCompteLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/titleDesactivationCompte"
+            android:text="@string/titleDesactivationProfil"
             style="@style/titre"
             android:layout_gravity="center"
             android:layout_marginTop="20dp" />
@@ -47,28 +47,12 @@
             android:text="" />
 
         <TextView
-            android:id="@+id/compteLabel"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:text="@string/compte"
-            style="@style/sousTitre"
-            android:layout_gravity="center"/>
-
-        <Spinner
-            android:id="@+id/spinnerSelectionCompte"
-            android:layout_gravity="center"
-            android:layout_height="wrap_content"
-            style="@style/input"
-            android:layout_marginTop="10dp" />
-
-        <TextView
             android:id="@+id/raisonLabel"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:text="@string/raison"
             style="@style/sousTitre"
-            android:layout_gravity="center"
-            android:layout_marginTop="30dp"/>
+            android:layout_gravity="center"/>
 
         <Spinner
             android:id="@+id/spinnerRaisonDesactivation"
@@ -88,13 +72,13 @@
 
         <EditText
             android:id="@+id/inputDescription"
-            android:layout_height="100dp"
-            android:ems="10"
-            android:layout_gravity="center"
-            android:gravity="start|top"
-            android:inputType="textMultiLine"
             style="@style/input"
-            android:layout_marginTop="10dp"/>
+            android:layout_height="103dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:ems="10"
+            android:gravity="start|top"
+            android:inputType="textMultiLine" />
 
         <Button
             android:id="@+id/soumettreButton"
