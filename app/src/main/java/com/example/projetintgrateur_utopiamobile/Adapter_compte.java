@@ -1,7 +1,7 @@
 /****************************************
  Fichier : Adapter_compte
- Auteur : Mathis Leduc
- Fonctionnalité : M-CTE-8 consulter les comptes bancaires
+ @author : Mathis Leduc
+ Fonctionnalité : M-CTE-7 consulter un compte bancaire
  Date : 2024-05-23
  ****************************************/
 package com.example.projetintgrateur_utopiamobile;
@@ -35,6 +35,13 @@ public class Adapter_compte extends RecyclerView.Adapter<Adapter_compte.MyViewHo
         return new MyViewHolder(view);
     }
 
+    /**
+     *
+     * @param context Contexte de l'adapter
+     * @param comptes Liste des comptes à afficher
+     *
+     * Constructeur de Adapter_compte
+     */
     public Adapter_compte(Context context, ArrayList<CompteBancaire> comptes) {
         this.context = context;
         this.comptes = comptes;

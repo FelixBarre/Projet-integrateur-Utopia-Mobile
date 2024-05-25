@@ -1,6 +1,9 @@
-/*
- * Auteur(s): Mathis Leduc, Max Belval-Michaud, Joel Tidjane
- */
+/****************************************
+ Fichier : PlusActivity
+ @author : Mathis Leduc, Max Belval-Michaud, Joel Tidjane
+ Date : 2024-05-23
+ ****************************************/
+
 package com.example.projetintgrateur_utopiamobile;
 
 import android.content.Intent;

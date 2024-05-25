@@ -1,6 +1,8 @@
-/*
- * Auteur(s): , Mathis Leduc
- */
+/****************************************
+ Fichier : FooterView
+ @author : Félix Barré, Mathis Leduc
+ Date : 2024-05-23
+ ****************************************/
 package com.example.projetintgrateur_utopiamobile;
 
 import android.app.Activity;

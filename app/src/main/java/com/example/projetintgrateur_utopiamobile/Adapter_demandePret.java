@@ -1,7 +1,7 @@
 /****************************************
  Fichier : Adapter_demandePret
- Auteur : Mathis Leduc
- Fonctionnalité : M-CTE-8 consulter les comptes bancaires
+ @author : Mathis Leduc
+ Fonctionnalité : M-CTE-13 consulter les demandes de prêt
  Date : 2024-05-23
  ****************************************/
 package com.example.projetintgrateur_utopiamobile;
@@ -43,6 +43,13 @@ public class Adapter_demandePret extends RecyclerView.Adapter<Adapter_demandePre
         return new Adapter_demandePret.MyViewHolder(view);
     }
 
+    /**
+     *
+     * @param context Contexte de l'adapter
+     * @param demandes Liste des demandes de prêt à afficher
+     *
+     * Constructeur de Adapter_compte
+     */
     public Adapter_demandePret(Context context, ArrayList<DemandePret> demandes) {
         this.context = context;
         this.demandes = demandes;
