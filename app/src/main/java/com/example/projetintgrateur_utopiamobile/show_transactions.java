@@ -23,7 +23,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * Création de la classe show_transactions
@@ -84,7 +88,7 @@ public class show_transactions extends AppCompatActivity {
                             transaction.setCompteReceveur(objJson.getString("id_compte_receveur"));
                             transaction.setTypeTransaction(objJson.getString("id_type_transaction"));
                             transaction.setEtatTransaction(objJson.getString("id_etat_transaction"));
-                            transaction.setDateTransaction(objJson.getString("created_at"));
+                            transaction.setDateTransaction(formatDate(objJson.getString("created_at")));
                             transaction.setDateTransactionModifie(objJson.getString("updated_at"));
                             transactions.add(transaction);
                         }
@@ -136,5 +140,18 @@ public class show_transactions extends AppCompatActivity {
                 }
             }
         }).start();
+    }
+
+    private String formatDate(String dateString) {
+        SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault());
+        SimpleDateFormat targetFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+
+        try {
+            Date date = originalFormat.parse(dateString);
+            return targetFormat.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return dateString; // En cas d'erreur, renvoie simplement la chaîne d'origine
+        }
     }
 }
