@@ -1,6 +1,9 @@
-/*
- * Auteur(s):
- */
+/****************************************
+ Fichier : Cancel_transaction
+ @author : Joel Tidjane
+ Date : 2024-05-23
+ ****************************************/
+
 package com.example.projetintgrateur_utopiamobile;
 
 import android.content.Intent;
@@ -23,6 +26,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+
 public class cancel_transaction extends AppCompatActivity implements View.OnClickListener{
 
     private Integer transactionType;
@@ -38,6 +42,14 @@ public class cancel_transaction extends AppCompatActivity implements View.OnClic
 
     private Integer idFacture;
 
+    /**
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *  Debut de la creation de l'activité
+     */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +60,10 @@ public class cancel_transaction extends AppCompatActivity implements View.OnClic
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        /**
+         * Initialisation des objets de l'activité
+         */
 
         btnConfirm = (Button) findViewById(R.id.confirmCancel);
         btnAnnuler = (Button) findViewById(R.id.cancelTransaction);
@@ -72,6 +88,9 @@ public class cancel_transaction extends AppCompatActivity implements View.OnClic
     public void onClick(View v){
         if(v.getId()==R.id.confirmCancel) {
 
+            /**
+             * Reception des données de la transaction envoyées dans un bundle depuis l'activité transaction
+             */
 
             Bundle bundle = getIntent().getExtras();
 
@@ -99,6 +118,9 @@ public class cancel_transaction extends AppCompatActivity implements View.OnClic
                 idFacture = 0;
             }
 
+            /**
+             * Envoie des données du bundle reccupérées vers l'api de transaction
+             */
             new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -124,6 +146,9 @@ public class cancel_transaction extends AppCompatActivity implements View.OnClic
 
             Intent intent = new Intent(cancel_transaction.this, accueil.class);
             startActivity(intent);
+            /**
+             * Retour vers l'activité accueil
+             * */
 
         } else if (v.getId()==R.id.cancelTransaction) {
             Intent intent = new Intent(cancel_transaction.this, transaction.class);

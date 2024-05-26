@@ -1,6 +1,9 @@
-/*
- * Auteur(s): Mathis Leduc
- */
+/****************************************
+ Fichier : Adapter_transaction
+ @author : Joel Tidjane
+ Date : 2024-05-23
+ ****************************************/
+
 package com.example.projetintgrateur_utopiamobile;
 
 import android.content.Context;
@@ -14,6 +17,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+
+/**
+ * Adapter pour afficher la liste des transaction d'un compte dans une recycleview
+ */
 
 public class Adapter_transaction extends RecyclerView.Adapter<Adapter_transaction.MyViewHolder>{
     private ArrayList<TransactionClass> transactions;

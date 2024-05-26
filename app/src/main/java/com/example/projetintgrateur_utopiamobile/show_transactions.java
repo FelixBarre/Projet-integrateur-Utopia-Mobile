@@ -1,6 +1,8 @@
-/*
- * Auteur(s):
- */
+/****************************************
+ Fichier : show_transactions
+ @author : Joel Tidjane
+ Date : 2024-05-24
+ ****************************************/
 package com.example.projetintgrateur_utopiamobile;
 
 import android.content.Intent;
@@ -23,10 +25,22 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * Création de la classe show_transactions
+ * Affiche les transactions d'un compte
+ */
+
 public class show_transactions extends AppCompatActivity {
     ArrayList<TransactionClass> transactions = new ArrayList<>();
     RecyclerView recyclerViewTransaction;
 
+    /**
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *Créaction de l'activité show_transactions
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,11 +52,18 @@ public class show_transactions extends AppCompatActivity {
             return insets;
         });
 
+        /**
+         * Iniitialisation des objets de la classe
+         */
+
         Intent intent = getIntent();
         int idCompte = intent.getIntExtra("id_compte", 0);
 
         recyclerViewTransaction = (RecyclerView) findViewById(R.id.recyclerViewTransaction);
 
+        /**
+         * Recupération des transactions d'un compte depuis l'Api
+         */
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -68,6 +89,9 @@ public class show_transactions extends AppCompatActivity {
                             transactions.add(transaction);
                         }
 
+                        /**
+                         * Initialisation de l'adapter pour la recycleView
+                         */
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
