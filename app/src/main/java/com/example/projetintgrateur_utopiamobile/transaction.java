@@ -51,6 +51,8 @@ public class transaction extends AppCompatActivity implements View.OnClickListen
     private ArrayList<CompteBancaire> comptesBancaires;
 
     private int currentUserId;
+
+    private double transactionMontant;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -124,6 +126,7 @@ public class transaction extends AppCompatActivity implements View.OnClickListen
 
         Spinner type = (Spinner) findViewById(R.id.typeTransaction);
         EditText montant = (EditText) findViewById(R.id.montantTransaction);
+        String montantTransaction = montant.getText().toString().trim();
         Spinner destinataire = (Spinner) findViewById(R.id.destinationTansaction);
 
 
@@ -165,7 +168,7 @@ public class transaction extends AppCompatActivity implements View.OnClickListen
         }
 
 
-        String montantTransaction = montant.getText().toString().trim();
+
 
 
 
@@ -179,7 +182,7 @@ public class transaction extends AppCompatActivity implements View.OnClickListen
                 verifInfos.setError("Veuillez cocher la case.");
                 return;
             }
-            double transactionMontant = Double.parseDouble(montantTransaction);
+            transactionMontant = Double.parseDouble(montantTransaction);
             new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -187,7 +190,7 @@ public class transaction extends AppCompatActivity implements View.OnClickListen
                     try {
 
                         HttpClient httpClient = HttpClient.instanceOfClient();
-                        String responsePOST = httpClient.post("transactionApi/new", "{ \"montant\": \""+ transactionMontant +"\", " +
+                        String responsePOST = httpClient.post("transactionApi/new", "{ \"montant\": \""+montantTransaction+"\", " +
                                 "\"id_compte_envoyeur\":\""+expediteurTransaction + "\","+
                                 "\"id_compte_receveur\":\""+destinataireTransaction +"\"," +
                                 "\"id_type_transaction\":\""+transactionType+"\"," +
@@ -196,7 +199,7 @@ public class transaction extends AppCompatActivity implements View.OnClickListen
                                 " }");
                         if (!responsePOST.isEmpty()) {
                             JSONObject Json = new JSONObject(responsePOST);
-                            Toast.makeText(transaction.this, "Aucune donnée n'a été trouvée", Toast.LENGTH_SHORT).show();
+
                         }else{
 
                             runOnUiThread(new Runnable() {

@@ -150,7 +150,10 @@ public class FactureActivity extends AppCompatActivity implements View.OnClickLi
 
         if (v.getId()==R.id.valideTransaction) {
 
-            if (!verifInfos.isChecked()) {
+            if (transactionMontant.isEmpty()) {
+                montant.setError("Le montant est requis");
+                return;
+            } else if (!verifInfos.isChecked()) {
                 verifInfos.setError("Veuillez cocher la case.");
                 return;
             }
