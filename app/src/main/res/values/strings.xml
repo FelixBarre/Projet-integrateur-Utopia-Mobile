@@ -117,6 +117,7 @@
     <string name="confirmCancel">Confirmer </string>
     <string name="textErrorTransaction">Désolé, il y a aucune transaction pour ce compte.</string>
     <string name="aPayer">A payer : </string>
+    <string name="transactionLoading">Transaction en cours ... </string>
 
     <string-array name="transactionType">
         <item>Dépôt</item>

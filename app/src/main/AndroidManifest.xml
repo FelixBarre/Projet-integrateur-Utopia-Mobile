@@ -19,6 +19,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".TransactionStatus"
+            android:exported="false" />
+        <activity
             android:name=".LoadingTransaction"
             android:exported="false" />
         <activity
