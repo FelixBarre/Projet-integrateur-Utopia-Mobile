@@ -1,6 +1,8 @@
-/*
- * Auteur(s):
- */
+/****************************************
+ Fichier : FactureActivity
+ @author : Joel Tidjane
+ Date : 2024-05-23
+ ****************************************/
 package com.example.projetintgrateur_utopiamobile;
 
 import android.content.Intent;
@@ -27,7 +29,12 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 
+
 public class FactureActivity extends AppCompatActivity implements View.OnClickListener{
+
+    /**
+     * Déclarations des propriétés de la class FactureActivity
+     */
 
     public ArrayList<Fournisseur> fournisseurs = new ArrayList<>();
 
@@ -45,6 +52,13 @@ public class FactureActivity extends AppCompatActivity implements View.OnClickLi
 
     private CheckBox verifInfos;
 
+    /**
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *  Création de l'activité Facture
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +70,10 @@ public class FactureActivity extends AppCompatActivity implements View.OnClickLi
             return insets;
         });
 
+        /**
+         * Initialisation des objets de l'activité
+         */
+
         spinnerFournisseur = (Spinner) findViewById(R.id.fournisseurFacture);
 
         verifInfos= (CheckBox) findViewById(R.id.verifInfosTransaction);
@@ -66,6 +84,9 @@ public class FactureActivity extends AppCompatActivity implements View.OnClickLi
         btnTermine.setOnClickListener(this);
         btnAnnule.setOnClickListener(this);
 
+        /**
+         * Réccupération des Fournisseur dépuis l'api FournisseurApi
+         */
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -147,7 +168,9 @@ public class FactureActivity extends AppCompatActivity implements View.OnClickLi
         expediteurTransaction = UserManager.getAuthUser().getId();
         idFacture = selectedFournisseur.getId();
 
-
+        /**
+         * Envoie des données vers l'api des Transaction
+         */
         if (v.getId()==R.id.valideTransaction) {
 
             if (transactionMontant.isEmpty()) {
@@ -191,7 +214,9 @@ public class FactureActivity extends AppCompatActivity implements View.OnClickLi
             }).start();
 
 
-
+            /**
+             * Retour à l'activité principale Acceuil
+             */
         } else if (v.getId()==R.id.annulerTransaction) {
 
             Intent intent = new Intent(FactureActivity.this, accueil.class);

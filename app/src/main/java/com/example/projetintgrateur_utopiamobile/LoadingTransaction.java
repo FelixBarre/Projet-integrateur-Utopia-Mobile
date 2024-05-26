@@ -1,3 +1,9 @@
+/****************************************
+ Fichier : LoadingTransaction
+ @author : Joel Tidjane
+ Date : 2024-05-26
+ ****************************************/
+
 package com.example.projetintgrateur_utopiamobile;
 
 import android.content.Intent;
@@ -11,13 +17,26 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+/**
+ * Activité de chargement lorsque une transaction est effectuée
+ */
 public class LoadingTransaction extends AppCompatActivity {
 
+    /**
+     * Déclaration des propriétés de la class
+     */
     private ProgressBar progressBar;
     private int progressStatus = 0;
 
     private Handler handler = new Handler();
 
+    /**
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *Création de l'actvité Loadingtransaction
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +48,9 @@ public class LoadingTransaction extends AppCompatActivity {
             return insets;
         });
 
+        /**
+         * initialisation de la barre de progession
+         */
         ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBarTransaction);
 
         new Thread(new Runnable() {
@@ -52,6 +74,9 @@ public class LoadingTransaction extends AppCompatActivity {
 
                 }
 
+                /**
+                 * Renvoie vers l'activité de succès de transaction après chargement
+                 */
                 Intent intent = new Intent(LoadingTransaction.this, TransactionStatus.class);
 
 

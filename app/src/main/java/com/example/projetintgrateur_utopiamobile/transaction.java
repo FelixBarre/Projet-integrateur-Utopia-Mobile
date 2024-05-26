@@ -1,6 +1,8 @@
-/*
- * Auteur(s):
- */
+/****************************************
+ Fichier :transaction
+ @author : Joel Tidjane
+ Date : 2024-05-23
+ ****************************************/
 package com.example.projetintgrateur_utopiamobile;
 
 import android.content.Context;
@@ -28,8 +30,11 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class transaction extends AppCompatActivity implements View.OnClickListener{
 
+public class transaction extends AppCompatActivity implements View.OnClickListener{
+    /**
+     * Déclaration des propriétés de la classe transactions
+     */
 
     private Button btnTermine;
     private Button btnAnnule;
@@ -53,6 +58,15 @@ public class transaction extends AppCompatActivity implements View.OnClickListen
     private int currentUserId;
 
     private double transactionMontant;
+
+    /**
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     *     Création de l'activité transaction
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +78,10 @@ public class transaction extends AppCompatActivity implements View.OnClickListen
 
             return insets;
         });
+
+        /**
+         * Initialisation des objets et propriétés de la classe
+         */
 
         Spinner spinner = (Spinner) findViewById(R.id.typeTransaction);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.transactionType, android.R.layout.simple_spinner_item);
@@ -99,6 +117,9 @@ public class transaction extends AppCompatActivity implements View.OnClickListen
         btnTermine.setOnClickListener(this);
         btnAnnule.setOnClickListener(this);
 
+        /**
+         * Initialisation du spinner du type de transaction pour aafficher et masquer le destinataire
+         */
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -118,17 +139,20 @@ public class transaction extends AppCompatActivity implements View.OnClickListen
             }
         });
 
-
-
     }
 
     public void onClick(View v){
-
+        /**
+         * Initialisation des Objets recupérés du fourmulaire
+         */
         Spinner type = (Spinner) findViewById(R.id.typeTransaction);
         EditText montant = (EditText) findViewById(R.id.montantTransaction);
         String montantTransaction = montant.getText().toString().trim();
         Spinner destinataire = (Spinner) findViewById(R.id.destinationTansaction);
 
+        /**
+         * Initialisation des comptes à afficher dans le spinner
+         */
 
         String selectedCompteNom = (String) destinataire.getSelectedItem();
         CompteBancaire selectedCompteBancaire = null;
@@ -168,11 +192,9 @@ public class transaction extends AppCompatActivity implements View.OnClickListen
         }
 
 
-
-
-
-
-
+        /**
+         * Envoie des données vers l'api
+         */
         if (v.getId()==R.id.valideTransaction) {
 
             if (montantTransaction.isEmpty()) {
@@ -224,7 +246,9 @@ public class transaction extends AppCompatActivity implements View.OnClickListen
             Intent intent = new Intent(transaction.this, LoadingTransaction.class);
             startActivity(intent);
             finish();
-
+            /**
+             * Envoie des données à l'activité cancel_transaction ou principale accueil
+             */
         } else if (v.getId()==R.id.annulerTransaction) {
 
             if (montantTransaction.isEmpty()) {
