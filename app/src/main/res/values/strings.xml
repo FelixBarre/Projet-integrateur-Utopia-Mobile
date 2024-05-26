@@ -113,11 +113,13 @@
     <string name="destinationTransaction">Vers : </string>
     <string name="checkVerificationTransaction">Les informations sont exactes </string>
     <string name="valideTransaction">Terminer </string>
+    <string name="retourTransaction">Retour </string>
     <string name="stopTransaction">Annuler </string>
     <string name="confirmCancel">Confirmer </string>
     <string name="textErrorTransaction">Désolé, il y a aucune transaction pour ce compte.</string>
     <string name="aPayer">A payer : </string>
-    <string name="transactionLoading">Transaction en cours ... </string>
+    <string name="transactionLoading">Traitement en cours ... </string>
+    <string name="titleStatusTransaction">Votre Transaction à été effectuée avec succès. </string>
 
     <string-array name="transactionType">
         <item>Dépôt</item>

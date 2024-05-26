@@ -44,7 +44,7 @@ public class LoadingTransaction extends AppCompatActivity {
                         }
                     });
                     try {
-                        Thread.sleep(200);
+                        Thread.sleep(100);
 
                     }catch (InterruptedException e){
                         e.printStackTrace();
@@ -52,7 +52,7 @@ public class LoadingTransaction extends AppCompatActivity {
 
                 }
 
-                Intent intent = new Intent(LoadingTransaction.this, InscriptionSucces.class);
+                Intent intent = new Intent(LoadingTransaction.this, TransactionStatus.class);
 
 
 

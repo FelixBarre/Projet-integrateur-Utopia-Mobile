@@ -1,6 +1,8 @@
-/*
- * Auteur(s):
- */
+/****************************************
+ Fichier : Accueil
+ @author : Joel Tidjane
+ Date : 2024-05-23
+ ****************************************/
 package com.example.projetintgrateur_utopiamobile;
 
 import android.content.Intent;
@@ -28,7 +30,13 @@ public class accueil  extends AppCompatActivity implements View.OnClickListener{
     private Button btnPayer;
     private Button btnDemande;
 
-
+    /**
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *      Fonction principale pour lancer l'activité acceuil
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +47,10 @@ public class accueil  extends AppCompatActivity implements View.OnClickListener{
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        /**
+         * Initialise les objets de l'activité accueil
+         */
 
         compteManager.initComptes(accueil.this);
         btnVoirPlus = (Button) findViewById(R.id.buttonCompte);
@@ -51,7 +63,9 @@ public class accueil  extends AppCompatActivity implements View.OnClickListener{
     }
 
     public void onClick(View v){
-
+        /**
+         * Action sur les differents boutons de l'activité
+         */
 
         if (v.getId()==R.id.buttonCompte) {
             Intent intent = new Intent(accueil.this, ComptesBancairesActivity.class);

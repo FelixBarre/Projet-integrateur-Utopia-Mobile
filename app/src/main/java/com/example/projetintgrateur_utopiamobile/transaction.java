@@ -221,7 +221,7 @@ public class transaction extends AppCompatActivity implements View.OnClickListen
                 }
             }).start();
 
-            Intent intent = new Intent(transaction.this, accueil.class);
+            Intent intent = new Intent(transaction.this, LoadingTransaction.class);
             startActivity(intent);
             finish();
 
