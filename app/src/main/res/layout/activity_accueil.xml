@@ -36,7 +36,7 @@
             android:id="@+id/compteTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="7dp"
             android:layout_marginLeft="10sp"
             android:layout_marginBottom="10dp"
             android:gravity="left"
@@ -46,59 +46,13 @@
             android:textStyle="bold" />
 
 
-        <LinearLayout
+
+
+
+        <ListView
+            android:id="@+id/listeCompte"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#F5F5DC"
-            android:orientation="horizontal"
-            android:padding="10sp">
-
-
-            <TextView
-                android:id="@+id/compteName1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/compteName1"
-                android:textSize="15sp" />
-
-            <TextView
-                android:id="@+id/soldeCompte1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="right"
-                android:text="@string/soldeCompte1"
-                android:textSize="15sp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#F5F5DC"
-            android:orientation="horizontal"
-            android:padding="10sp">
-
-
-            <TextView
-                android:id="@+id/compteName2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/compteName2"
-                android:textSize="15sp" />
-
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="right"
-                android:text="@string/soldeCompte2"
-                android:textSize="15sp" />
-
-        </LinearLayout>
+            android:layout_height="130dp" />
 
 
         <Button
@@ -111,6 +65,8 @@
             android:textSize="17sp"
             android:textColor="#178CA4"
             android:text="@string/voirPlus" />
+
+
 
         <TextView
             android:id="@+id/annonceTitle"
@@ -135,13 +91,7 @@
             android:orientation="vertical">
 
 
-            <TextView
-                android:id="@+id/dateAnnonce"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_marginBottom="10sp"
-                android:text="@string/annonceDate" />
+
 
             <TextView
                 android:id="@+id/descriptionAnnonce"
@@ -154,12 +104,13 @@
 
         </LinearLayout>
 
+
         <TextView
             android:id="@+id/carteTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
             android:layout_marginLeft="10sp"
+            android:layout_marginTop="15dp"
             android:layout_marginBottom="10dp"
             android:gravity="left"
             android:text="@string/carteTitle"
@@ -167,38 +118,14 @@
             android:textSize="20sp"
             android:textStyle="bold" />
 
+        <ListView
+            android:id="@+id/creditCompte"
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#F5F5DC"
-            android:orientation="horizontal"
-            android:padding="10sp">
-
-
-            <TextView
-                android:id="@+id/carteName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/nameCarte"
-                android:textSize="15sp" />
-
-            <TextView
-                android:id="@+id/montantCarte"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="right"
-                android:text="@string/montantCarte"
-                android:textSize="15sp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#F5F5DC"
             android:padding="10sp"
             android:orientation="vertical">
 
