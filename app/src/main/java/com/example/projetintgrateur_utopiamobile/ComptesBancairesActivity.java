@@ -68,7 +68,7 @@ public class ComptesBancairesActivity extends AppCompatActivity {
 
                 performPostDelayTask();
             }
-        }, 800);
+        }, 2000);
     }
 
     private void performPostDelayTask() {
