@@ -16,7 +16,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * Adapter pour afficher la liste des transaction d'un compte dans une recycleview
@@ -45,7 +49,7 @@ public class Adapter_transaction extends RecyclerView.Adapter<Adapter_transactio
         holder.compteReceveur.setText("Vers : " + transactions.get(position).getCompteReceveur());
         holder.typeTransaction.setText(transactions.get(position).getTypeTransaction());
         holder.etatTransaction.setText(transactions.get(position).getEtatTransaction());
-        holder.dateTransaction.setText(transactions.get(position).getDateTransaction());
+        holder.dateTransaction.setText(formatDate(transactions.get(position).getDateTransaction()));
     }
 
     @Override
@@ -72,4 +76,16 @@ public class Adapter_transaction extends RecyclerView.Adapter<Adapter_transactio
         }
     }
 
+    private String formatDate(String dateString) {
+        SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault());
+        SimpleDateFormat targetFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+
+        try {
+            Date date = originalFormat.parse(dateString);
+            return targetFormat.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return dateString; // En cas d'erreur, renvoie simplement la chaîne d'origine
+        }
+    }
 }
