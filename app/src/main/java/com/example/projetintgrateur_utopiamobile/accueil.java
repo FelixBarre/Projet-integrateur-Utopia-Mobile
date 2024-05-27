@@ -8,7 +8,9 @@ package com.example.projetintgrateur_utopiamobile;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,6 +31,12 @@ public class accueil  extends AppCompatActivity implements View.OnClickListener{
     private Button btnVoirPlus;
     private Button btnPayer;
     private Button btnDemande;
+
+    private ListView listeCompte;
+    private ListView creditCompte;
+    private ArrayList<String> comptesDisplay = new ArrayList<>();
+    private ArrayList<String> creditCompteDisplay = new ArrayList<>();
+    private ArrayAdapter<String> adapter;
 
     /**
      *
@@ -53,6 +61,14 @@ public class accueil  extends AppCompatActivity implements View.OnClickListener{
          */
 
         compteManager.initComptes(accueil.this);
+
+        listeCompte = (ListView) findViewById(R.id.listeCompte);
+        creditCompte = (ListView) findViewById(R.id.creditCompte);
+
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_2, android.R.id.text1, comptesDisplay);
+        listeCompte.setAdapter(adapter);
+
+
         btnVoirPlus = (Button) findViewById(R.id.buttonCompte);
         btnPayer = (Button) findViewById(R.id.btnPaiement);
         btnDemande = (Button) findViewById(R.id.btnDemande);
@@ -60,6 +76,64 @@ public class accueil  extends AppCompatActivity implements View.OnClickListener{
         btnVoirPlus.setOnClickListener(this);
         btnPayer.setOnClickListener(this);
         btnDemande.setOnClickListener(this);
+
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    HttpClient httpClient = new  HttpClient();
+                    String responseGET = httpClient.get("comptesBancaires");
+                    JSONObject jsonResponse = new JSONObject(responseGET);
+
+                    if (jsonResponse.has("data") && jsonResponse.getJSONArray("data").length() > 0) {
+                        JSONArray arrayJson = jsonResponse.getJSONArray("data");
+
+                        for (int i = 0; i < arrayJson.length(); i++) {
+                            JSONObject objJson = arrayJson.getJSONObject(i);
+
+                            int userId = objJson.getInt("id_user");
+                            User usermanager = UserManager.getAuthUser();
+                            int connectedUserId = (usermanager != null) ? usermanager.getId() : 0;
+
+                            if (userId == connectedUserId) {
+                                String nom = objJson.getString("nom");
+                                double solde = objJson.getDouble("solde");
+
+                                String displayText = nom + " " + solde + "$";
+                                comptesDisplay.add(displayText);
+
+                                if (nom.equals("carte de crédit")) {
+                                    creditCompteDisplay.add(displayText);
+                                }
+                            }
+                        }
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                adapter.notifyDataSetChanged();
+                                ArrayAdapter<String> creditAdapter = new ArrayAdapter<>(accueil.this, android.R.layout.simple_list_item_1, android.R.id.text1, creditCompteDisplay);
+                                creditCompte.setAdapter(creditAdapter);
+                            }
+                        });
+
+                    } else {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+
+                            }
+                        });
+                    }
+
+                } catch (IOException | JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
+
     }
 
     public void onClick(View v){
